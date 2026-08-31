@@ -1,0 +1,89 @@
+{
+  "dataset": {
+    "name": "weibo",
+    "display_name": "Weibo",
+    "adapter": "dataset_tools.weibo.prepare",
+    "schema_version": "cute_fnd_multimodal_v1",
+    "positive_label": 0,
+    "positive_class": "fake",
+    "class_names": {
+      "0": "fake",
+      "1": "real"
+    }
+  },
+  "seed": 200408,
+  "data": {
+    "root": "datasets/weibo/raw",
+    "image_root": "datasets/weibo/raw",
+    "processed_dir": "workspaces/weibo/processed",
+    "eann_split_dir": "datasets/weibo/raw/eann_split",
+    "max_images": 1000,
+    "image_size": 224,
+    "image_preprocessing": {
+      "color_mode": "RGB",
+      "transparent_background": "white",
+      "train_augmentation": {
+        "enabled": true,
+        "random_crop_scale": [0.9, 1.0],
+        "brightness": 0.08,
+        "contrast": 0.08
+      }
+    },
+    "max_text_length": 192,
+    "text_instruction": "请提取这条新闻中的事件、人物、时间、地点、因果关系、夸张表达和不确定性线索。新闻：",
+    "num_workers": 4,
+    "pin_memory": true,
+    "persistent_workers": true,
+    "prefetch_factor": 2
+  },
+  "model": {
+    "architecture_version": "qwen_lora_iurd_three_module_v2",
+    "text_backbone": "pretrained_models/qwen2.5-0.5b-instruct",
+    "vision_backbone": "pretrained_models/siglip-base-patch16-224",
+    "hidden_dim": 384,
+    "num_heads": 8,
+    "dropout": 0.2,
+    "lora_rank": 8,
+    "lora_alpha": 16,
+    "lora_dropout": 0.05,
+    "lora_target_modules": ["q_proj", "v_proj"],
+    "qwen_gradient_checkpointing": true,
+    "graph_rounds": 1,
+    "graph_residual_limit": 0.1,
+    "causal_effect_scale": 0.5,
+    "view_dropout_probability": 0.0,
+    "freeze_vision": true,
+    "unfreeze_vision_last_n": 2
+  },
+  "train": {
+    "epochs": 50,
+    "per_gpu_batch_size": 4,
+    "grad_accum_steps": 1,
+    "vision_learning_rate": 0.00002,
+    "lora_learning_rate": 0.0001,
+    "head_learning_rate": 0.00004,
+    "weight_decay": 0.02,
+    "warmup_ratio": 0.1,
+    "label_smoothing": 0.05,
+    "gradient_clip_norm": 1.0,
+    "precision": "bf16",
+    "early_stop_patience": 8,
+    "monitor": "macro_f1",
+    "top_k_checkpoint_average": 5,
+    "threshold_min": 0.2,
+    "threshold_max": 0.8,
+    "threshold_step": 0.01,
+    "threshold_plateau_delta": 0.002,
+    "output_dir": "workspaces/weibo/runs/training"
+  },
+  "loss": {
+    "classification": 1.0,
+    "contrastive": 0.05,
+    "causal_probe_classification": 0.02,
+    "causal_fidelity": 0.02,
+    "event_counterfactual_ranking": 0.05,
+    "visual_source_ranking": 0.03,
+    "causal_veracity_ranking": 0.01,
+    "uncertainty_calibration": 0.02
+  }
+}
