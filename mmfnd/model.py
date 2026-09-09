@@ -7,6 +7,8 @@ from peft import LoraConfig, TaskType, get_peft_model
 from peft.tuners.lora import model as peft_lora_model
 from transformers import AutoModel
 
+from mmfnd.latent_evidence_deliberation import LLMGuidedLatentEvidenceDeliberation
+
 # A stale CPU-only bitsandbytes package can make PEFT
 # probe CUDA-only adapter dispatch and print misleading errors on Apple Silicon.
 # This model uses ordinary PyTorch LoRA, so disable only that optional dispatcher
@@ -85,16 +87,16 @@ class IntrinsicUncertaintyResidualDisentangler(nn.Module):
 
     The uncertainty definition is specific to this model and combines four
     internal signals: decision-boundary ambiguity, disagreement among the text,
-    image and event views, leave-one-view intervention sensitivity, and diffuse
-    evidence-graph relations. A bounded correction removes only the component of
-    the joint representation aligned with the dominant cross-view conflict.
+    image and event views, leave-one-view intervention sensitivity, and LG-LED
+    latent relation uncertainty. A bounded correction removes only the component
+    of the joint representation aligned with the dominant cross-view conflict.
     """
 
     component_names = (
         "decision_margin",
         "view_conflict",
         "intervention_sensitivity",
-        "graph_ambiguity",
+        "latent_relation_uncertainty",
     )
 
     def __init__(self, dim: int, max_correction: float = 0.1,
@@ -109,7 +111,7 @@ class IntrinsicUncertaintyResidualDisentangler(nn.Module):
 
     def forward(self, feature: torch.Tensor, views: list[torch.Tensor],
                 consensus: torch.Tensor, intervention_effects: torch.Tensor,
-                graph_ambiguity: torch.Tensor,
+                latent_relation_uncertainty: torch.Tensor,
                 preliminary_logits: torch.Tensor,
                 available: torch.Tensor | None = None) -> dict:
         preliminary_probabilities = preliminary_logits.softmax(dim=-1)
@@ -143,7 +145,7 @@ class IntrinsicUncertaintyResidualDisentangler(nn.Module):
             decision_margin,
             view_conflict,
             intervention_sensitivity,
-            graph_ambiguity,
+            latent_relation_uncertainty,
         ], dim=-1)
         component_weights = self.component_logits.softmax(dim=-1)
         uncertainty = (
@@ -354,102 +356,33 @@ class IntrinsicEventEvidence(nn.Module):
         }
 
 
-class RelationalEvidenceGraph(nn.Module):
-    """Reason over internal evidence as a small, auditable directed graph.
-
-    Nodes represent text, image, intrinsic event evidence and cross-modal interaction.
-    This does not fabricate propagation edges, user metadata or external knowledge.
-    """
-
-    node_names = ("text", "image", "intrinsic_event", "interaction")
-
-    def __init__(self, dim: int, rounds: int, dropout: float,
-                 residual_limit: float):
-        super().__init__()
-        self.rounds = max(1, int(rounds))
-        node_count = len(self.node_names)
-        self.node_type = nn.Parameter(torch.empty(node_count, dim))
-        self.edge_bias = nn.Parameter(
-            torch.zeros(self.rounds, node_count, node_count)
-        )
-        self.node_score = nn.Sequential(
-            nn.LayerNorm(dim), nn.Linear(dim, 1),
-        )
-        self.message_norm = nn.LayerNorm(dim)
-        # The graph refines but cannot replace the established content path.
-        self.residual_scale = nn.Parameter(torch.tensor(0.1))
-        self.residual_limit = float(residual_limit)
-        self.dropout = nn.Dropout(dropout)
-        nn.init.normal_(self.node_type, std=0.02)
-
-    def forward(
-        self, node_features: list[torch.Tensor],
-        available: torch.Tensor | None = None,
-    ) -> dict:
-        nodes = torch.stack(node_features, dim=1) + self.node_type.unsqueeze(0)
-        if available is None:
-            available = torch.ones(
-                nodes.shape[:2], dtype=torch.bool, device=nodes.device
-            )
-        if available.shape != nodes.shape[:2]:
-            raise ValueError(
-                f"graph availability shape {tuple(available.shape)} does not match "
-                f"node shape {tuple(nodes.shape[:2])}"
-            )
-        available = available.bool()
-        available_float = available.to(nodes.dtype)
-        nodes = nodes * available_float.unsqueeze(-1)
-        adjacency = None
-        for round_index in range(self.rounds):
-            normalized = F.normalize(nodes, dim=-1)
-            edge_logits = (
-                torch.matmul(normalized, normalized.transpose(1, 2)) / 0.2
-                + self.edge_bias[round_index].unsqueeze(0)
-            )
-            edge_logits = edge_logits.masked_fill(
-                ~available.unsqueeze(1), -1e4
-            )
-            adjacency = edge_logits.softmax(dim=-1)
-            adjacency = adjacency * available_float.unsqueeze(-1)
-            nodes = self.message_norm(
-                nodes + self.dropout(torch.matmul(adjacency, nodes))
-            ) * available_float.unsqueeze(-1)
-        node_logits = self.node_score(nodes).squeeze(-1).masked_fill(
-            ~available, -1e4
-        )
-        node_weights = node_logits.softmax(dim=-1) * available_float
-        node_weights = node_weights / node_weights.sum(dim=-1, keepdim=True).clamp_min(
-            torch.finfo(node_weights.dtype).eps
-        )
-        graph_feature = (node_weights.unsqueeze(-1) * nodes).sum(dim=1)
-        residual_scale = self.residual_limit * torch.tanh(self.residual_scale)
-        residual = residual_scale * graph_feature
-        row_entropy = -(
-            adjacency * adjacency.clamp_min(1e-8).log()
-        ).sum(dim=-1)
-        active_node_count = available_float.sum(dim=-1)
-        edge_entropy = (
-            row_entropy * available_float
-        ).sum(dim=-1) / active_node_count.clamp_min(1.0)
-        return {
-            "residual": residual,
-            "adjacency": adjacency,
-            "node_weights": node_weights,
-            "edge_entropy": edge_entropy,
-            "active_node_count": active_node_count,
-            "residual_scale": residual_scale,
-        }
-
-
 class MultimodalIntrinsicEvidenceEncoder(nn.Module):
     """Module 1: Qwen-LoRA/SigLIP encoding and news-internal evidence."""
 
     def __init__(self, cfg: dict, dim: int, num_heads: int):
         super().__init__()
+        if not bool(cfg.get("qwen_use_lora", True)):
+            raise ValueError("CUTE-FND v3 forbids full Qwen-7B fine-tuning; enable LoRA")
+        qwen_dtype_name = str(cfg.get("qwen_dtype", "bfloat16")).lower()
+        qwen_dtypes = {
+            "bfloat16": torch.bfloat16,
+            "bf16": torch.bfloat16,
+            "float16": torch.float16,
+            "fp16": torch.float16,
+            "float32": torch.float32,
+            "fp32": torch.float32,
+        }
+        if qwen_dtype_name not in qwen_dtypes:
+            raise ValueError(
+                "model.qwen_dtype must be bfloat16, float16 or float32"
+            )
         text_base = AutoModel.from_pretrained(
-            cfg["text_backbone"], local_files_only=True
+            cfg["text_backbone"], local_files_only=True,
+            torch_dtype=qwen_dtypes[qwen_dtype_name],
         )
-        text_base.config.use_cache = False
+        text_base.config.use_cache = bool(cfg.get("qwen_use_cache", False))
+        if text_base.config.use_cache:
+            raise ValueError("model.qwen_use_cache must be false during v3 training")
         if bool(cfg.get("qwen_gradient_checkpointing", True)):
             text_base.gradient_checkpointing_enable(
                 gradient_checkpointing_kwargs={"use_reentrant": False}
@@ -480,6 +413,17 @@ class MultimodalIntrinsicEvidenceEncoder(nn.Module):
             nn.LayerNorm(dim * 2), nn.Linear(dim * 2, dim), nn.GELU()
         )
         self._freeze_vision(cfg)
+
+    def shared_qwen_model(self) -> nn.Module:
+        """Return the one PEFT-instrumented Qwen2Model used by both paths."""
+        model = self.text_encoder.get_base_model()
+        if not hasattr(model, "layers"):
+            model = getattr(model, "model", model)
+        if not all(hasattr(model, name) for name in ("layers", "rotary_emb", "norm")):
+            raise TypeError(
+                f"Unsupported shared Qwen base model: {type(model).__name__}"
+            )
+        return model
 
     def _freeze_vision(self, cfg: dict) -> None:
         if not cfg.get("freeze_vision", False):
@@ -607,28 +551,28 @@ class MultimodalIntrinsicEvidenceEncoder(nn.Module):
 
 
 class UncertaintyAwareEvidenceReasoner(nn.Module):
-    """Module 2: deletion intervention, reliability fusion and relation graph."""
+    """Module 2: reliability probes and Qwen-guided latent adjudication."""
 
-    def __init__(self, cfg: dict, dim: int):
+    def __init__(self, cfg: dict, dim: int, qwen_hidden_size: int):
         super().__init__()
         self.reliability_gate = CausalReliabilityGate(
             dim, float(cfg.get("causal_effect_scale", 0.5))
         )
-        self.instance_norm = nn.LayerNorm(dim)
         self.view_dropout_probability = float(
             cfg.get("view_dropout_probability", 0.0)
         )
         if not 0.0 <= self.view_dropout_probability <= 1.0:
             raise ValueError("view_dropout_probability must be between 0 and 1")
-        self.evidence_graph = RelationalEvidenceGraph(
-            dim,
-            int(cfg.get("graph_rounds", 1)),
-            float(cfg["dropout"]),
-            float(cfg.get("graph_residual_limit", 0.1)),
+        lgled_cfg = cfg.get("lgled", {})
+        if not bool(lgled_cfg.get("enabled", True)):
+            raise ValueError("CUTE-FND v3 requires model.lgled.enabled=true")
+        self.lgled = LLMGuidedLatentEvidenceDeliberation(
+            dim, qwen_hidden_size, lgled_cfg
         )
 
     def forward(
         self, encoded: dict, ablate_component: str | None,
+        qwen_model: nn.Module,
     ) -> dict:
         text = encoded["text"]
         vision = encoded["vision"]
@@ -668,21 +612,12 @@ class UncertaintyAwareEvidenceReasoner(nn.Module):
         interaction = encoded["interaction"] * interaction_available.unsqueeze(
             -1
         ).to(encoded["interaction"].dtype)
-        instance = self.instance_norm(reliable + interaction)
-        graph_available = torch.cat([
+        evidence_available = torch.cat([
             available, interaction_available.unsqueeze(-1)
         ], dim=-1)
-        graph = self.evidence_graph(
-            [*masked_views, interaction], graph_available
+        lgled = self.lgled(
+            [*masked_views, interaction], qwen_model, evidence_available
         )
-        graph_feature = instance + graph["residual"]
-        active_node_count = graph["active_node_count"]
-        entropy_normalizer = active_node_count.clamp_min(2.0).log()
-        graph_ambiguity = torch.where(
-            active_node_count > 1.0,
-            graph["edge_entropy"] / entropy_normalizer,
-            torch.zeros_like(graph["edge_entropy"]),
-        ).clamp(0.0, 1.0)
         return {
             "reliable": reliable,
             "views": masked_views,
@@ -691,9 +626,11 @@ class UncertaintyAwareEvidenceReasoner(nn.Module):
             "causal_effects": effects,
             "probe_logits": probe_logits,
             "probe_ablated": probe_ablated,
-            "graph": graph,
-            "graph_feature": graph_feature,
-            "graph_ambiguity": graph_ambiguity,
+            "lgled": lgled,
+            "fused_feature": lgled["fused_feature"],
+            "latent_relation_uncertainty": lgled[
+                "relation_uncertainty"
+            ].mean(dim=1),
         }
 
 
@@ -707,16 +644,14 @@ class UncertaintyCalibratedDecision(nn.Module):
         self.calibrator = IntrinsicUncertaintyResidualDisentangler(dim)
 
     def forward(self, encoded: dict, reasoned: dict) -> dict:
-        joint = self.final_norm(
-            reasoned["graph_feature"] + 0.5 * reasoned["reliable"]
-        )
+        joint = self.final_norm(reasoned["fused_feature"])
         preliminary_logits = self.classifier(joint)
         calibrated = self.calibrator(
             joint,
             reasoned["views"],
             reasoned["reliable"],
             reasoned["causal_effects"],
-            reasoned["graph_ambiguity"],
+            reasoned["latent_relation_uncertainty"],
             preliminary_logits,
             reasoned["view_available"],
         )
@@ -731,9 +666,9 @@ class UncertaintyCalibratedDecision(nn.Module):
 
 
 class ExplainableMMFND(nn.Module):
-    """CUTE-FND-QIURD: three-module Qwen-LoRA uncertainty model."""
+    """CUTE-FND v3 with one shared Qwen and LG-LED adjudication."""
 
-    architecture_version = "qwen_lora_iurd_three_module_v2"
+    architecture_version = "qwen_lora_lgled_v3"
 
     def __init__(self, config: dict):
         super().__init__()
@@ -757,12 +692,17 @@ class ExplainableMMFND(nn.Module):
                 f"valid choices include {valid_heads}."
             )
         self.encoder = MultimodalIntrinsicEvidenceEncoder(cfg, dim, num_heads)
-        self.reasoner = UncertaintyAwareEvidenceReasoner(cfg, dim)
+        qwen_hidden_size = int(
+            self.encoder.shared_qwen_model().config.hidden_size
+        )
+        self.reasoner = UncertaintyAwareEvidenceReasoner(
+            cfg, dim, qwen_hidden_size
+        )
         self.decision = UncertaintyCalibratedDecision(dim)
 
     @property
-    def evidence_graph(self) -> RelationalEvidenceGraph:
-        return self.reasoner.evidence_graph
+    def lgled(self) -> LLMGuidedLatentEvidenceDeliberation:
+        return self.reasoner.lgled
 
     def forward(self, batch: dict, ablate_component: str | None = None) -> dict:
         if ablate_component not in (None, "text", "image", "intrinsic_event"):
@@ -770,11 +710,13 @@ class ExplainableMMFND(nn.Module):
                 "ablate_component must be one of: text, image, intrinsic_event"
             )
         encoded = self.encoder(batch, ablate_component)
-        reasoned = self.reasoner(encoded, ablate_component)
+        reasoned = self.reasoner(
+            encoded, ablate_component, self.encoder.shared_qwen_model()
+        )
         decision = self.decision(encoded, reasoned)
         calibrated = decision["calibrated"]
         intrinsic = encoded["intrinsic"]
-        graph = reasoned["graph"]
+        lgled = reasoned["lgled"]
         return {
             "logits": decision["logits"],
             "preliminary_logits": decision["preliminary_logits"],
@@ -784,7 +726,9 @@ class ExplainableMMFND(nn.Module):
             "uncertainty_temperature": calibrated["temperature"],
             "uncertainty_correction_norm": calibrated["correction_norm"],
             "uncertainty_correction_scale": calibrated["correction_scale"],
-            "graph_ambiguity": reasoned["graph_ambiguity"],
+            "latent_relation_uncertainty": reasoned[
+                "latent_relation_uncertainty"
+            ],
             "modality_weights": reasoned["modality_weights"],
             "causal_gate_effects": reasoned["causal_effects"],
             "causal_probe_logits": reasoned["probe_logits"],
@@ -800,10 +744,11 @@ class ExplainableMMFND(nn.Module):
             "multi_image_dispersion": intrinsic["multi_image_dispersion"],
             "multi_image_available": intrinsic["multi_image_available"],
             "intrinsic_alignment_attention": intrinsic["alignment_attention"],
-            "graph_adjacency": graph["adjacency"],
-            "graph_node_weights": graph["node_weights"],
-            "graph_edge_entropy": graph["edge_entropy"],
-            "graph_residual_scale": graph["residual_scale"],
+            "evidence_features": torch.stack([
+                encoded["text"], encoded["vision"],
+                encoded["intrinsic_feature"], encoded["interaction"],
+            ], dim=1),
+            **lgled,
             "text_embedding": encoded["text"],
             "vision_embedding": encoded["vision"],
             "per_image_embedding": encoded["per_image"],
@@ -890,6 +835,9 @@ def multimodal_loss(outputs: dict, labels: torch.Tensor, weights: dict,
         "visual_source_ranking": visual_source_ranking,
         "causal_veracity_ranking": causal_veracity_ranking,
         "uncertainty_calibration": uncertainty_calibration,
+        # No fabricated pair labels are used. This optional scalar only reserves
+        # an interface for future strength regularization and defaults to zero.
+        "evidential_regularization": outputs["relation_strength"].mean(),
     }
     total = sum(float(weights.get(name, 0.0)) * value for name, value in components.items())
     return total, {name: float(value.detach()) for name, value in components.items()}

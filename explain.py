@@ -12,8 +12,8 @@ import numpy as np
 import torch
 
 from mmfnd.data import move_batch
-from mmfnd.dataset_contract import normalize_runtime_paths, validate_dataset_semantics
-from mmfnd.engine import load_checkpoint
+from mmfnd.dataset_contract import bind_dataset_workspace, validate_dataset_semantics
+from mmfnd.engine import autocast_context, lgled_sample_diagnostics, load_checkpoint
 from mmfnd.factory import build_loader, build_processor
 from mmfnd.image_preprocessing import load_preprocessed_image
 from mmfnd.model import ExplainableMMFND
@@ -48,7 +48,12 @@ def image_occlusion_map(
     target_class: int | None = None,
 ) -> np.ndarray:
     """Model-agnostic faithfulness map: probability drop after patch occlusion."""
-    with torch.no_grad():
+    device = next(model.parameters()).device
+    qwen_dtype = next(model.encoder.shared_qwen_model().parameters()).dtype
+    precision = "bf16" if qwen_dtype == torch.bfloat16 else (
+        "fp16" if qwen_dtype == torch.float16 else "fp32"
+    )
+    with torch.no_grad(), autocast_context(device, precision):
         base = model(batch)["logits"].softmax(-1)
         predicted = (
             int(base[sample_index].argmax())
@@ -71,7 +76,7 @@ def image_occlusion_map(
             modified[target_index, :, y0:y1, x0:x1] = 0
             changed = dict(batch)
             changed["pixel_values"] = modified
-            with torch.no_grad():
+            with torch.no_grad(), autocast_context(device, precision):
                 score = float(model(changed)["logits"].softmax(-1)[sample_index, predicted])
             heat[row, col] = max(0.0, base_score - score)
     return heat / max(float(heat.max()), 1e-8)
@@ -84,12 +89,17 @@ def main() -> None:
     parser.add_argument("--split", choices=("val", "test"), default="test")
     parser.add_argument("--samples", type=int, default=12)
     parser.add_argument("--grid", type=int, default=7)
+    parser.add_argument("--manifest-dir")
     args = parser.parse_args()
     chinese_font = configure_chinese_font()
     print(f"matplotlib_chinese_font={chinese_font}")
     root = Path(__file__).resolve().parent
     config = load_config(root / args.config)
-    normalize_runtime_paths(root, config)
+    dataset = str(config["dataset"]["name"])
+    bind_dataset_workspace(
+        root, config, dataset,
+        args.manifest_dir or f"datasets/{dataset}/ready",
+    )
     positive_label, class_names = validate_dataset_semantics(config)
     negative_label = 1 - positive_label
     device = get_device()
@@ -99,6 +109,7 @@ def main() -> None:
     checkpoint = load_checkpoint(args.checkpoint, model, device)
     decision_threshold = float(checkpoint.get("decision_threshold", 0.5))
     model.eval()
+    precision = str(config["train"].get("precision", "bf16"))
     output_dir = (
         args.checkpoint.resolve().parent.parent / "explanations"
         if args.checkpoint.parent.name == "checkpoints"
@@ -112,7 +123,7 @@ def main() -> None:
     produced = 0
     for raw_batch in loader:
         batch = move_batch(raw_batch, device)
-        with torch.no_grad():
+        with torch.no_grad(), autocast_context(device, precision):
             outputs = model(batch)
             probs = outputs["logits"].softmax(-1)
             ablated_probs = {
@@ -173,7 +184,7 @@ def main() -> None:
                     "intervention_sensitivity": float(
                         outputs["uncertainty_components"][index, 2].item()
                     ),
-                    "graph_ambiguity": float(
+                    "latent_relation_uncertainty": float(
                         outputs["uncertainty_components"][index, 3].item()
                     ),
                     "component_weights": outputs[
@@ -212,21 +223,7 @@ def main() -> None:
                     ("text", "image", "intrinsic_event"),
                     outputs["causal_gate_effects"][index].cpu().tolist(),
                 )),
-                "relational_evidence_graph": {
-                    "node_names": list(model.evidence_graph.node_names),
-                    "node_weights": outputs[
-                        "graph_node_weights"
-                    ][index].cpu().tolist(),
-                    "adjacency": outputs[
-                        "graph_adjacency"
-                    ][index].cpu().tolist(),
-                    "edge_entropy": float(
-                        outputs["graph_edge_entropy"][index].item()
-                    ),
-                    "residual_scale": float(
-                        outputs["graph_residual_scale"].item()
-                    ),
-                },
+                "lgled": lgled_sample_diagnostics(outputs, index),
                 "causal_intervention_probability_drop": {
                     component: float(
                         probs[index, predicted_class].item()

@@ -6,7 +6,7 @@ from datetime import datetime
 import json
 from pathlib import Path
 
-from mmfnd.dataset_contract import normalize_runtime_paths, validate_dataset_semantics
+from mmfnd.dataset_contract import bind_dataset_workspace, validate_dataset_semantics
 from mmfnd.engine import evaluate, load_checkpoint, write_jsonl
 from mmfnd.factory import build_loader, build_processor
 from mmfnd.model import ExplainableMMFND
@@ -18,10 +18,15 @@ def main() -> None:
     parser.add_argument("--config", required=True)
     parser.add_argument("--checkpoint", required=True, type=Path)
     parser.add_argument("--split", choices=("val", "test"), default="test")
+    parser.add_argument("--manifest-dir")
     args = parser.parse_args()
     root = Path(__file__).resolve().parent
     config = load_config(root / args.config)
-    normalize_runtime_paths(root, config)
+    dataset = str(config["dataset"]["name"])
+    bind_dataset_workspace(
+        root, config, dataset,
+        args.manifest_dir or f"datasets/{dataset}/ready",
+    )
     positive_label, class_names = validate_dataset_semantics(config)
     seed_everything(int(config["seed"]))
     device = get_device()

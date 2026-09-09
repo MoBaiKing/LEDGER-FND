@@ -1,4 +1,4 @@
-name: cute-fnd-py310
+name: cute-fnd-v3-py310
 channels:
   - conda-forge
 dependencies:

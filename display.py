@@ -14,15 +14,18 @@ import torch
 
 from explain import configure_chinese_font, image_occlusion_map
 from mmfnd.data import move_batch
-from mmfnd.dataset_contract import normalize_runtime_paths, validate_dataset_semantics
-from mmfnd.engine import load_checkpoint
+from mmfnd.dataset_contract import bind_dataset_workspace, validate_dataset_semantics
+from mmfnd.engine import autocast_context, lgled_sample_diagnostics, load_checkpoint
 from mmfnd.factory import build_loader, build_processor
 from mmfnd.image_preprocessing import load_preprocessed_image
 from mmfnd.model import ExplainableMMFND
 from mmfnd.utils import get_device, load_config, resolve_path, seed_everything
 
 
-NODE_ZH = {"text": "文本", "image": "图像", "intrinsic_event": "内生事件", "interaction": "图文交互"}
+EVIDENCE_ZH = {
+    "text": "文本", "vision": "图像",
+    "intrinsic_feature": "内生事件", "interaction": "图文交互",
+}
 
 
 def find_latest_final(root: Path, config: dict) -> Path:
@@ -55,10 +58,10 @@ def uncertainty_level(value: float) -> tuple[str, str]:
 
 def format_explanation(info: dict, chinese: bool) -> str:
     names = info["class_names"]
-    graph = info["relational_evidence_graph"]
-    node_names = [NODE_ZH.get(name, name) if chinese else name for name in graph["node_names"]]
-    nodes = ("、" if chinese else ", ").join(
-        f"{name}={weight:.3f}" for name, weight in zip(node_names, graph["node_weights"])
+    lgled = info["lgled"]
+    evidence_weights = ("、" if chinese else ", ").join(
+        f"{EVIDENCE_ZH.get(name, name) if chinese else name}={values['final_weight']:.3f}"
+        for name, values in lgled["evidence"].items()
     )
     probabilities = ("，" if chinese else ", ").join(
         f"{names[str(label)]}={info['class_probabilities'][names[str(label)]]:.4f}" for label in (0, 1)
@@ -71,10 +74,11 @@ def format_explanation(info: dict, chinese: bool) -> str:
             f"正类：{info['positive_class']}（label={info['positive_label']}），判定阈值={info['decision_threshold']:.4f}",
             f"预测不确定性：{info['uncertainty']:.4f}（{info['uncertainty_level_zh']}）",
             f"不确定性分量：{info['uncertainty_analysis']}",
-            f"模态权重：{info['modality_weights']}", f"关系证据图节点贡献：{nodes}",
+            f"三路可靠性探针权重：{info['modality_weights']}",
+            f"LG-LED 最终四路证据权重：{evidence_weights}",
             f"内生证据：{info['intrinsic_evidence']}",
             f"因果门控效应：{info['causal_gate_effects']}",
-            f"关系图边熵={graph['edge_entropy']:.4f}，残差注入强度={graph['residual_scale']:.4f}",
+            f"LG-LED disagreement={lgled['sample_disagreement']:.4f}，routing gate={lgled['routing_gate']:.4f}",
             f"数据子群（仅元数据）：{info['category']}",
             "视觉解释：热力图越红，遮挡该区域后当前预测类别概率下降越明显。",
             "注意：删除干预只衡量模型内部依赖，不代表现实世界因果关系。",
@@ -86,10 +90,11 @@ def format_explanation(info: dict, chinese: bool) -> str:
         f"Positive class: {info['positive_class']} (label={info['positive_label']}), threshold={info['decision_threshold']:.4f}",
         f"Predictive uncertainty: {info['uncertainty']:.4f} ({info['uncertainty_level_en']})",
         f"Uncertainty components: {info['uncertainty_analysis']}",
-        f"Modality weights: {info['modality_weights']}", f"Evidence-graph node contributions: {nodes}",
+        f"Three-view reliability-probe weights: {info['modality_weights']}",
+        f"LG-LED final evidence weights: {evidence_weights}",
         f"Intrinsic evidence: {info['intrinsic_evidence']}",
         f"Causal gate effects: {info['causal_gate_effects']}",
-        f"Graph edge entropy={graph['edge_entropy']:.4f}, residual scale={graph['residual_scale']:.4f}",
+        f"LG-LED disagreement={lgled['sample_disagreement']:.4f}, routing gate={lgled['routing_gate']:.4f}",
         f"Metadata subgroup: {info['category']}",
         "Red regions produce a larger current-class probability drop when occluded.",
         "Deletion interventions measure internal dependence, not real-world causality.",
@@ -114,15 +119,22 @@ def save_plot(image_path: Path, heat: np.ndarray, info: dict, output_path: Path)
         image.close()
 
 
-def save_graph_plot(info: dict, output_path: Path) -> None:
+def save_lgled_plot(info: dict, output_path: Path) -> None:
     configure_chinese_font()
-    graph = info["relational_evidence_graph"]
-    labels = [NODE_ZH.get(name, name) for name in graph["node_names"]]
-    adjacency = np.asarray(graph["adjacency"], dtype=np.float32)
-    fig, ax = plt.subplots(figsize=(6.8, 5.8)); rendered = ax.imshow(adjacency, cmap="Blues", vmin=0.0, vmax=1.0)
-    ax.set_xticks(range(len(labels)), labels, rotation=25, ha="right"); ax.set_yticks(range(len(labels)), labels)
-    ax.set_xlabel("源节点 / Source"); ax.set_ylabel("更新节点 / Destination"); ax.set_title("内部关系证据图 / Internal evidence graph")
-    fig.colorbar(rendered, ax=ax, label="attention weight"); fig.tight_layout(); fig.savefig(output_path, dpi=220, bbox_inches="tight"); plt.close(fig)
+    lgled = info["lgled"]
+    labels = list(lgled["pairs"])
+    relation_names = lgled["relation_order"]
+    beliefs = np.asarray([
+        [lgled["pairs"][pair][name] for name in relation_names]
+        for pair in labels
+    ], dtype=np.float32)
+    fig, ax = plt.subplots(figsize=(7.2, 5.8))
+    rendered = ax.imshow(beliefs, cmap="viridis", vmin=0.0, vmax=1.0)
+    ax.set_xticks(range(len(relation_names)), relation_names, rotation=20, ha="right")
+    ax.set_yticks(range(len(labels)), labels)
+    ax.set_title("LG-LED 潜在关系信念 / Latent relation beliefs")
+    fig.colorbar(rendered, ax=ax, label="Dirichlet mean belief")
+    fig.tight_layout(); fig.savefig(output_path, dpi=220, bbox_inches="tight"); plt.close(fig)
 
 
 def main() -> None:
@@ -132,9 +144,15 @@ def main() -> None:
     parser.add_argument("--split", choices=("val", "test"), default="test")
     parser.add_argument("--sample-id"); parser.add_argument("--sample-index", type=int, default=0)
     parser.add_argument("--grid", type=int, default=7); parser.add_argument("--output-dir", default="outputs/display")
+    parser.add_argument("--manifest-dir")
     args = parser.parse_args()
     root = Path(__file__).resolve().parent
-    config = load_config(root / args.config); normalize_runtime_paths(root, config)
+    config = load_config(root / args.config)
+    dataset = str(config["dataset"]["name"])
+    bind_dataset_workspace(
+        root, config, dataset,
+        args.manifest_dir or f"datasets/{dataset}/ready",
+    )
     positive_label, class_names_int = validate_dataset_semantics(config)
     class_names = {str(key): value for key, value in class_names_int.items()}
     seed_everything(int(config["seed"])); device = get_device()
@@ -145,7 +163,8 @@ def main() -> None:
     raw_batch, index = select_sample(loader, args.sample_id, args.sample_index); batch = move_batch(raw_batch, device)
     model = ExplainableMMFND(config).to(device); checkpoint = load_checkpoint(checkpoint_path, model, device)
     decision_threshold = float(checkpoint.get("decision_threshold", 0.5)); model.eval()
-    with torch.no_grad():
+    precision = str(config["train"].get("precision", "bf16"))
+    with torch.no_grad(), autocast_context(device, precision):
         outputs = model(batch); probabilities = outputs["logits"].float().softmax(dim=-1)
         ablated = {component: model(batch, ablate_component=component)["logits"].float().softmax(dim=-1)
                    for component in ("text", "image", "intrinsic_event")}
@@ -154,11 +173,7 @@ def main() -> None:
     level_zh, level_en = uncertainty_level(uncertainty)
     image_root = resolve_path(root, config["data"].get("image_root", config["data"]["root"]))
     image_path = image_root / batch["image_paths"][index][0]
-    graph = {"node_names": list(model.evidence_graph.node_names),
-             "node_weights": outputs["graph_node_weights"][index].float().cpu().tolist(),
-             "adjacency": outputs["graph_adjacency"][index].float().cpu().tolist(),
-             "edge_entropy": float(outputs["graph_edge_entropy"][index]),
-             "residual_scale": float(outputs["graph_residual_scale"])}
+    lgled = lgled_sample_diagnostics(outputs, index)
     info = {"id": batch["ids"][index], "split": args.split, "checkpoint": str(checkpoint_path.resolve()),
             "checkpoint_epoch": int(checkpoint.get("epoch", -1)), "text": batch["texts"][index], "image": str(image_path),
             "label": label, "prediction": prediction, "correct": prediction == label, "class_names": class_names,
@@ -169,7 +184,7 @@ def main() -> None:
             "uncertainty_level_zh": level_zh, "uncertainty_level_en": level_en,
             "uncertainty_analysis": {
                 name: float(outputs["uncertainty_components"][index, position])
-                for position, name in enumerate(("decision_margin", "view_conflict", "intervention_sensitivity", "graph_ambiguity"))
+                for position, name in enumerate(("decision_margin", "view_conflict", "intervention_sensitivity", "latent_relation_uncertainty"))
             } | {
                 "component_weights": outputs["uncertainty_component_weights"].float().cpu().tolist(),
                 "temperature": float(outputs["uncertainty_temperature"][index]),
@@ -192,13 +207,13 @@ def main() -> None:
                 name: float(outputs["causal_gate_effects"][index, position])
                 for position, name in enumerate(("text", "image", "intrinsic_event"))
             },
-            "relational_evidence_graph": graph,
+            "lgled": lgled,
             "causal_intervention_probability_drop": {component: float(probabilities[index, prediction] - values[index, prediction])
                                                        for component, values in ablated.items()},
             "category": batch["categories"][index]}
     heat = image_occlusion_map(model, batch, index, args.grid, target_class=prediction)
     stem = info["id"]; save_plot(image_path, heat, info, output_dir / f"{stem}_explanation.png")
-    save_graph_plot(info, output_dir / f"{stem}_evidence_graph.png")
+    save_lgled_plot(info, output_dir / f"{stem}_lgled_relations.png")
     zh_text = format_explanation(info, True); en_text = format_explanation(info, False)
     (output_dir / f"{stem}_explanation_zh.txt").write_text(zh_text + "\n", encoding="utf-8")
     (output_dir / f"{stem}_explanation_en.txt").write_text(en_text + "\n", encoding="utf-8")

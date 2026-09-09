@@ -22,6 +22,7 @@ from mmfnd.engine import (
     select_robust_threshold, unwrap_model, write_jsonl,
 )
 from mmfnd.factory import build_loader, build_processor
+from mmfnd.latent_evidence_deliberation import EVIDENCE_ORDER, RELATION_ORDER
 from mmfnd.model import ExplainableMMFND, multimodal_loss
 from mmfnd.utils import cleanup_distributed, dump_json, init_distributed, load_config, resolve_path, seed_everything
 
@@ -97,6 +98,45 @@ def reduce_training_stats(running: dict[str, float], batches: int, device, distr
     return {name: float(tensor[index].item() / count) for index, name in enumerate(names)}
 
 
+def lgled_training_diagnostics(outputs: dict) -> dict[str, float]:
+    """Small detached summaries suitable for per-epoch DDP logging."""
+    relation_means = outputs["relation_probs"].float().mean(dim=(0, 1))
+    diagnostics = {
+        f"lgled/mean_{name}": float(relation_means[index].detach())
+        for index, name in enumerate(RELATION_ORDER)
+    }
+    diagnostics.update({
+        "lgled/mean_relation_uncertainty": float(
+            outputs["relation_uncertainty"].float().mean().detach()
+        ),
+        "lgled/mean_relation_strength": float(
+            outputs["relation_strength"].float().mean().detach()
+        ),
+        "lgled/mean_disagreement": float(
+            outputs["sample_disagreement"].float().mean().detach()
+        ),
+        "lgled/mean_routing_gate": float(
+            outputs["routing_gate"].float().mean().detach()
+        ),
+    })
+    for index, name in enumerate(EVIDENCE_ORDER):
+        diagnostics.update({
+            f"lgled/{name}_confidence": float(
+                outputs["evidence_confidence"][:, index].float().mean().detach()
+            ),
+            f"lgled/{name}_deviation": float(
+                outputs["evidence_deviation"][:, index].float().mean().detach()
+            ),
+            f"lgled/{name}_minority": float(
+                outputs["minority_score"][:, index].float().mean().detach()
+            ),
+            f"lgled/{name}_final_weight": float(
+                outputs["final_evidence_weights"][:, index].float().mean().detach()
+            ),
+        })
+    return diagnostics
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--dataset", required=True)
@@ -148,6 +188,31 @@ def main() -> None:
         )
         val_loader = build_loader(root, config, "val", processor) if context.is_main else None
         model = ExplainableMMFND(config).to(context.device)
+        if context.is_main:
+            qwen_model = model.encoder.shared_qwen_model()
+            shared_layers = model.lgled.selected_qwen_layers(qwen_model)
+            qwen_layers = list(qwen_model.layers)
+            runtime = model.lgled.runtime(qwen_model)
+            print(json.dumps({
+                "architecture": model.architecture_version,
+                "qwen_path": config["model"]["text_backbone"],
+                "qwen_class": type(qwen_model).__name__,
+                "qwen_hidden_size": int(qwen_model.config.hidden_size),
+                "qwen_num_hidden_layers": int(qwen_model.config.num_hidden_layers),
+                "latent_judge_layer_indices": [
+                    runtime.first_shared_layer, runtime.last_shared_layer,
+                ],
+                "shared_layer_reference": all(
+                    actual is expected for actual, expected in zip(
+                        shared_layers,
+                        qwen_layers[-model.lgled.latent_judge_num_layers:],
+                    )
+                ),
+                "total_parameters": sum(p.numel() for p in model.parameters()),
+                "trainable_parameters": sum(
+                    p.numel() for p in model.parameters() if p.requires_grad
+                ),
+            }, ensure_ascii=False, indent=2))
         if context.distributed:
             model = DDP(
                 model,
@@ -167,6 +232,8 @@ def main() -> None:
         scaler = torch.amp.GradScaler(
             "cuda", enabled=precision == "fp16" and context.device.type == "cuda"
         )
+        if context.device.type == "cuda":
+            torch.cuda.reset_peak_memory_stats(context.device)
 
         output_root = resolve_path(root, config["train"]["output_dir"])
         if args.resume:
@@ -266,6 +333,8 @@ def main() -> None:
                 running["total"] += float(loss.detach())
                 for name, value in components.items():
                     running[name] = running.get(name, 0.0) + value
+                for name, value in lgled_training_diagnostics(outputs).items():
+                    running[name] = running.get(name, 0.0) + value
                 batch_count += 1
                 if args.smoke_steps and global_step >= args.smoke_steps:
                     stop_training = True
@@ -273,11 +342,29 @@ def main() -> None:
 
             train_stats = reduce_training_stats(running, batch_count, context.device, context.distributed)
             if args.smoke_steps:
+                local_peak = (
+                    torch.cuda.max_memory_allocated(context.device)
+                    if context.device.type == "cuda" else 0
+                )
+                peak_tensor = torch.tensor(
+                    [local_peak], device=context.device, dtype=torch.float64
+                )
+                if context.distributed:
+                    gathered_peaks = [torch.zeros_like(peak_tensor) for _ in range(context.world_size)]
+                    dist.all_gather(gathered_peaks, peak_tensor)
+                    rank_peak_memory = [int(value.item()) for value in gathered_peaks]
+                else:
+                    rank_peak_memory = [int(local_peak)]
                 if context.is_main:
                     smoke_path = checkpoint_dir / "smoke.pth"
                     save_checkpoint(smoke_path, model, optimizer, scheduler, epoch, train_stats, config, scaler=scaler)
                     load_checkpoint(smoke_path, model, context.device)
-                    print(json.dumps({"smoke_steps": global_step, "train": train_stats, "checkpoint": str(smoke_path)}, ensure_ascii=False, indent=2))
+                    print(json.dumps({
+                        "smoke_steps": global_step,
+                        "train": train_stats,
+                        "checkpoint": str(smoke_path),
+                        "rank_peak_memory_bytes": rank_peak_memory,
+                    }, ensure_ascii=False, indent=2))
                 if context.distributed:
                     dist.barrier()
                 return

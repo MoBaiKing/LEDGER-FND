@@ -10,6 +10,93 @@ from sklearn.metrics import accuracy_score, confusion_matrix, f1_score, precisio
 from tqdm import tqdm
 
 from mmfnd.data import move_batch
+from mmfnd.latent_evidence_deliberation import (
+    EVIDENCE_ORDER,
+    PAIR_ORDER,
+    RELATION_ORDER,
+)
+
+
+def lgled_sample_diagnostics(outputs: dict, index: int) -> dict:
+    """Convert one sample's LG-LED tensors to a JSON-serializable record."""
+    relation_probabilities = outputs["relation_probs"][index].float().cpu()
+    relation_uncertainty = outputs["relation_uncertainty"][index].float().cpu()
+    relation_strength = outputs["relation_strength"][index].float().cpu()
+    pairs = {}
+    for pair_index, pair in enumerate(PAIR_ORDER):
+        name = "-".join(pair)
+        pairs[name] = {
+            relation: float(relation_probabilities[pair_index, relation_index])
+            for relation_index, relation in enumerate(RELATION_ORDER)
+        } | {
+            "uncertainty": float(relation_uncertainty[pair_index]),
+            "strength": float(relation_strength[pair_index]),
+        }
+    evidence = {}
+    for evidence_index, name in enumerate(EVIDENCE_ORDER):
+        evidence[name] = {
+            "confidence": float(outputs["evidence_confidence"][index, evidence_index]),
+            "deviation": float(outputs["evidence_deviation"][index, evidence_index]),
+            "minority_score": float(outputs["minority_score"][index, evidence_index]),
+            "global_judge_weight": float(outputs["global_judge_weights"][index, evidence_index]),
+            "deliberative_weight": float(outputs["deliberative_weights"][index, evidence_index]),
+            "direct_weight": float(outputs["direct_weights"][index, evidence_index]),
+            "final_weight": float(outputs["final_evidence_weights"][index, evidence_index]),
+        }
+    return {
+        "relation_order": list(RELATION_ORDER),
+        "pairs": pairs,
+        "evidence": evidence,
+        "sample_disagreement": float(outputs["sample_disagreement"][index, 0]),
+        "routing_gate": float(outputs["routing_gate"][index, 0]),
+    }
+
+
+def _update_lgled_totals(totals: dict[str, torch.Tensor | float],
+                         outputs: dict) -> int:
+    batch_size = int(outputs["relation_probs"].size(0))
+    values = {
+        "relations": outputs["relation_probs"].float().mean(dim=1).sum(dim=0),
+        "relation_uncertainty": outputs["relation_uncertainty"].float().mean(dim=1).sum(),
+        "relation_strength": outputs["relation_strength"].float().mean(dim=1).sum(),
+        "confidence": outputs["evidence_confidence"].float().sum(dim=0),
+        "deviation": outputs["evidence_deviation"].float().sum(dim=0),
+        "minority": outputs["minority_score"].float().sum(dim=0),
+        "global_weights": outputs["global_judge_weights"].float().sum(dim=0),
+        "deliberative_weights": outputs["deliberative_weights"].float().sum(dim=0),
+        "direct_weights": outputs["direct_weights"].float().sum(dim=0),
+        "final_weights": outputs["final_evidence_weights"].float().sum(dim=0),
+        "disagreement": outputs["sample_disagreement"].float().sum(),
+        "routing": outputs["routing_gate"].float().sum(),
+    }
+    for name, value in values.items():
+        detached = value.detach().cpu()
+        totals[name] = totals.get(name, torch.zeros_like(detached)) + detached
+    return batch_size
+
+
+def _finalize_lgled_totals(totals: dict, count: int) -> dict:
+    divisor = max(count, 1)
+    relations = totals["relations"] / divisor
+    result = {
+        f"mean_{name}": float(relations[index])
+        for index, name in enumerate(RELATION_ORDER)
+    }
+    result.update({
+        "mean_relation_uncertainty": float(totals["relation_uncertainty"] / divisor),
+        "mean_relation_strength": float(totals["relation_strength"] / divisor),
+        "mean_disagreement": float(totals["disagreement"] / divisor),
+        "mean_routing_gate": float(totals["routing"] / divisor),
+    })
+    for metric in (
+        "confidence", "deviation", "minority", "global_weights",
+        "deliberative_weights", "direct_weights", "final_weights",
+    ):
+        result[f"mean_evidence_{metric}"] = {
+            name: float(totals[metric][index] / divisor)
+            for index, name in enumerate(EVIDENCE_ORDER)
+        }
+    return result
 
 
 def unwrap_model(model):
@@ -109,11 +196,19 @@ def evaluate(
     raw_model = unwrap_model(model)
     raw_model.eval()
     labels, positive_probabilities, argmax_predictions, rows = [], [], [], []
+    lgled_totals: dict[str, torch.Tensor | float] = {}
+    lgled_count = 0
+    export_diagnostics = bool(
+        raw_model.runtime_config["model"].get("lgled", {}).get(
+            "export_diagnostics", False
+        )
+    )
     iterator = tqdm(loader, desc="evaluate", leave=False, disable=not show_progress)
     for batch in iterator:
         batch = move_batch(batch, device)
         with autocast_context(device, precision):
             outputs = raw_model(batch)
+        lgled_count += _update_lgled_totals(lgled_totals, outputs)
         probs = outputs["logits"].float().softmax(-1)
         batch_labels = batch["labels"].cpu().tolist()
         batch_positive = probs[:, positive_label].cpu().tolist()
@@ -138,7 +233,7 @@ def evaluate(
                     "decision_margin": float(outputs["uncertainty_components"][index, 0].item()),
                     "view_conflict": float(outputs["uncertainty_components"][index, 1].item()),
                     "intervention_sensitivity": float(outputs["uncertainty_components"][index, 2].item()),
-                    "graph_ambiguity": float(outputs["uncertainty_components"][index, 3].item()),
+                    "latent_relation_uncertainty": float(outputs["uncertainty_components"][index, 3].item()),
                     "component_weights": outputs["uncertainty_component_weights"].float().cpu().tolist(),
                     "temperature": float(outputs["uncertainty_temperature"][index].item()),
                     "residual_correction_norm": float(outputs["uncertainty_correction_norm"][index].item()),
@@ -162,21 +257,17 @@ def evaluate(
                     name: float(outputs["causal_gate_effects"][index, position].item())
                     for position, name in enumerate(("text", "image", "intrinsic_event"))
                 },
-                "relational_evidence_graph": {
-                    "node_names": list(raw_model.evidence_graph.node_names),
-                    "node_weights": outputs["graph_node_weights"][index].float().cpu().tolist(),
-                    "adjacency": outputs["graph_adjacency"][index].float().cpu().tolist(),
-                    "edge_entropy": float(outputs["graph_edge_entropy"][index].item()),
-                    "residual_scale": float(outputs["graph_residual_scale"].item()),
-                },
                 "image_paths": batch["image_paths"][index],
                 "text": batch["texts"][index],
                 "category": batch["categories"][index],
             })
+            if export_diagnostics:
+                rows[-1]["lgled"] = lgled_sample_diagnostics(outputs, index)
     metrics = classification_metrics(
         labels, positive_probabilities, decision_threshold, positive_label,
         class_names, argmax_predictions,
     )
+    metrics["lgled"] = _finalize_lgled_totals(lgled_totals, lgled_count)
     negative_label = 1 - positive_label
     predictions = [
         positive_label if probability >= decision_threshold else negative_label
@@ -189,6 +280,7 @@ def evaluate(
 
 
 def _checkpoint_contract(config: dict) -> dict:
+    lgled = config["model"].get("lgled", {})
     return {
         "architecture_version": config["model"]["architecture_version"],
         "dataset": config["dataset"]["name"],
@@ -196,6 +288,9 @@ def _checkpoint_contract(config: dict) -> dict:
         # Keep relocation possible while still rejecting a different backbone.
         "text_backbone": Path(str(config["model"]["text_backbone"])).name,
         "vision_backbone": Path(str(config["model"]["vision_backbone"])).name,
+        "projector_type": lgled.get("projector_type", "shared"),
+        "judge_type": lgled.get("judge_type", "qwen_latent"),
+        "latent_judge_num_layers": int(lgled.get("latent_judge_num_layers", 2)),
     }
 
 
