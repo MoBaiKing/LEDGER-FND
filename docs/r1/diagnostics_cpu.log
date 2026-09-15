@@ -1,0 +1,12 @@
+[HAMI-core Msg(4056589:140452393499520:libvgpu.c:856)]: Initializing.....
+[HAMI-core ERROR (pid:4056589 thread=140452393499520 libvgpu.c:897)]: cuInit failed:100
+/data/dyl/sotamodelv3_mask/mmfnd/mechanisms_masked_r1.py:47: RuntimeWarning: AUC is undefined for a single-class split; returning NaN
+  metric=compute_classification_metrics(y[mask],p[mask],threshold)
+/data/dyl/sotamodelv3_mask/mmfnd/mechanisms_masked_r1.py:47: RuntimeWarning: AUC is undefined for a single-class split; returning NaN
+  metric=compute_classification_metrics(y[mask],p[mask],threshold)
+/data/dyl/sotamodelv3_mask/mmfnd/mechanisms_masked_r1.py:47: RuntimeWarning: AUC is undefined for a single-class split; returning NaN
+  metric=compute_classification_metrics(y[mask],p[mask],threshold)
+/data/dyl/sotamodelv3_mask/mmfnd/mechanisms_masked_r1.py:47: RuntimeWarning: AUC is undefined for a single-class split; returning NaN
+  metric=compute_classification_metrics(y[mask],p[mask],threshold)
+workspaces/r1_cpu_release_smoke/runs/synthetic_smoke/mechanisms/val/none/report.json
+[HAMI-core Msg(4056589:140452393499520:multiprocess_memory_limit.c:455)]: Calling exit handler 4056589

@@ -6,6 +6,7 @@ from contextlib import nullcontext
 from datetime import datetime
 import json
 import math
+import time
 from pathlib import Path
 
 import torch
@@ -22,7 +23,7 @@ from mmfnd.engine import (
     unwrap_model, write_jsonl,
 )
 from mmfnd.evaluation import PROTOCOL, checkpoint_threshold_selection, evaluation_info, log_evaluation
-from mmfnd.factory import build_loader, build_processor
+from mmfnd.factory import build_loader, build_processor, build_model
 from mmfnd.latent_evidence_deliberation import EVIDENCE_ORDER, RELATION_ORDER
 from mmfnd.model import ExplainableMMFND, multimodal_loss
 from mmfnd.utils import cleanup_distributed, dump_json, init_distributed, load_config, resolve_path, seed_everything
@@ -86,6 +87,13 @@ def average_checkpoints(paths: list[Path], model, device) -> None:
         name: torch.stack([checkpoint["model_state_dict"][name].float() for checkpoint in checkpoints]).mean(0)
         for name in reference_state
     }
+    if getattr(unwrap_model(model), "architecture_version", "") == "qwen_lora_lgled_masked_r1":
+        raw = unwrap_model(model)
+        if set(averaged) != {n for n,p in raw.named_parameters() if p.requires_grad}:
+            raise RuntimeError("R1 averaged trainable key mismatch")
+        merged = raw.state_dict(); merged.update(averaged)
+        raw.load_state_dict(merged, strict=True)
+        return
     incompatible = unwrap_model(model).load_state_dict(averaged, strict=False)
     trainable = {name for name, parameter in unwrap_model(model).named_parameters() if parameter.requires_grad}
     if incompatible.unexpected_keys or set(incompatible.missing_keys) & trainable:
@@ -103,6 +111,10 @@ def reduce_training_stats(running: dict[str, float], batches: int, device, distr
 
 def lgled_training_diagnostics(outputs: dict) -> dict[str, float]:
     """Small detached summaries suitable for per-epoch DDP logging."""
+    if outputs.get("architecture_version") == "qwen_lora_lgled_masked_r1":
+        valid = outputs["pair_available"]
+        means = (outputs["relation_probs"] * valid[...,None]).sum((0,1)) / valid.sum().clamp_min(1)
+        return {f"r1/relation_{name}": float(means[i].detach()) for i,name in enumerate(("A","M","C"))}
     relation_means = outputs["relation_probs"].float().mean(dim=(0, 1))
     diagnostics = {
         f"lgled/mean_{name}": float(relation_means[index].detach())
@@ -146,6 +158,8 @@ def main() -> None:
     parser.add_argument("--config", required=True)
     parser.add_argument("--manifest-dir", required=True)
     parser.add_argument("--resume", type=Path)
+    parser.add_argument("--r1-target-cache", type=Path)
+    parser.add_argument("--final-test-frozen", action="store_true", help="Explicit final test after final weights/validation threshold are frozen")
     parser.add_argument("--run-name")
     parser.add_argument("--seed", type=int)
     parser.add_argument("--epochs", type=int)
@@ -184,7 +198,35 @@ def main() -> None:
         monitor = str(config["train"].get("monitor", "macro_f1")).lower()
         if monitor != "macro_f1":
             raise ValueError("This protocol requires train.monitor=macro_f1 after validation threshold tuning")
-        seed_everything(int(config["seed"]) + context.rank)
+        is_r1 = config["model"]["architecture_version"] == "qwen_lora_lgled_masked_r1"
+        target_cache = None
+        if is_r1:
+            from mmfnd.r1_cache import student_source_fingerprint
+            config["r1_student_source_fingerprint"] = student_source_fingerprint(root)
+        if "replay_seed" in config["data"]:
+            config["data"]["replay_seed"] = int(config["seed"])
+        encoder_baseline = is_r1 and bool(config["model"].get("r1", {}).get("baseline"))
+        if encoder_baseline:
+            from mmfnd.r1_cache import backbone_fingerprint, digest
+            _, backbone_hash = backbone_fingerprint(root, config)
+            config["r1_backbone_identity"] = {"model_fingerprint": backbone_hash,
+                "preprocess_fingerprint": digest(config["data"]), "source_fingerprint": "r1_encoder_baseline"}
+        if is_r1 and (positive_label != 0 or float(config["train"]["label_smoothing"]) != 0):
+            raise ValueError("R1 requires Fake=0 and label_smoothing=0")
+        if is_r1 and not encoder_baseline:
+            if args.r1_target_cache is None:
+                raise ValueError("R1 requires an exact OOF target cache")
+            config["data"]["replay_seed"] = int(config["seed"])
+            from mmfnd.reference_pipeline import prepare_identity
+            from mmfnd.r1_cache import TargetCache
+            _, _, fingerprint = prepare_identity(root, config)
+            target_cache = TargetCache(args.r1_target_cache, fingerprint)
+            if target_cache.epsilon != float(config["loss"].get("epsilon",1e-7)):
+                raise ValueError("Target normalization scale and student NLL epsilon mismatch")
+            config["r1_backbone_identity"] = {k:fingerprint[k] for k in ("model_fingerprint","preprocess_fingerprint","source_fingerprint")}
+            config["r1_reference_cache"] = str(args.r1_target_cache.resolve())
+            config["r1_reference_fingerprint"] = fingerprint
+        seed_everything(int(config["seed"]) + (0 if is_r1 or config.get("protocol") == "r1_replay_pool_v1" else context.rank))
         precision = str(config["train"].get("precision", "bf16")).lower()
         if precision not in {"bf16", "fp16", "fp32"}:
             raise ValueError("precision must be bf16, fp16 or fp32")
@@ -200,8 +242,8 @@ def main() -> None:
             distributed_context=context,
         )
         val_loader = build_loader(root, config, "val", processor) if context.is_main else None
-        model = ExplainableMMFND(config).to(context.device)
-        if context.is_main:
+        model = build_model(config).to(context.device)
+        if context.is_main and hasattr(model, "lgled"):
             qwen_model = model.encoder.shared_qwen_model()
             shared_layers = model.lgled.selected_qwen_layers(qwen_model)
             qwen_layers = list(qwen_model.layers)
@@ -314,7 +356,15 @@ def main() -> None:
             history = list(state.get("history", []))
             topk = list(state.get("topk", []))
 
+        if is_r1 and args.resume:
+            from mmfnd.r1_runtime import restore_rng
+            rng_states = resume_checkpoint.get("training_state", {}).get("rng_states")
+            if not rng_states or len(rng_states) != context.world_size:
+                raise ValueError("R1 resume requires matching per-rank RNG states/world size")
+            restore_rng(rng_states[context.rank])
         optimizer.zero_grad(set_to_none=True)
+        training_started = time.monotonic()
+        observed_examples = 0
         stop_training = False
         last_epoch = start_epoch - 1
         for epoch in range(start_epoch, int(config["train"]["epochs"]) + 1):
@@ -327,6 +377,7 @@ def main() -> None:
             iterator = tqdm(train_loader, desc=f"train {epoch}", disable=not context.is_main)
             for step, raw_batch in enumerate(iterator, start=1):
                 batch = move_batch(raw_batch, context.device)
+                observed_examples += len(batch["labels"])
                 window_start = ((step - 1) // accumulation) * accumulation + 1
                 window_end = min(window_start + accumulation - 1, len(train_loader))
                 window_size = window_end - window_start + 1
@@ -334,11 +385,27 @@ def main() -> None:
                 sync_context = model.no_sync() if context.distributed and not update_now else nullcontext()
                 with sync_context:
                     with autocast_context(context.device, precision):
-                        outputs = model(batch)
-                        loss, components = multimodal_loss(
-                            outputs, batch["labels"], config["loss"],
-                            float(config["train"]["label_smoothing"]), positive_label,
-                        )
+                        if is_r1:
+                            from mmfnd.losses_masked_r1 import masked_r1_loss
+                            latent_mask = batch["availability"].clone()
+                            dropout = float(config["model"]["r1"].get("latent_view_dropout",0))
+                            if dropout:
+                                latent_mask &= torch.rand(latent_mask.shape,device=context.device) >= dropout
+                                empty = ~latent_mask.any(-1)
+                                latent_mask[empty,0] = True
+                            outputs = model(batch, latent_view_mask=latent_mask)
+                            if encoder_baseline:
+                                loss = torch.nn.functional.cross_entropy(outputs["logits"].float(), batch["labels"])
+                                components = {"classification": float(loss.detach())}
+                            else:
+                                q = target_cache.lookup(batch["ids"],batch["augmentation_ids"],batch["availability"],context.device)
+                                loss,components = masked_r1_loss(outputs,batch["labels"],q,target_cache.scale,config["loss"],epoch)
+                        else:
+                            outputs = model(batch)
+                            loss, components = multimodal_loss(
+                                outputs, batch["labels"], config["loss"],
+                                float(config["train"]["label_smoothing"]), positive_label,
+                            )
                         scaled_loss = loss / window_size
                     if not torch.isfinite(loss):
                         raise FloatingPointError(f"non-finite loss epoch={epoch} step={step}: {components}")
@@ -366,6 +433,15 @@ def main() -> None:
                     break
 
             train_stats = reduce_training_stats(running, batch_count, context.device, context.distributed)
+            rng_states = None
+            if is_r1:
+                from mmfnd.r1_runtime import capture_rng
+                local_rng = capture_rng()
+                if context.distributed:
+                    rng_states = [None] * context.world_size
+                    dist.all_gather_object(rng_states, local_rng)
+                else:
+                    rng_states = [local_rng]
             if args.smoke_steps:
                 local_peak = (
                     torch.cuda.max_memory_allocated(context.device)
@@ -441,11 +517,15 @@ def main() -> None:
                 for removed in topk[keep:]:
                     Path(removed["path"]).unlink(missing_ok=True)
                 topk = topk[:keep]
+                if is_r1:
+                    from mmfnd.r1_runtime import capture_rng
+                    rng_states[0] = capture_rng()
                 state = {
                     "monitor": monitor, "best_score": best_score,
                     "best_val_macro_f1": best_score,
                     "bad_epochs": bad_epochs,
                     "global_step": global_step, "history": history, "topk": topk,
+                    **({"rng_states": rng_states} if is_r1 else {}),
                 }
                 save_checkpoint(
                     checkpoint_dir / "last.pth", model, optimizer, scheduler,
@@ -489,33 +569,50 @@ def main() -> None:
             dump_json(evaluation_info(val_metrics), val_dir / "evaluation_info.json")
             write_jsonl(val_rows, val_dir / "predictions.jsonl")
 
-            # Test is exposed exactly once, after the final model and threshold are frozen.
-            final_checkpoint = load_checkpoint(final_path, model, context.device)
-            frozen_selection = checkpoint_threshold_selection(final_checkpoint)
-            test_loader = build_loader(root, config, "test", processor)
-            test_metrics, test_rows, _ = evaluate(
-                unwrap_model(model), test_loader, context.device, positive_label,
-                class_names, selected_threshold, precision,
-                split="test", threshold_selection=frozen_selection,
-            )
-            log_evaluation(test_metrics)
-            test_dir = output_dir / "evaluation" / "final" / "test"
-            dump_json(test_metrics, test_dir / "metrics.json")
-            dump_json(evaluation_info(test_metrics), test_dir / "evaluation_info.json")
-            write_jsonl(test_rows, test_dir / "predictions.jsonl")
-            summary = {
-                "completed_at": datetime.now().astimezone().isoformat(),
-                "checkpoint": str(final_path), "decision_threshold": selected_threshold,
-                **evaluation_info(test_metrics),
-                "best_checkpoint": str(checkpoint_dir / "best.pth"),
-                "best_val_macro_f1": best_score, "best_epoch": topk[0]["epoch"],
-                "test_macro_f1": test_metrics["macro_f1"],
-                "final_model_kind": "top_k_average", "topk": topk,
-                "val_calibrated": val_metrics, "test": test_metrics,
-            }
-            dump_json(summary, output_dir / "final_summary.json")
-            print(json.dumps(summary, ensure_ascii=False, indent=2))
-            print(f"completed_run={output_dir}")
+            if (is_r1 or config.get("protocol") == "r1_replay_pool_v1") and not args.final_test_frozen:
+                from mmfnd.r1_cache import file_sha
+                summary = {"checkpoint": str(final_path), "checkpoint_sha256": file_sha(final_path),
+                           "decision_threshold": selected_threshold, "val": val_metrics,
+                           "test": "NOT RUN: explicit --final-test-frozen required", "topk": topk,
+                           "final_model_kind": "top_k_average",
+                           "resource_cost": {"training_seconds": time.monotonic()-training_started,
+                               "observed_examples_with_sampler_padding": observed_examples*context.world_size,
+                               "examples_per_second": observed_examples*context.world_size/max(1e-6,time.monotonic()-training_started),
+                               "peak_cuda_bytes_rank0": torch.cuda.max_memory_allocated(context.device) if context.device.type == "cuda" else 0,
+                               "total_parameters": sum(p.numel() for p in unwrap_model(model).parameters()),
+                               "trainable_parameters": sum(p.numel() for p in unwrap_model(model).parameters() if p.requires_grad),
+                               "effective_batch_size": int(config["train"]["per_gpu_batch_size"])*accumulation*context.world_size,
+                               "world_size": context.world_size, "reference_cost_manifest": str(args.r1_target_cache.parent / "reference_manifest.json") if target_cache is not None else None}}
+                dump_json(summary, output_dir / "final_summary.json")
+                print(f"completed_run={output_dir}; test=NOT_RUN", flush=True)
+            else:
+                # Test is exposed exactly once, after the final model and threshold are frozen.
+                final_checkpoint = load_checkpoint(final_path, model, context.device)
+                frozen_selection = checkpoint_threshold_selection(final_checkpoint)
+                test_loader = build_loader(root, config, "test", processor)
+                test_metrics, test_rows, _ = evaluate(
+                    unwrap_model(model), test_loader, context.device, positive_label,
+                    class_names, selected_threshold, precision,
+                    split="test", threshold_selection=frozen_selection,
+                )
+                log_evaluation(test_metrics)
+                test_dir = output_dir / "evaluation" / "final" / "test"
+                dump_json(test_metrics, test_dir / "metrics.json")
+                dump_json(evaluation_info(test_metrics), test_dir / "evaluation_info.json")
+                write_jsonl(test_rows, test_dir / "predictions.jsonl")
+                summary = {
+                    "completed_at": datetime.now().astimezone().isoformat(),
+                    "checkpoint": str(final_path), "decision_threshold": selected_threshold,
+                    **evaluation_info(test_metrics),
+                    "best_checkpoint": str(checkpoint_dir / "best.pth"),
+                    "best_val_macro_f1": best_score, "best_epoch": topk[0]["epoch"],
+                    "test_macro_f1": test_metrics["macro_f1"],
+                    "final_model_kind": "top_k_average", "topk": topk,
+                    "val_calibrated": val_metrics, "test": test_metrics,
+                }
+                dump_json(summary, output_dir / "final_summary.json")
+                print(json.dumps(summary, ensure_ascii=False, indent=2))
+                print(f"completed_run={output_dir}")
         if context.distributed:
             dist.barrier()
     finally:

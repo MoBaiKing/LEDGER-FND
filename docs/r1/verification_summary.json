@@ -1,0 +1,20 @@
+{
+  "pytest": {
+    "passed": 66,
+    "subtests_passed": 14,
+    "warnings": 4
+  },
+  "CPU_single_end_to_end": "PASS",
+  "CPU_Gloo4_end_to_end": "PASS",
+  "CPU_Gloo4_resume": "PASS",
+  "CLI_all_Gloo4": "PASS",
+  "actual_GPU_tests": "NOT RUN",
+  "real_mechanism_acceptance": "NOT RUN",
+  "real_performance_acceptance": "NOT RUN",
+  "real_train_counts": {
+    "weibo21": 4926,
+    "weibo": 5415,
+    "gossipcop": 16069
+  },
+  "scheduled_gpu_start": "2026-09-16T01:00:00+08:00"
+}

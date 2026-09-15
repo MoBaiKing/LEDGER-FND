@@ -1,0 +1,133 @@
+{
+  "dataset": {
+    "name": "gossipcop",
+    "display_name": "GossipCop",
+    "adapter": "dataset_tools.gossipcop.prepare",
+    "schema_version": "cute_fnd_multimodal_v1",
+    "positive_label": 0,
+    "positive_class": "fake",
+    "class_names": {
+      "0": "fake",
+      "1": "real"
+    }
+  },
+  "seed": 200408,
+  "data": {
+    "root": "datasets/gossipcop/raw",
+    "source_file": "gossipcop_all_data.xlsx",
+    "image_root": "datasets/gossipcop/raw/images",
+    "processed_dir": "workspaces/gossipcop/processed",
+    "max_images": 1000,
+    "image_size": 224,
+    "image_preprocessing": {
+      "color_mode": "RGB",
+      "transparent_background": "white",
+      "train_augmentation": {
+        "enabled": true,
+        "random_crop_scale": [
+          0.85,
+          1.0
+        ],
+        "brightness": 0.1,
+        "contrast": 0.1,
+        "jpeg_recompression": {
+          "probability": 0.2,
+          "quality": [
+            80,
+            100
+          ]
+        }
+      }
+    },
+    "max_text_length": 192,
+    "text_instruction": "Extract the event, entities, time, location, causal claims, exaggeration, and uncertainty cues from this news item: ",
+    "num_workers": 4,
+    "pin_memory": true,
+    "persistent_workers": true,
+    "prefetch_factor": 2,
+    "replay_seed": 200408
+  },
+  "model": {
+    "architecture_version": "qwen_lora_lgled_masked_r1",
+    "text_backbone": "pretrained_models/Qwen2.5-7B-Instruct",
+    "vision_backbone": "pretrained_models/siglip-base-patch16-224",
+    "hidden_dim": 384,
+    "num_heads": 8,
+    "dropout": 0.3,
+    "lora_rank": 8,
+    "lora_alpha": 16,
+    "lora_dropout": 0.05,
+    "lora_target_modules": [
+      "q_proj",
+      "v_proj"
+    ],
+    "qwen_gradient_checkpointing": true,
+    "qwen_use_cache": false,
+    "qwen_dtype": "bfloat16",
+    "qwen_use_lora": true,
+    "view_dropout_probability": 0.0,
+    "freeze_vision": true,
+    "unfreeze_vision_last_n": 1,
+    "r1": {
+      "latent_judge_num_layers": 2,
+      "judge_type": "qwen_latent",
+      "visibility": "causal",
+      "use_global": true,
+      "evidential": true,
+      "explicit_relations": true,
+      "explicit_vacuity": true,
+      "head_hidden_dim": 256,
+      "tau": 1.0,
+      "fusion": "utility",
+      "allow_task_grad_into_routing": false,
+      "latent_view_dropout": 0.0,
+      "gradient_checkpointing": true
+    }
+  },
+  "train": {
+    "epochs": 50,
+    "per_gpu_batch_size": 1,
+    "grad_accum_steps": 8,
+    "vision_learning_rate": 5e-06,
+    "lora_learning_rate": 5e-05,
+    "head_learning_rate": 3e-05,
+    "weight_decay": 0.05,
+    "warmup_ratio": 0.08,
+    "label_smoothing": 0.0,
+    "gradient_clip_norm": 1.0,
+    "precision": "bf16",
+    "early_stop_patience": 8,
+    "monitor": "macro_f1",
+    "top_k_checkpoint_average": 3,
+    "threshold_min": 0.2,
+    "threshold_max": 0.8,
+    "threshold_step": 0.01,
+    "output_dir": "workspaces/gossipcop/runs/masked_r1_causal_mask"
+  },
+  "loss": {
+    "lambda_relation": 0.2,
+    "lambda_utility": 1.0,
+    "beta_edl": 0.01,
+    "edl_warmup_epochs": 3,
+    "utility_target": "shapley",
+    "epsilon": 1e-07
+  },
+  "protocol": "r1_replay_pool_v1",
+  "reference": {
+    "folds": 3,
+    "epochs": 3,
+    "patience": 2,
+    "width": 256,
+    "prior_smoothing": 1.0,
+    "temperature_grid": [
+      0.5,
+      1.0,
+      2.0,
+      4.0
+    ],
+    "initialization": "pretrained_only",
+    "label_smoothing": 0.0,
+    "class_weight": null
+  },
+  "ablation": "causal_mask"
+}

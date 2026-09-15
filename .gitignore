@@ -44,3 +44,6 @@ checkpoints/
 *.pid
 nohup.out
 latest_*.txt
+
+# Keep actual R1 audit and verification logs reviewable.
+!docs/r1/*.log

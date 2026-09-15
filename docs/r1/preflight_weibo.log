@@ -1,0 +1,4 @@
+[HAMI-core Msg(4028500:140267071466368:libvgpu.c:856)]: Initializing.....
+[HAMI-core ERROR (pid:4028500 thread=140267071466368 libvgpu.c:897)]: cuInit failed:100
+CPU preflight complete: 5415 originals; workspaces/r1_preflight/weibo
+[HAMI-core Msg(4028500:140267071466368:multiprocess_memory_limit.c:455)]: Calling exit handler 4028500

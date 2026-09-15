@@ -46,7 +46,9 @@ def build_loader(
         **config["data"],
         "dataset_name": config["dataset"]["name"],
     }
-    dataset = CUTEFNDMultimodalDataset(
+    from mmfnd.r1_data import ReplayDataset
+    dataset_class = ReplayDataset if "replay_seed" in dataset_config else CUTEFNDMultimodalDataset
+    dataset = dataset_class(
         processed / f"{split}.jsonl", image_root, processor,
         dataset_config, train=split == "train" and shuffle,
     )
@@ -76,3 +78,14 @@ def build_loader(
         collate_fn=dataset.collate_fn,
         **loader_options,
     )
+
+
+def build_model(config):
+    from mmfnd.model import ExplainableMMFND
+    from mmfnd.revision_masked_r1 import MaskedR1Model, EncoderFusionBaseline, VERSION
+    version = config["model"].get("architecture_version")
+    if version == VERSION:
+        return (EncoderFusionBaseline(config) if config["model"].get("r1", {}).get("baseline") else MaskedR1Model(config))
+    if version == ExplainableMMFND.architecture_version:
+        return ExplainableMMFND(config)
+    raise ValueError(f"Unsupported architecture_version: {version}")

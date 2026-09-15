@@ -1,0 +1,3 @@
+..................................................................                                                                 [100%]
+66 passed, 4 warnings, 14 subtests passed in 5.52s
+[HAMI-core Msg(4072273:140705320893312:multiprocess_memory_limit.c:455)]: Calling exit handler 4072273

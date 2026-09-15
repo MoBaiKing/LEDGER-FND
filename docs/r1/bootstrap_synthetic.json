@@ -1,0 +1,17 @@
+{
+  "paired_seed_differences": [
+    0.0
+  ],
+  "mean_difference": 0.0,
+  "seed_std": null,
+  "paired_bootstrap_interval": [
+    0.0,
+    0.0
+  ],
+  "resampling_unit": "news sample",
+  "seed": 991,
+  "repetitions": 20,
+  "multiple_comparisons": "Bonferroni interval",
+  "comparisons": 1,
+  "limitation": "Bootstrap conditional on these paired trained seeds; not independent news replicated by seed"
+}

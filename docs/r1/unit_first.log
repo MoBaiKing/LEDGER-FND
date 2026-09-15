@@ -1,0 +1,40 @@
+.............F...........F.F.                                            [100%]
+=================================== FAILURES ===================================
+____________ test_12_actual_qwen_nonendpoint_jacobian[sdpa-dtype2] _____________
+tests/test_masked_r1_contract.py:147: in test_12_actual_qwen_nonendpoint_jacobian
+    m,q=tiny(backend,dtype);z=torch.randn(2,4,16,dtype=dtype,requires_grad=True);out=m(z,q)
+.venv/lib/python3.10/site-packages/torch/nn/modules/module.py:1553: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+.venv/lib/python3.10/site-packages/torch/nn/modules/module.py:1562: in _call_impl
+    return forward_call(*args, **kwargs)
+mmfnd/revision_masked_r1.py:120: in forward
+    means = torch.einsum('bip,bpc->bic',membership,features)/count.clamp_min(1)[...,None]
+.venv/lib/python3.10/site-packages/torch/functional.py:386: in einsum
+    return _VF.einsum(equation, operands)  # type: ignore[attr-defined]
+E   RuntimeError: expected scalar type BFloat16 but found Float
+_________________________ test_23_amp_resume_and_dedup _________________________
+tests/test_masked_r1_contract.py:265: in test_23_amp_resume_and_dedup
+    m,q=tiny('sdpa',torch.bfloat16);out=m(torch.randn(2,4,16,dtype=torch.bfloat16),q)
+.venv/lib/python3.10/site-packages/torch/nn/modules/module.py:1553: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+.venv/lib/python3.10/site-packages/torch/nn/modules/module.py:1562: in _call_impl
+    return forward_call(*args, **kwargs)
+mmfnd/revision_masked_r1.py:120: in forward
+    means = torch.einsum('bip,bpc->bic',membership,features)/count.clamp_min(1)[...,None]
+.venv/lib/python3.10/site-packages/torch/functional.py:386: in einsum
+    return _VF.einsum(equation, operands)  # type: ignore[attr-defined]
+E   RuntimeError: expected scalar type BFloat16 but found Float
+____________________ test_25_brier_factor_and_top_label_ece ____________________
+tests/test_masked_r1_contract.py:290: in test_25_brier_factor_and_top_label_ece
+    assert double==pytest.approx(2*a['brier']) and a['ece']==b['ece'] and a['accuracy']!=b['accuracy']
+E   assert (0.45 == 0.45 ± 4.5e-07
+E
+E     comparison failed
+E     Obtained: 0.45
+E     Expected: 0.45 ± 4.5e-07 and 0.45 == 0.45 and 0.5 != 0.5)
+=========================== short test summary info ============================
+FAILED tests/test_masked_r1_contract.py::test_12_actual_qwen_nonendpoint_jacobian[sdpa-dtype2]
+FAILED tests/test_masked_r1_contract.py::test_23_amp_resume_and_dedup - Runti...
+FAILED tests/test_masked_r1_contract.py::test_25_brier_factor_and_top_label_ece
+3 failed, 26 passed in 4.43s
+[HAMI-core Msg(4015127:140377481579392:multiprocess_memory_limit.c:455)]: Calling exit handler 4015127

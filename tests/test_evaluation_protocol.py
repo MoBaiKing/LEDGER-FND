@@ -173,7 +173,7 @@ class PipelineTests(unittest.TestCase):
             with contextlib.ExitStack() as stack:
                 for name, replacement in (("load_config", lambda p: config), ("get_device", lambda: torch.device("cpu")),
                                            ("bind_dataset_workspace", lambda *a: root), ("build_processor", lambda *a: None),
-                                           ("build_loader", build_loader), ("ExplainableMMFND", lambda c: model)):
+                                           ("build_loader", build_loader), ("build_model", lambda c: model)):
                     stack.enter_context(patch.object(evaluate_cli, name, replacement))
                 stack.enter_context(contextlib.redirect_stdout(io.StringIO()))
                 stack.enter_context(contextlib.redirect_stderr(io.StringIO()))
@@ -223,7 +223,7 @@ class PipelineTests(unittest.TestCase):
                                            ("bind_dataset_workspace", lambda *a: root / "fixture_manifest"),
                                            ("init_distributed", lambda: context), ("cleanup_distributed", lambda: None),
                                            ("build_processor", lambda *a: None), ("build_loader", build_loader),
-                                           ("ExplainableMMFND", lambda c: model), ("multimodal_loss", loss),
+                                           ("build_model", lambda c: model), ("multimodal_loss", loss),
                                            ("tqdm", lambda value, **kw: value)):
                     stack.enter_context(patch.object(train, name, replacement))
                 stack.enter_context(patch.object(sys, "argv", args))

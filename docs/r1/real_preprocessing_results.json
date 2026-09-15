@@ -1,0 +1,56 @@
+[
+  {
+    "dataset": "gossipcop",
+    "originals": 16069,
+    "pool_entries": 32138,
+    "augmentation_id": "clean",
+    "images": 1,
+    "pixel_sha256": "c25a95cb373d250c74b6d3d102d55d1484bbe218880557810f24a80a655a5290",
+    "status": "PASS"
+  },
+  {
+    "dataset": "gossipcop",
+    "originals": 16069,
+    "pool_entries": 32138,
+    "augmentation_id": "aug1",
+    "images": 1,
+    "pixel_sha256": "5a6ff561ec9e8b14a5d45c75ad66488974bc8cbd69c96addad67807af4d7edb5",
+    "status": "PASS"
+  },
+  {
+    "dataset": "weibo21",
+    "originals": 4926,
+    "pool_entries": 9852,
+    "augmentation_id": "clean",
+    "images": 1,
+    "pixel_sha256": "e0fde215b6570b3b4f762141ad022fed7c89f9e39930af4f97a250bd9f88921f",
+    "status": "PASS"
+  },
+  {
+    "dataset": "weibo21",
+    "originals": 4926,
+    "pool_entries": 9852,
+    "augmentation_id": "aug1",
+    "images": 1,
+    "pixel_sha256": "adcda23ea88a10afc599c26656e9b5e9c77c1375b189c483e6ff3ff5d8f8c88d",
+    "status": "PASS"
+  },
+  {
+    "dataset": "weibo",
+    "originals": 5415,
+    "pool_entries": 10830,
+    "augmentation_id": "clean",
+    "images": 1,
+    "pixel_sha256": "1a740fdc780c57509017c75c451dbbb4142c9f5831a15becd16475eacbd9cd28",
+    "status": "PASS"
+  },
+  {
+    "dataset": "weibo",
+    "originals": 5415,
+    "pool_entries": 10830,
+    "augmentation_id": "aug1",
+    "images": 1,
+    "pixel_sha256": "768339e2a507e9f134101d22e2db7e51cafb0251b96ce4cbde8ec9c8e4275485",
+    "status": "PASS"
+  }
+]

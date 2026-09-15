@@ -1,0 +1,2798 @@
+{
+  "created_at": "2026-09-15T23:24:06.349816+08:00",
+  "scope": "/data/dyl/sotamodelv3_mask",
+  "authorization": "User explicitly requested deletion of old masked project checkpoints and fresh training.",
+  "status": "completed",
+  "count": 396,
+  "logical_bytes": 41188183245,
+  "files": [
+    {
+      "path": "workspaces/gossipcop/runs/training/lgled_4datasets_5seeds_20260909_141124_gossipcop_seed200408/checkpoints/final_averaged.pth",
+      "bytes": 71344099,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 141747825104
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/lgled_4datasets_5seeds_20260909_141124_gossipcop_seed200408/checkpoints/last.pth",
+      "bytes": 214004306,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 141747825105
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/lgled_4datasets_5seeds_20260909_141124_gossipcop_seed200408/checkpoints/topk/epoch_02.pth",
+      "bytes": 71341989,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 143923191277
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/lgled_4datasets_5seeds_20260909_141124_gossipcop_seed200408/checkpoints/topk/epoch_03.pth",
+      "bytes": 71341989,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 143923191278
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/lgled_4datasets_5seeds_20260909_141124_gossipcop_seed200408/checkpoints/topk/epoch_04.pth",
+      "bytes": 71341989,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 143923191279
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/lgled_4datasets_5seeds_20260909_141124_gossipcop_seed2024/checkpoints/final_averaged.pth",
+      "bytes": 71344099,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 156766383786
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/lgled_4datasets_5seeds_20260909_141124_gossipcop_seed2024/checkpoints/last.pth",
+      "bytes": 214004306,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 156766383788
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/lgled_4datasets_5seeds_20260909_141124_gossipcop_seed2024/checkpoints/topk/epoch_03.pth",
+      "bytes": 71341989,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 158920824164
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/lgled_4datasets_5seeds_20260909_141124_gossipcop_seed2024/checkpoints/topk/epoch_04.pth",
+      "bytes": 71341989,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 158920824168
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/lgled_4datasets_5seeds_20260909_141124_gossipcop_seed2024/checkpoints/topk/epoch_05.pth",
+      "bytes": 71341989,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 158920825664
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/lgled_4datasets_5seeds_20260909_141124_gossipcop_seed2025/checkpoints/final_averaged.pth",
+      "bytes": 71344099,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 171966078821
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/lgled_4datasets_5seeds_20260909_141124_gossipcop_seed2025/checkpoints/last.pth",
+      "bytes": 214001874,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 171966078823
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/lgled_4datasets_5seeds_20260909_141124_gossipcop_seed2025/checkpoints/topk/epoch_02.pth",
+      "bytes": 71341989,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 173973034415
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/lgled_4datasets_5seeds_20260909_141124_gossipcop_seed2025/checkpoints/topk/epoch_03.pth",
+      "bytes": 71341989,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 173973271560
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/lgled_4datasets_5seeds_20260909_141124_gossipcop_seed2025/checkpoints/topk/epoch_04.pth",
+      "bytes": 71341989,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 173973271562
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/lgled_4datasets_5seeds_20260909_141124_gossipcop_seed3407/checkpoints/final_averaged.pth",
+      "bytes": 71344099,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 186852259150
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/lgled_4datasets_5seeds_20260909_141124_gossipcop_seed3407/checkpoints/last.pth",
+      "bytes": 214001874,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 186852259151
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/lgled_4datasets_5seeds_20260909_141124_gossipcop_seed3407/checkpoints/topk/epoch_02.pth",
+      "bytes": 71341989,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 188983760309
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/lgled_4datasets_5seeds_20260909_141124_gossipcop_seed3407/checkpoints/topk/epoch_03.pth",
+      "bytes": 71341989,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 188983760311
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/lgled_4datasets_5seeds_20260909_141124_gossipcop_seed3407/checkpoints/topk/epoch_04.pth",
+      "bytes": 71341989,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 188983760312
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/lgled_4datasets_5seeds_20260909_141124_gossipcop_seed42/checkpoints/final_averaged.pth",
+      "bytes": 71344099,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 201920688597
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/lgled_4datasets_5seeds_20260909_141124_gossipcop_seed42/checkpoints/last.pth",
+      "bytes": 214001874,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 201920688598
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/lgled_4datasets_5seeds_20260909_141124_gossipcop_seed42/checkpoints/topk/epoch_02.pth",
+      "bytes": 71341989,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 204057650408
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/lgled_4datasets_5seeds_20260909_141124_gossipcop_seed42/checkpoints/topk/epoch_03.pth",
+      "bytes": 71341989,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 204057650409
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/lgled_4datasets_5seeds_20260909_141124_gossipcop_seed42/checkpoints/topk/epoch_04.pth",
+      "bytes": 71341989,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 204057650413
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/v3_random4_20260914_014500_gossipcop_seed1728520375/checkpoints/best.pth",
+      "bytes": 71330193,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 216927166567
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/v3_random4_20260914_014500_gossipcop_seed1728520375/checkpoints/final_averaged.pth",
+      "bytes": 71345699,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 216927166568
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/v3_random4_20260914_014500_gossipcop_seed1728520375/checkpoints/last.pth",
+      "bytes": 214045138,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 216927166569
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/v3_random4_20260914_014500_gossipcop_seed1728520375/checkpoints/topk/epoch_12.pth",
+      "bytes": 71343525,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 219073845066
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/v3_random4_20260914_014500_gossipcop_seed1728520375/checkpoints/topk/epoch_16.pth",
+      "bytes": 71343525,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 219073845067
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/v3_random4_20260914_014500_gossipcop_seed1728520375/checkpoints/topk/epoch_17.pth",
+      "bytes": 71343525,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 219073845068
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/v3_random4_20260914_014500_gossipcop_seed1933686559/checkpoints/best.pth",
+      "bytes": 71330193,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 231968485868
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/v3_random4_20260914_014500_gossipcop_seed1933686559/checkpoints/final_averaged.pth",
+      "bytes": 71345699,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 231968485879
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/v3_random4_20260914_014500_gossipcop_seed1933686559/checkpoints/last.pth",
+      "bytes": 214020690,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 231968485881
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/v3_random4_20260914_014500_gossipcop_seed1933686559/checkpoints/topk/epoch_05.pth",
+      "bytes": 71343525,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 234091549572
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/v3_random4_20260914_014500_gossipcop_seed1933686559/checkpoints/topk/epoch_08.pth",
+      "bytes": 71343525,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 234095052990
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/v3_random4_20260914_014500_gossipcop_seed1933686559/checkpoints/topk/epoch_13.pth",
+      "bytes": 71343525,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 234095052991
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/v3_random4_20260914_014500_gossipcop_seed391173430/checkpoints/best.pth",
+      "bytes": 71330193,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 246961107946
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/v3_random4_20260914_014500_gossipcop_seed391173430/checkpoints/final_averaged.pth",
+      "bytes": 71345699,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 246961107947
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/v3_random4_20260914_014500_gossipcop_seed391173430/checkpoints/last.pth",
+      "bytes": 214027666,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 246961107948
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/v3_random4_20260914_014500_gossipcop_seed391173430/checkpoints/topk/epoch_03.pth",
+      "bytes": 71343525,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 249109318638
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/v3_random4_20260914_014500_gossipcop_seed391173430/checkpoints/topk/epoch_07.pth",
+      "bytes": 71343525,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 249109318639
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/v3_random4_20260914_014500_gossipcop_seed391173430/checkpoints/topk/epoch_09.pth",
+      "bytes": 71343525,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 249109318640
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/v3_random4_20260914_014500_gossipcop_seed395953986/checkpoints/best.pth",
+      "bytes": 71330193,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 262016539040
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/v3_random4_20260914_014500_gossipcop_seed395953986/checkpoints/final_averaged.pth",
+      "bytes": 71345699,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 262016539052
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/v3_random4_20260914_014500_gossipcop_seed395953986/checkpoints/last.pth",
+      "bytes": 214038162,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 262016539054
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/v3_random4_20260914_014500_gossipcop_seed395953986/checkpoints/topk/epoch_04.pth",
+      "bytes": 71343525,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 264141050511
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/v3_random4_20260914_014500_gossipcop_seed395953986/checkpoints/topk/epoch_10.pth",
+      "bytes": 71343525,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 264141050547
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/v3_random4_20260914_014500_gossipcop_seed395953986/checkpoints/topk/epoch_12.pth",
+      "bytes": 71343525,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 264141050550
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed325960923/checkpoints/best.pth",
+      "bytes": 71330193,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 283468746473
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed325960923/checkpoints/last.pth",
+      "bytes": 214017234,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 283468750716
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed325960923/checkpoints/final_averaged.pth",
+      "bytes": 71345763,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 283468750717
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed325960923/checkpoints/topk/epoch_03.pth",
+      "bytes": 71343525,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 285629165891
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed325960923/checkpoints/topk/epoch_04.pth",
+      "bytes": 71343525,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 285629165892
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed325960923/checkpoints/topk/epoch_11.pth",
+      "bytes": 71343525,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 285629165890
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed2029091074/checkpoints/best.pth",
+      "bytes": 71330193,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 298514133405
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed2029091074/checkpoints/last.pth",
+      "bytes": 214031250,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 298514133406
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed2029091074/checkpoints/cutoff_20260915_102500.pth",
+      "bytes": 214031250,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 298514133407
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed2029091074/checkpoints/final_averaged.pth",
+      "bytes": 71345763,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 298514133408
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed2029091074/checkpoints/topk/epoch_02.pth",
+      "bytes": 71343525,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 300666753068
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed2029091074/checkpoints/topk/epoch_07.pth",
+      "bytes": 71343525,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 300666753067
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed2029091074/checkpoints/topk/epoch_08.pth",
+      "bytes": 71343525,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 300666753069
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed769503384/checkpoints/best.pth",
+      "bytes": 71330193,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 313536218558
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed769503384/checkpoints/last.pth",
+      "bytes": 214013714,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 313536218559
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed769503384/checkpoints/final_averaged.pth",
+      "bytes": 71345763,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 313536226752
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed769503384/checkpoints/topk/epoch_03.pth",
+      "bytes": 71343525,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 315703240886
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed769503384/checkpoints/topk/epoch_10.pth",
+      "bytes": 71343525,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 315703240885
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed769503384/checkpoints/topk/epoch_11.pth",
+      "bytes": 71343525,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 315703240883
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed323592911/checkpoints/best.pth",
+      "bytes": 71330193,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 328621121392
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed323592911/checkpoints/last.pth",
+      "bytes": 214017234,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 328621121393
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed323592911/checkpoints/final_averaged.pth",
+      "bytes": 71345763,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 328621121394
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed323592911/checkpoints/topk/epoch_04.pth",
+      "bytes": 71343525,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 330712838987
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed323592911/checkpoints/topk/epoch_10.pth",
+      "bytes": 71343525,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 330712838984
+    },
+    {
+      "path": "workspaces/gossipcop/runs/training/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed323592911/checkpoints/topk/epoch_11.pth",
+      "bytes": 71343525,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 330712838986
+    },
+    {
+      "path": "workspaces/twitter/runs/training/lgled_twitter_5seeds_20260911_145739_seed200408/checkpoints/final_averaged.pth",
+      "bytes": 71344099,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 320000492422
+    },
+    {
+      "path": "workspaces/twitter/runs/training/lgled_twitter_5seeds_20260911_145739_seed200408/checkpoints/last.pth",
+      "bytes": 214004242,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 320000492423
+    },
+    {
+      "path": "workspaces/twitter/runs/training/lgled_twitter_5seeds_20260911_145739_seed200408/checkpoints/topk/epoch_04.pth",
+      "bytes": 71341989,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 322125418445
+    },
+    {
+      "path": "workspaces/twitter/runs/training/lgled_twitter_5seeds_20260911_145739_seed200408/checkpoints/topk/epoch_06.pth",
+      "bytes": 71341989,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 322125418447
+    },
+    {
+      "path": "workspaces/twitter/runs/training/lgled_twitter_5seeds_20260911_145739_seed200408/checkpoints/topk/epoch_07.pth",
+      "bytes": 71341989,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 322125418449
+    },
+    {
+      "path": "workspaces/twitter/runs/training/lgled_twitter_5seeds_20260911_145739_seed2024/checkpoints/final_averaged.pth",
+      "bytes": 71344035,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 335018580739
+    },
+    {
+      "path": "workspaces/twitter/runs/training/lgled_twitter_5seeds_20260911_145739_seed2024/checkpoints/last.pth",
+      "bytes": 214009234,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 335018580740
+    },
+    {
+      "path": "workspaces/twitter/runs/training/lgled_twitter_5seeds_20260911_145739_seed2024/checkpoints/topk/epoch_06.pth",
+      "bytes": 71341989,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 337176002265
+    },
+    {
+      "path": "workspaces/twitter/runs/training/lgled_twitter_5seeds_20260911_145739_seed2024/checkpoints/topk/epoch_08.pth",
+      "bytes": 71341989,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 337176002266
+    },
+    {
+      "path": "workspaces/twitter/runs/training/lgled_twitter_5seeds_20260911_145739_seed2024/checkpoints/topk/epoch_10.pth",
+      "bytes": 71341989,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 337177238271
+    },
+    {
+      "path": "workspaces/twitter/runs/training/lgled_twitter_5seeds_20260911_145739_seed2025/checkpoints/final_averaged.pth",
+      "bytes": 71344035,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 350049941488
+    },
+    {
+      "path": "workspaces/twitter/runs/training/lgled_twitter_5seeds_20260911_145739_seed2025/checkpoints/last.pth",
+      "bytes": 214011666,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 350049941489
+    },
+    {
+      "path": "workspaces/twitter/runs/training/lgled_twitter_5seeds_20260911_145739_seed2025/checkpoints/topk/epoch_07.pth",
+      "bytes": 71341989,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 352194148834
+    },
+    {
+      "path": "workspaces/twitter/runs/training/lgled_twitter_5seeds_20260911_145739_seed2025/checkpoints/topk/epoch_09.pth",
+      "bytes": 71341989,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 352194148835
+    },
+    {
+      "path": "workspaces/twitter/runs/training/lgled_twitter_5seeds_20260911_145739_seed2025/checkpoints/topk/epoch_10.pth",
+      "bytes": 71341989,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 352194148841
+    },
+    {
+      "path": "workspaces/twitter/runs/training/lgled_twitter_5seeds_20260911_145739_seed3407/checkpoints/final_averaged.pth",
+      "bytes": 71344035,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 365094876950
+    },
+    {
+      "path": "workspaces/twitter/runs/training/lgled_twitter_5seeds_20260911_145739_seed3407/checkpoints/last.pth",
+      "bytes": 214001810,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 365094876951
+    },
+    {
+      "path": "workspaces/twitter/runs/training/lgled_twitter_5seeds_20260911_145739_seed3407/checkpoints/topk/epoch_03.pth",
+      "bytes": 71341989,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 367401480932
+    },
+    {
+      "path": "workspaces/twitter/runs/training/lgled_twitter_5seeds_20260911_145739_seed3407/checkpoints/topk/epoch_04.pth",
+      "bytes": 71341989,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 367401480933
+    },
+    {
+      "path": "workspaces/twitter/runs/training/lgled_twitter_5seeds_20260911_145739_seed3407/checkpoints/topk/epoch_06.pth",
+      "bytes": 71341989,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 367401480934
+    },
+    {
+      "path": "workspaces/twitter/runs/training/lgled_twitter_5seeds_20260911_145739_seed42/checkpoints/final_averaged.pth",
+      "bytes": 71344035,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 380119264084
+    },
+    {
+      "path": "workspaces/twitter/runs/training/lgled_twitter_5seeds_20260911_145739_seed42/checkpoints/last.pth",
+      "bytes": 214001810,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 380119264085
+    },
+    {
+      "path": "workspaces/twitter/runs/training/lgled_twitter_5seeds_20260911_145739_seed42/checkpoints/topk/epoch_03.pth",
+      "bytes": 71341989,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 382254450984
+    },
+    {
+      "path": "workspaces/twitter/runs/training/lgled_twitter_5seeds_20260911_145739_seed42/checkpoints/topk/epoch_05.pth",
+      "bytes": 71341989,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 382254450985
+    },
+    {
+      "path": "workspaces/twitter/runs/training/lgled_twitter_5seeds_20260911_145739_seed42/checkpoints/topk/epoch_06.pth",
+      "bytes": 71341989,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 382254450986
+    },
+    {
+      "path": "workspaces/weibo/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo_seed200408/checkpoints/final_averaged.pth",
+      "bytes": 99702643,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 408026725828
+    },
+    {
+      "path": "workspaces/weibo/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo_seed200408/checkpoints/last.pth",
+      "bytes": 299100626,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 408026725829
+    },
+    {
+      "path": "workspaces/weibo/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo_seed200408/checkpoints/topk/epoch_07.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 410235551576
+    },
+    {
+      "path": "workspaces/weibo/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo_seed200408/checkpoints/topk/epoch_08.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 410235557825
+    },
+    {
+      "path": "workspaces/weibo/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo_seed200408/checkpoints/topk/epoch_10.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 410235613002
+    },
+    {
+      "path": "workspaces/weibo/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo_seed200408/checkpoints/topk/epoch_14.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 410236478253
+    },
+    {
+      "path": "workspaces/weibo/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo_seed200408/checkpoints/topk/epoch_15.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 410236573040
+    },
+    {
+      "path": "workspaces/weibo/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo_seed2024/checkpoints/final_averaged.pth",
+      "bytes": 99702643,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 423062884182
+    },
+    {
+      "path": "workspaces/weibo/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo_seed2024/checkpoints/last.pth",
+      "bytes": 299090706,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 423062971888
+    },
+    {
+      "path": "workspaces/weibo/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo_seed2024/checkpoints/topk/epoch_09.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 425210587604
+    },
+    {
+      "path": "workspaces/weibo/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo_seed2024/checkpoints/topk/epoch_10.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 425210587605
+    },
+    {
+      "path": "workspaces/weibo/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo_seed2024/checkpoints/topk/epoch_13.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 425210587606
+    },
+    {
+      "path": "workspaces/weibo/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo_seed2024/checkpoints/topk/epoch_15.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 425210587607
+    },
+    {
+      "path": "workspaces/weibo/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo_seed2024/checkpoints/topk/epoch_17.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 425210587608
+    },
+    {
+      "path": "workspaces/weibo/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo_seed2025/checkpoints/final_averaged.pth",
+      "bytes": 99702643,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 438098547550
+    },
+    {
+      "path": "workspaces/weibo/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo_seed2025/checkpoints/last.pth",
+      "bytes": 299115410,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 438090916736
+    },
+    {
+      "path": "workspaces/weibo/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo_seed2025/checkpoints/topk/epoch_20.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 440237417844
+    },
+    {
+      "path": "workspaces/weibo/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo_seed2025/checkpoints/topk/epoch_22.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 440237417845
+    },
+    {
+      "path": "workspaces/weibo/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo_seed2025/checkpoints/topk/epoch_23.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 440237417846
+    },
+    {
+      "path": "workspaces/weibo/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo_seed2025/checkpoints/topk/epoch_27.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 440237417847
+    },
+    {
+      "path": "workspaces/weibo/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo_seed2025/checkpoints/topk/epoch_28.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 440237417852
+    },
+    {
+      "path": "workspaces/weibo/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo_seed3407/checkpoints/final_averaged.pth",
+      "bytes": 99702643,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 453123260881
+    },
+    {
+      "path": "workspaces/weibo/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo_seed3407/checkpoints/last.pth",
+      "bytes": 299122834,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 453123260882
+    },
+    {
+      "path": "workspaces/weibo/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo_seed3407/checkpoints/topk/epoch_21.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 455269326429
+    },
+    {
+      "path": "workspaces/weibo/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo_seed3407/checkpoints/topk/epoch_22.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 455269326430
+    },
+    {
+      "path": "workspaces/weibo/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo_seed3407/checkpoints/topk/epoch_23.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 455269326432
+    },
+    {
+      "path": "workspaces/weibo/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo_seed3407/checkpoints/topk/epoch_29.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 455269326433
+    },
+    {
+      "path": "workspaces/weibo/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo_seed3407/checkpoints/topk/epoch_30.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 455269326435
+    },
+    {
+      "path": "workspaces/weibo/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo_seed42/checkpoints/final_averaged.pth",
+      "bytes": 99702643,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 468156635304
+    },
+    {
+      "path": "workspaces/weibo/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo_seed42/checkpoints/last.pth",
+      "bytes": 299100562,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 468156770416
+    },
+    {
+      "path": "workspaces/weibo/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo_seed42/checkpoints/topk/epoch_07.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 470308290226
+    },
+    {
+      "path": "workspaces/weibo/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo_seed42/checkpoints/topk/epoch_09.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 470308290228
+    },
+    {
+      "path": "workspaces/weibo/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo_seed42/checkpoints/topk/epoch_14.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 470308290229
+    },
+    {
+      "path": "workspaces/weibo/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo_seed42/checkpoints/topk/epoch_15.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 470308290231
+    },
+    {
+      "path": "workspaces/weibo/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo_seed42/checkpoints/topk/epoch_21.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 470308290232
+    },
+    {
+      "path": "workspaces/weibo/runs/training/v3_random4_20260914_014500_weibo_seed1728520375/checkpoints/best.pth",
+      "bytes": 99687041,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 483211340975
+    },
+    {
+      "path": "workspaces/weibo/runs/training/v3_random4_20260914_014500_weibo_seed1728520375/checkpoints/final_averaged.pth",
+      "bytes": 99704179,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 483211340976
+    },
+    {
+      "path": "workspaces/weibo/runs/training/v3_random4_20260914_014500_weibo_seed1728520375/checkpoints/last.pth",
+      "bytes": 299137618,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 483211340977
+    },
+    {
+      "path": "workspaces/weibo/runs/training/v3_random4_20260914_014500_weibo_seed1728520375/checkpoints/topk/epoch_18.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 485333244245
+    },
+    {
+      "path": "workspaces/weibo/runs/training/v3_random4_20260914_014500_weibo_seed1728520375/checkpoints/topk/epoch_19.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 485333244246
+    },
+    {
+      "path": "workspaces/weibo/runs/training/v3_random4_20260914_014500_weibo_seed1728520375/checkpoints/topk/epoch_20.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 485333244248
+    },
+    {
+      "path": "workspaces/weibo/runs/training/v3_random4_20260914_014500_weibo_seed1728520375/checkpoints/topk/epoch_22.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 485333244249
+    },
+    {
+      "path": "workspaces/weibo/runs/training/v3_random4_20260914_014500_weibo_seed1728520375/checkpoints/topk/epoch_24.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 485333244251
+    },
+    {
+      "path": "workspaces/weibo/runs/training/v3_random4_20260914_014500_weibo_seed1933686559/checkpoints/best.pth",
+      "bytes": 99687041,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 498222762398
+    },
+    {
+      "path": "workspaces/weibo/runs/training/v3_random4_20260914_014500_weibo_seed1933686559/checkpoints/final_averaged.pth",
+      "bytes": 99704179,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 498222762399
+    },
+    {
+      "path": "workspaces/weibo/runs/training/v3_random4_20260914_014500_weibo_seed1933686559/checkpoints/last.pth",
+      "bytes": 299141074,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 498222762401
+    },
+    {
+      "path": "workspaces/weibo/runs/training/v3_random4_20260914_014500_weibo_seed1933686559/checkpoints/topk/epoch_11.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 500409886150
+    },
+    {
+      "path": "workspaces/weibo/runs/training/v3_random4_20260914_014500_weibo_seed1933686559/checkpoints/topk/epoch_13.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 500409886151
+    },
+    {
+      "path": "workspaces/weibo/runs/training/v3_random4_20260914_014500_weibo_seed1933686559/checkpoints/topk/epoch_19.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 500409886152
+    },
+    {
+      "path": "workspaces/weibo/runs/training/v3_random4_20260914_014500_weibo_seed1933686559/checkpoints/topk/epoch_20.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 500409886153
+    },
+    {
+      "path": "workspaces/weibo/runs/training/v3_random4_20260914_014500_weibo_seed1933686559/checkpoints/topk/epoch_22.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 500409886154
+    },
+    {
+      "path": "workspaces/weibo/runs/training/v3_random4_20260914_014500_weibo_seed391173430/checkpoints/best.pth",
+      "bytes": 99687041,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 513253075454
+    },
+    {
+      "path": "workspaces/weibo/runs/training/v3_random4_20260914_014500_weibo_seed391173430/checkpoints/final_averaged.pth",
+      "bytes": 99704179,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 513253075455
+    },
+    {
+      "path": "workspaces/weibo/runs/training/v3_random4_20260914_014500_weibo_seed391173430/checkpoints/last.pth",
+      "bytes": 299130578,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 513257306110
+    },
+    {
+      "path": "workspaces/weibo/runs/training/v3_random4_20260914_014500_weibo_seed391173430/checkpoints/topk/epoch_12.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 515429063663
+    },
+    {
+      "path": "workspaces/weibo/runs/training/v3_random4_20260914_014500_weibo_seed391173430/checkpoints/topk/epoch_15.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 515429063664
+    },
+    {
+      "path": "workspaces/weibo/runs/training/v3_random4_20260914_014500_weibo_seed391173430/checkpoints/topk/epoch_16.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 515429063665
+    },
+    {
+      "path": "workspaces/weibo/runs/training/v3_random4_20260914_014500_weibo_seed391173430/checkpoints/topk/epoch_21.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 515429063666
+    },
+    {
+      "path": "workspaces/weibo/runs/training/v3_random4_20260914_014500_weibo_seed391173430/checkpoints/topk/epoch_23.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 515429171674
+    },
+    {
+      "path": "workspaces/weibo/runs/training/v3_random4_20260914_014500_weibo_seed395953986/checkpoints/best.pth",
+      "bytes": 99687041,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 528283919722
+    },
+    {
+      "path": "workspaces/weibo/runs/training/v3_random4_20260914_014500_weibo_seed395953986/checkpoints/final_averaged.pth",
+      "bytes": 99704179,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 528283919723
+    },
+    {
+      "path": "workspaces/weibo/runs/training/v3_random4_20260914_014500_weibo_seed395953986/checkpoints/last.pth",
+      "bytes": 299130578,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 528283919724
+    },
+    {
+      "path": "workspaces/weibo/runs/training/v3_random4_20260914_014500_weibo_seed395953986/checkpoints/topk/epoch_16.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 530429419526
+    },
+    {
+      "path": "workspaces/weibo/runs/training/v3_random4_20260914_014500_weibo_seed395953986/checkpoints/topk/epoch_17.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 530429419527
+    },
+    {
+      "path": "workspaces/weibo/runs/training/v3_random4_20260914_014500_weibo_seed395953986/checkpoints/topk/epoch_18.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 530429419529
+    },
+    {
+      "path": "workspaces/weibo/runs/training/v3_random4_20260914_014500_weibo_seed395953986/checkpoints/topk/epoch_19.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 530429419531
+    },
+    {
+      "path": "workspaces/weibo/runs/training/v3_random4_20260914_014500_weibo_seed395953986/checkpoints/topk/epoch_21.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 530429419532
+    },
+    {
+      "path": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed325960923/checkpoints/best.pth",
+      "bytes": 99687041,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 356526725077
+    },
+    {
+      "path": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed325960923/checkpoints/last.pth",
+      "bytes": 299095698,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 356526725078
+    },
+    {
+      "path": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed325960923/checkpoints/cutoff_20260915_102500.pth",
+      "bytes": 299095698,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 356526725080
+    },
+    {
+      "path": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed325960923/checkpoints/final_averaged.pth",
+      "bytes": 99704243,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 356526725079
+    },
+    {
+      "path": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed325960923/checkpoints/topk/epoch_03.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 359335563192
+    },
+    {
+      "path": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed325960923/checkpoints/topk/epoch_04.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 359335563193
+    },
+    {
+      "path": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed325960923/checkpoints/topk/epoch_05.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 359335563194
+    },
+    {
+      "path": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed325960923/checkpoints/topk/epoch_06.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 359335563195
+    },
+    {
+      "path": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed325960923/checkpoints/topk/epoch_09.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 359335563191
+    },
+    {
+      "path": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed2029091074/checkpoints/best.pth",
+      "bytes": 99687041,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 371536039883
+    },
+    {
+      "path": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed2029091074/checkpoints/last.pth",
+      "bytes": 299095698,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 371536039884
+    },
+    {
+      "path": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed2029091074/checkpoints/cutoff_20260915_102500.pth",
+      "bytes": 299095698,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 371552210390
+    },
+    {
+      "path": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed2029091074/checkpoints/final_averaged.pth",
+      "bytes": 99704243,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 371552210388
+    },
+    {
+      "path": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed2029091074/checkpoints/topk/epoch_06.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 373679825668
+    },
+    {
+      "path": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed2029091074/checkpoints/topk/epoch_08.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 373679825664
+    },
+    {
+      "path": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed2029091074/checkpoints/topk/epoch_09.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 373679825666
+    },
+    {
+      "path": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed2029091074/checkpoints/topk/epoch_13.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 373679825665
+    },
+    {
+      "path": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed2029091074/checkpoints/topk/epoch_14.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 373679823679
+    },
+    {
+      "path": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed769503384/checkpoints/best.pth",
+      "bytes": 99687041,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 386553481437
+    },
+    {
+      "path": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed769503384/checkpoints/last.pth",
+      "bytes": 299102738,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 386553481438
+    },
+    {
+      "path": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed769503384/checkpoints/cutoff_20260915_102500.pth",
+      "bytes": 299102738,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 386553481439
+    },
+    {
+      "path": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed769503384/checkpoints/topk/epoch_07.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 388728426217
+    },
+    {
+      "path": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed769503384/checkpoints/topk/epoch_09.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 388728426218
+    },
+    {
+      "path": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed769503384/checkpoints/topk/epoch_10.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 388728426222
+    },
+    {
+      "path": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed769503384/checkpoints/topk/epoch_11.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 388728426220
+    },
+    {
+      "path": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed769503384/checkpoints/topk/epoch_12.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 388728426221
+    },
+    {
+      "path": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed323592911/checkpoints/best.pth",
+      "bytes": 99687041,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 403753874440
+    },
+    {
+      "path": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed323592911/checkpoints/last.pth",
+      "bytes": 299078226,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 403753874444
+    },
+    {
+      "path": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed323592911/checkpoints/cutoff_20260915_102500.pth",
+      "bytes": 299078226,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 403753874445
+    },
+    {
+      "path": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed323592911/checkpoints/topk/epoch_02.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 405875051795
+    },
+    {
+      "path": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed323592911/checkpoints/topk/epoch_05.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 405881842731
+    },
+    {
+      "path": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed323592911/checkpoints/topk/epoch_06.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 405881842732
+    },
+    {
+      "path": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed323592911/checkpoints/topk/epoch_07.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 405875051794
+    },
+    {
+      "path": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed323592911/checkpoints/topk/epoch_09.pth",
+      "bytes": 99701397,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 405875051796
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo21_seed200408/checkpoints/final_averaged.pth",
+      "bytes": 99702643,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 562647032730
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo21_seed200408/checkpoints/last.pth",
+      "bytes": 299115410,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 562647032731
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo21_seed200408/checkpoints/topk/epoch_15.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 564790258591
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo21_seed200408/checkpoints/topk/epoch_16.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 564790258592
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo21_seed200408/checkpoints/topk/epoch_20.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 564790258593
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo21_seed200408/checkpoints/topk/epoch_22.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 564790607669
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo21_seed200408/checkpoints/topk/epoch_23.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 564790607673
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo21_seed2024/checkpoints/final_averaged.pth",
+      "bytes": 99702643,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 577674589545
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo21_seed2024/checkpoints/last.pth",
+      "bytes": 299080786,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 577674589546
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo21_seed2024/checkpoints/topk/epoch_06.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 579829397847
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo21_seed2024/checkpoints/topk/epoch_09.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 579829397848
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo21_seed2024/checkpoints/topk/epoch_11.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 579829397853
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo21_seed2024/checkpoints/topk/epoch_13.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 579829397880
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo21_seed2024/checkpoints/topk/epoch_14.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 579829397881
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo21_seed2025/checkpoints/final_averaged.pth",
+      "bytes": 99702643,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 592713030577
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo21_seed2025/checkpoints/last.pth",
+      "bytes": 299115410,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 592713030578
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo21_seed2025/checkpoints/topk/epoch_17.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 594890396299
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo21_seed2025/checkpoints/topk/epoch_19.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 594890396300
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo21_seed2025/checkpoints/topk/epoch_20.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 594890396301
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo21_seed2025/checkpoints/topk/epoch_21.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 594890396317
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo21_seed2025/checkpoints/topk/epoch_25.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 594890396318
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo21_seed3407/checkpoints/final_averaged.pth",
+      "bytes": 99702643,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 607761000736
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo21_seed3407/checkpoints/last.pth",
+      "bytes": 299085714,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 607761000738
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo21_seed3407/checkpoints/topk/epoch_04.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 609970438830
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo21_seed3407/checkpoints/topk/epoch_06.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 609970438831
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo21_seed3407/checkpoints/topk/epoch_08.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 609970438832
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo21_seed3407/checkpoints/topk/epoch_11.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 609970438833
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo21_seed3407/checkpoints/topk/epoch_16.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 609970438834
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo21_seed42/checkpoints/final_averaged.pth",
+      "bytes": 99702643,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 622773052113
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo21_seed42/checkpoints/last.pth",
+      "bytes": 299090642,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 622773052114
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo21_seed42/checkpoints/topk/epoch_04.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 624920275478
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo21_seed42/checkpoints/topk/epoch_09.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 624920275479
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo21_seed42/checkpoints/topk/epoch_10.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 624920275480
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo21_seed42/checkpoints/topk/epoch_11.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 624920275481
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_remaining_3datasets_5seeds_20260910_195451_retry_weibo21_seed42/checkpoints/topk/epoch_12.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 624920275482
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_rerun_20260912_000025_seed42/checkpoints/last.pth",
+      "bytes": 299047570,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 637806849467
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_rerun_20260912_000025_seed42/checkpoints/topk/epoch_01.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 639950826988
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_true_random_20260912_000650_seed1297322640/checkpoints/final_averaged.pth",
+      "bytes": 99702579,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 644261801408
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_true_random_20260912_000650_seed1297322640/checkpoints/last.pth",
+      "bytes": 299102994,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 644261801410
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_true_random_20260912_000650_seed1297322640/checkpoints/topk/epoch_09.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 646394853987
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_true_random_20260912_000650_seed1297322640/checkpoints/topk/epoch_11.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 646394853989
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_true_random_20260912_000650_seed1297322640/checkpoints/topk/epoch_14.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 646394853990
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_true_random_20260912_000650_seed1297322640/checkpoints/topk/epoch_15.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 646394853992
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_true_random_20260912_000650_seed1297322640/checkpoints/topk/epoch_16.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 646394853993
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_true_random_20260912_000650_seed1560619725/checkpoints/final_averaged.pth",
+      "bytes": 99702579,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 659277779648
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_true_random_20260912_000650_seed1560619725/checkpoints/last.pth",
+      "bytes": 299088146,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 659277780568
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_true_random_20260912_000650_seed1560619725/checkpoints/topk/epoch_08.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 661427860754
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_true_random_20260912_000650_seed1560619725/checkpoints/topk/epoch_09.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 661427860755
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_true_random_20260912_000650_seed1560619725/checkpoints/topk/epoch_10.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 661427860757
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_true_random_20260912_000650_seed1560619725/checkpoints/topk/epoch_11.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 661427860759
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_true_random_20260912_000650_seed1560619725/checkpoints/topk/epoch_12.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 661427860760
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_true_random_20260912_000650_seed1950692196/checkpoints/final_averaged.pth",
+      "bytes": 99702579,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 674314562526
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_true_random_20260912_000650_seed1950692196/checkpoints/last.pth",
+      "bytes": 299098066,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 674314562529
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_true_random_20260912_000650_seed1950692196/checkpoints/topk/epoch_07.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 676513047130
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_true_random_20260912_000650_seed1950692196/checkpoints/topk/epoch_08.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 676513047281
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_true_random_20260912_000650_seed1950692196/checkpoints/topk/epoch_11.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 676513047283
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_true_random_20260912_000650_seed1950692196/checkpoints/topk/epoch_13.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 676513047284
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_true_random_20260912_000650_seed1950692196/checkpoints/topk/epoch_16.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 676515557625
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_true_random_20260912_000650_seed266679722/checkpoints/final_averaged.pth",
+      "bytes": 99702579,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 689349195066
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_true_random_20260912_000650_seed266679722/checkpoints/last.pth",
+      "bytes": 299105490,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 689349195067
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_true_random_20260912_000650_seed266679722/checkpoints/topk/epoch_12.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 691497274633
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_true_random_20260912_000650_seed266679722/checkpoints/topk/epoch_16.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 691497571772
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_true_random_20260912_000650_seed266679722/checkpoints/topk/epoch_19.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 691497571774
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_true_random_20260912_000650_seed266679722/checkpoints/topk/epoch_21.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 691497571775
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_true_random_20260912_000650_seed266679722/checkpoints/topk/epoch_22.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 691497581000
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_true_random_20260912_000650_seed812529587/checkpoints/final_averaged.pth",
+      "bytes": 99702579,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 704378986944
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_true_random_20260912_000650_seed812529587/checkpoints/last.pth",
+      "bytes": 299088146,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 704378989462
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_true_random_20260912_000650_seed812529587/checkpoints/topk/epoch_06.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 706683638776
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_true_random_20260912_000650_seed812529587/checkpoints/topk/epoch_08.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 706683648403
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_true_random_20260912_000650_seed812529587/checkpoints/topk/epoch_09.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 706684710707
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_true_random_20260912_000650_seed812529587/checkpoints/topk/epoch_11.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 706684710708
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/lgled_weibo21_5seeds_true_random_20260912_000650_seed812529587/checkpoints/topk/epoch_13.pth",
+      "bytes": 99699861,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 706684715604
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/v3_random4_20260914_014500_weibo21_seed1728520375/checkpoints/best.pth",
+      "bytes": 99686977,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 719410360614
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/v3_random4_20260914_014500_weibo21_seed1728520375/checkpoints/final_averaged.pth",
+      "bytes": 99704115,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 719410414348
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/v3_random4_20260914_014500_weibo21_seed1728520375/checkpoints/last.pth",
+      "bytes": 299102610,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 719410439982
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/v3_random4_20260914_014500_weibo21_seed1728520375/checkpoints/topk/epoch_06.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 721559784979
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/v3_random4_20260914_014500_weibo21_seed1728520375/checkpoints/topk/epoch_07.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 721559784981
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/v3_random4_20260914_014500_weibo21_seed1728520375/checkpoints/topk/epoch_08.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 721559784982
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/v3_random4_20260914_014500_weibo21_seed1728520375/checkpoints/topk/epoch_12.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 721559784984
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/v3_random4_20260914_014500_weibo21_seed1728520375/checkpoints/topk/epoch_14.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 721559784985
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/v3_random4_20260914_014500_weibo21_seed1933686559/checkpoints/best.pth",
+      "bytes": 99686977,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 734484452851
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/v3_random4_20260914_014500_weibo21_seed1933686559/checkpoints/final_averaged.pth",
+      "bytes": 99704115,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 734484452854
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/v3_random4_20260914_014500_weibo21_seed1933686559/checkpoints/last.pth",
+      "bytes": 299099090,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 734484452856
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/v3_random4_20260914_014500_weibo21_seed1933686559/checkpoints/topk/epoch_06.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 736596514042
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/v3_random4_20260914_014500_weibo21_seed1933686559/checkpoints/topk/epoch_07.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 736596514044
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/v3_random4_20260914_014500_weibo21_seed1933686559/checkpoints/topk/epoch_09.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 736596514046
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/v3_random4_20260914_014500_weibo21_seed1933686559/checkpoints/topk/epoch_10.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 736596576061
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/v3_random4_20260914_014500_weibo21_seed1933686559/checkpoints/topk/epoch_12.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 736596576063
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/v3_random4_20260914_014500_weibo21_seed391173430/checkpoints/best.pth",
+      "bytes": 99686977,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 749477750110
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/v3_random4_20260914_014500_weibo21_seed391173430/checkpoints/final_averaged.pth",
+      "bytes": 99704115,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 749477750111
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/v3_random4_20260914_014500_weibo21_seed391173430/checkpoints/last.pth",
+      "bytes": 299092114,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 749477750112
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/v3_random4_20260914_014500_weibo21_seed391173430/checkpoints/topk/epoch_04.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 751620228035
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/v3_random4_20260914_014500_weibo21_seed391173430/checkpoints/topk/epoch_05.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 751620228036
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/v3_random4_20260914_014500_weibo21_seed391173430/checkpoints/topk/epoch_07.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 751620228039
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/v3_random4_20260914_014500_weibo21_seed391173430/checkpoints/topk/epoch_10.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 751620228040
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/v3_random4_20260914_014500_weibo21_seed391173430/checkpoints/topk/epoch_13.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 751620228041
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/v3_random4_20260914_014500_weibo21_seed395953986/checkpoints/best.pth",
+      "bytes": 99686977,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 764516470305
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/v3_random4_20260914_014500_weibo21_seed395953986/checkpoints/final_averaged.pth",
+      "bytes": 99704115,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 764516470306
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/v3_random4_20260914_014500_weibo21_seed395953986/checkpoints/last.pth",
+      "bytes": 299120082,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 764516470307
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/v3_random4_20260914_014500_weibo21_seed395953986/checkpoints/topk/epoch_08.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 766660085238
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/v3_random4_20260914_014500_weibo21_seed395953986/checkpoints/topk/epoch_13.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 766660085239
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/v3_random4_20260914_014500_weibo21_seed395953986/checkpoints/topk/epoch_18.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 766660085240
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/v3_random4_20260914_014500_weibo21_seed395953986/checkpoints/topk/epoch_20.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 766660516317
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/v3_random4_20260914_014500_weibo21_seed395953986/checkpoints/topk/epoch_21.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 766660516318
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/weibo21_lgled_20step_smoke/checkpoints/smoke.pth",
+      "bytes": 299046170,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 779555970109
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/weibo21_lgled_ddp_smoke/checkpoints/smoke.pth",
+      "bytes": 299046170,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 785979203658
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed323592911/checkpoints/best.pth",
+      "bytes": 99686977,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 526150330049
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed323592911/checkpoints/last.pth",
+      "bytes": 299085202,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 526150330050
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed323592911/checkpoints/final_averaged.pth",
+      "bytes": 99704243,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 526150330051
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed323592911/checkpoints/topk/epoch_03.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 528285850738
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed323592911/checkpoints/topk/epoch_05.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 528286113506
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed323592911/checkpoints/topk/epoch_06.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 528286113507
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed323592911/checkpoints/topk/epoch_07.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 528285850736
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed323592911/checkpoints/topk/epoch_08.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 528285850737
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed325960923/checkpoints/best.pth",
+      "bytes": 99686977,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 532577011363
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed325960923/checkpoints/last.pth",
+      "bytes": 299109714,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 532577011364
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed325960923/checkpoints/final_averaged.pth",
+      "bytes": 99704243,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 532577011365
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed325960923/checkpoints/topk/epoch_04.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 534732520276
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed325960923/checkpoints/topk/epoch_09.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 534733624764
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed325960923/checkpoints/topk/epoch_10.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 534732013440
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed325960923/checkpoints/topk/epoch_11.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 534732012542
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed325960923/checkpoints/topk/epoch_13.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 534732012543
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed2029091074/checkpoints/best.pth",
+      "bytes": 99686977,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 539092243411
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed2029091074/checkpoints/last.pth",
+      "bytes": 299095698,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 539092243412
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed2029091074/checkpoints/final_averaged.pth",
+      "bytes": 99704243,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 539092571537
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed2029091074/checkpoints/topk/epoch_05.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 541170801661
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed2029091074/checkpoints/topk/epoch_06.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 541170801662
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed2029091074/checkpoints/topk/epoch_07.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 541170801657
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed2029091074/checkpoints/topk/epoch_09.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 541170801659
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed2029091074/checkpoints/topk/epoch_10.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 541170801658
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed769503384/checkpoints/best.pth",
+      "bytes": 99686977,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 545463382208
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed769503384/checkpoints/last.pth",
+      "bytes": 299102674,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 545463382209
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed769503384/checkpoints/final_averaged.pth",
+      "bytes": 99704243,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 545463382210
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed769503384/checkpoints/topk/epoch_03.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 547631714737
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed769503384/checkpoints/topk/epoch_06.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 547631714740
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed769503384/checkpoints/topk/epoch_07.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 547631714735
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed769503384/checkpoints/topk/epoch_08.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 547631714736
+    },
+    {
+      "path": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed769503384/checkpoints/topk/epoch_09.pth",
+      "bytes": 99701333,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 547631714738
+    },
+    {
+      "path": "workspaces/r1_cpu_smoke_01/reference/fold_0.pth",
+      "bytes": 113750,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 523994187124
+    },
+    {
+      "path": "workspaces/r1_cpu_smoke_01/reference/fold_1.pth",
+      "bytes": 113750,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 523994187126
+    },
+    {
+      "path": "workspaces/r1_cpu_smoke_01/reference/fold_2.pth",
+      "bytes": 113750,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 523994187128
+    },
+    {
+      "path": "workspaces/r1_cpu_smoke_01/runs/synthetic_smoke/checkpoints/best.pth",
+      "bytes": 129200,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 532582224767
+    },
+    {
+      "path": "workspaces/r1_cpu_smoke_01/runs/synthetic_smoke/checkpoints/last.pth",
+      "bytes": 373818,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 532582224953
+    },
+    {
+      "path": "workspaces/r1_cpu_smoke_01/runs/synthetic_smoke/checkpoints/final_averaged.pth",
+      "bytes": 135470,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 532582224955
+    },
+    {
+      "path": "workspaces/r1_cpu_smoke_01/runs/synthetic_smoke/checkpoints/topk/epoch_01.pth",
+      "bytes": 134396,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 534739425218
+    },
+    {
+      "path": "workspaces/r1_cpu_smoke_01/runs/synthetic_smoke/checkpoints/topk/epoch_02.pth",
+      "bytes": 134396,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 534739425220
+    },
+    {
+      "path": "workspaces/r1_cpu_ddp4_smoke_01/reference/fold_0.pth",
+      "bytes": 113750,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 566937139139
+    },
+    {
+      "path": "workspaces/r1_cpu_ddp4_smoke_01/reference/fold_1.pth",
+      "bytes": 113750,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 566937139141
+    },
+    {
+      "path": "workspaces/r1_cpu_ddp4_smoke_01/reference/fold_2.pth",
+      "bytes": 113750,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 566937139143
+    },
+    {
+      "path": "workspaces/r1_cpu_ddp4_smoke_01/runs/synthetic_smoke/checkpoints/best.pth",
+      "bytes": 129200,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 575555117505
+    },
+    {
+      "path": "workspaces/r1_cpu_ddp4_smoke_01/runs/synthetic_smoke/checkpoints/last.pth",
+      "bytes": 373882,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 575555117506
+    },
+    {
+      "path": "workspaces/r1_cpu_ddp4_smoke_01/runs/synthetic_smoke/checkpoints/final_averaged.pth",
+      "bytes": 135470,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 575555117507
+    },
+    {
+      "path": "workspaces/r1_cpu_ddp4_smoke_01/runs/synthetic_smoke/checkpoints/topk/epoch_01.pth",
+      "bytes": 134396,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 577674799768
+    },
+    {
+      "path": "workspaces/r1_cpu_ddp4_smoke_01/runs/synthetic_smoke/checkpoints/topk/epoch_02.pth",
+      "bytes": 134396,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 577674799769
+    },
+    {
+      "path": "workspaces/r1_cpu_smoke_02/reference/fold_0.pth",
+      "bytes": 114070,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 648556338641
+    },
+    {
+      "path": "workspaces/r1_cpu_smoke_02/reference/fold_1.pth",
+      "bytes": 114070,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 648556338643
+    },
+    {
+      "path": "workspaces/r1_cpu_smoke_02/reference/fold_2.pth",
+      "bytes": 114070,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 648556338645
+    },
+    {
+      "path": "workspaces/r1_cpu_smoke_02/runs/synthetic_smoke/checkpoints/best.pth",
+      "bytes": 129456,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 659282501771
+    },
+    {
+      "path": "workspaces/r1_cpu_smoke_02/runs/synthetic_smoke/checkpoints/last.pth",
+      "bytes": 387381,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 659282501772
+    },
+    {
+      "path": "workspaces/r1_cpu_smoke_02/runs/synthetic_smoke/checkpoints/final_averaged.pth",
+      "bytes": 135726,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 659282501773
+    },
+    {
+      "path": "workspaces/r1_cpu_smoke_02/runs/synthetic_smoke/checkpoints/topk/epoch_01.pth",
+      "bytes": 134652,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 661440976817
+    },
+    {
+      "path": "workspaces/r1_cpu_smoke_02/runs/synthetic_smoke/checkpoints/topk/epoch_02.pth",
+      "bytes": 134652,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 661440976818
+    },
+    {
+      "path": "workspaces/r1_cpu_ddp4_smoke_final/reference/fold_0.pth",
+      "bytes": 114070,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 702234608689
+    },
+    {
+      "path": "workspaces/r1_cpu_ddp4_smoke_final/reference/fold_1.pth",
+      "bytes": 114070,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 702234608700
+    },
+    {
+      "path": "workspaces/r1_cpu_ddp4_smoke_final/reference/fold_2.pth",
+      "bytes": 114070,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 702234608907
+    },
+    {
+      "path": "workspaces/r1_cpu_ddp4_smoke_final/runs/synthetic_smoke/checkpoints/best.pth",
+      "bytes": 129520,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 725855264062
+    },
+    {
+      "path": "workspaces/r1_cpu_ddp4_smoke_final/runs/synthetic_smoke/checkpoints/last.pth",
+      "bytes": 426726,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 725855296273
+    },
+    {
+      "path": "workspaces/r1_cpu_ddp4_smoke_final/runs/synthetic_smoke/checkpoints/final_averaged.pth",
+      "bytes": 135854,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 725855296274
+    },
+    {
+      "path": "workspaces/r1_cpu_ddp4_smoke_final/runs/synthetic_smoke/checkpoints/topk/epoch_01.pth",
+      "bytes": 134716,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 727998324859
+    },
+    {
+      "path": "workspaces/r1_cpu_ddp4_smoke_final/runs/synthetic_smoke/checkpoints/topk/epoch_02.pth",
+      "bytes": 134716,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 727998324860
+    },
+    {
+      "path": "workspaces/r1_cpu_release_smoke/reference/fold_0.pth",
+      "bytes": 114262,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 788150522365
+    },
+    {
+      "path": "workspaces/r1_cpu_release_smoke/reference/fold_1.pth",
+      "bytes": 114262,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 788151329229
+    },
+    {
+      "path": "workspaces/r1_cpu_release_smoke/reference/fold_2.pth",
+      "bytes": 114262,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 788151756718
+    },
+    {
+      "path": "workspaces/r1_cpu_release_smoke/runs/synthetic_smoke/checkpoints/best.pth",
+      "bytes": 129840,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 794583263650
+    },
+    {
+      "path": "workspaces/r1_cpu_release_smoke/runs/synthetic_smoke/checkpoints/last.pth",
+      "bytes": 430054,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 794583605192
+    },
+    {
+      "path": "workspaces/r1_cpu_release_smoke/runs/synthetic_smoke/checkpoints/final_averaged.pth",
+      "bytes": 136302,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 794583605194
+    },
+    {
+      "path": "workspaces/r1_cpu_release_smoke/runs/synthetic_smoke/checkpoints/topk/epoch_01.pth",
+      "bytes": 135036,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 796780430951
+    },
+    {
+      "path": "workspaces/r1_cpu_release_smoke/runs/synthetic_smoke/checkpoints/topk/epoch_02.pth",
+      "bytes": 135036,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 796780430952
+    },
+    {
+      "path": "workspaces/r1_cpu_release_smoke/runs/cli_all_smoke/checkpoints/best.pth",
+      "bytes": 129840,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 871882550553
+    },
+    {
+      "path": "workspaces/r1_cpu_release_smoke/runs/cli_all_smoke/checkpoints/last.pth",
+      "bytes": 387765,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 871882550554
+    },
+    {
+      "path": "workspaces/r1_cpu_release_smoke/runs/cli_all_smoke/checkpoints/final_averaged.pth",
+      "bytes": 136174,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 871882550555
+    },
+    {
+      "path": "workspaces/r1_cpu_release_smoke/runs/cli_all_smoke/checkpoints/topk/epoch_01.pth",
+      "bytes": 135036,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 874027587407
+    },
+    {
+      "path": "workspaces/r1_cpu_release_smoke/runs/cli_all_smoke/checkpoints/topk/epoch_02.pth",
+      "bytes": 135036,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 874027587422
+    },
+    {
+      "path": "workspaces/r1_cpu_release_smoke/runs/final_cli_ddp4/checkpoints/best.pth",
+      "bytes": 129840,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 23631036868
+    },
+    {
+      "path": "workspaces/r1_cpu_release_smoke/runs/final_cli_ddp4/checkpoints/last.pth",
+      "bytes": 427046,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 23631036869
+    },
+    {
+      "path": "workspaces/r1_cpu_release_smoke/runs/final_cli_ddp4/checkpoints/final_averaged.pth",
+      "bytes": 136174,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 23631036870
+    },
+    {
+      "path": "workspaces/r1_cpu_release_smoke/runs/final_cli_ddp4/checkpoints/topk/epoch_01.pth",
+      "bytes": 135036,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 25780539034
+    },
+    {
+      "path": "workspaces/r1_cpu_release_smoke/runs/final_cli_ddp4/checkpoints/topk/epoch_02.pth",
+      "bytes": 135036,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 25780539035
+    },
+    {
+      "path": "workspaces/r1_cpu_cli_reference_smoke/fold_0.pth",
+      "bytes": 114262,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 867621224668
+    },
+    {
+      "path": "workspaces/r1_cpu_cli_reference_smoke/fold_1.pth",
+      "bytes": 114262,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 867621224670
+    },
+    {
+      "path": "workspaces/r1_cpu_cli_reference_smoke/fold_2.pth",
+      "bytes": 114262,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 867621224687
+    },
+    {
+      "path": "workspaces/r1_cpu_final_reference/fold_0.pth",
+      "bytes": 114262,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 19331856937
+    },
+    {
+      "path": "workspaces/r1_cpu_final_reference/fold_1.pth",
+      "bytes": 114262,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 19331856939
+    },
+    {
+      "path": "workspaces/r1_cpu_final_reference/fold_2.pth",
+      "bytes": 114262,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 19331856941
+    },
+    {
+      "path": "workspaces/r1_pretrained_control_synthetic/best.pt",
+      "bytes": 88810,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 83753516566
+    },
+    {
+      "path": "workspaces/r1_random_control_synthetic/best.pt",
+      "bytes": 88810,
+      "nlink": 1,
+      "symlink": false,
+      "inode": 85970934520
+    }
+  ],
+  "preserved": [
+    "datasets",
+    "pretrained_models",
+    "source code",
+    "logs and validation records",
+    "synthetic non-checkpoint caches (not used by scheduled jobs)"
+  ],
+  "queue_jobs": 12,
+  "fresh_run_and_reference_directories": true,
+  "resume_arguments": false,
+  "remaining_training_checkpoints": [],
+  "scheduled_hashes_match": true,
+  "queue_status": "scheduled",
+  "queue_job_statuses": {
+    "pending": 12
+  }
+}

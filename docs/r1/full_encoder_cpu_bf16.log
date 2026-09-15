@@ -1,0 +1,6 @@
+[HAMI-core Msg(4091390:139870177090432:libvgpu.c:856)]: Initializing.....
+[HAMI-core ERROR (pid:4091390 thread=139870177090432 libvgpu.c:897)]: cuInit failed:100
+/data/dyl/sotamodelv3_mask/.venv/lib/python3.10/site-packages/torch/utils/checkpoint.py:1399: FutureWarning: `torch.cpu.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cpu', args...)` instead.
+  with device_autocast_ctx, torch.cpu.amp.autocast(**cpu_autocast_kwargs), recompute_context:  # type: ignore[attr-defined]
+{"status": "PASS", "fixture": "tiny actual Qwen2/SigLIP/PEFT encoder + R1, synthetic q supervision", "device": "cpu", "autocast": "bfloat16", "loss_finite": true, "gradients_finite": true, "gpu_used": false}
+[HAMI-core Msg(4091390:139870177090432:multiprocess_memory_limit.c:455)]: Calling exit handler 4091390

@@ -1,0 +1,23 @@
+{
+  "selection_split": "val",
+  "baseline": {
+    "tau": 1.0,
+    "lambda_relation": 0.2,
+    "lambda_utility": 1.0
+  },
+  "one_factor_at_a_time": {
+    "tau": [
+      0.5,
+      2.0
+    ],
+    "lambda_relation": [
+      0.1,
+      0.4
+    ],
+    "lambda_utility": [
+      0.5,
+      2.0
+    ]
+  },
+  "test_selection_forbidden": true
+}

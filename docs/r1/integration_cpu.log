@@ -1,0 +1,523 @@
+[HAMI-core Msg(4042851:139782954044288:libvgpu.c:856)]: Initializing.....
+[HAMI-core ERROR (pid:4042851 thread=139782954044288 libvgpu.c:897)]: cuInit failed:100
+/data/dyl/sotamodelv3_mask/.venv/lib/python3.10/site-packages/torch/utils/checkpoint.py:1399: FutureWarning: `torch.cpu.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cpu', args...)` instead.
+  with device_autocast_ctx, torch.cpu.amp.autocast(**cpu_autocast_kwargs), recompute_context:  # type: ignore[attr-defined]
+{"reference_fold": 0, "epoch": 1, "cal_nll": 0.7478237152099609}
+{"reference_fold": 1, "epoch": 1, "cal_nll": 0.7581272721290588}
+{"reference_fold": 2, "epoch": 1, "cal_nll": 0.5976254940032959}
+[HAMI-core Msg(4043134:140544096263040:libvgpu.c:856)]: Initializing.....
+[HAMI-core ERROR (pid:4043134 thread=140544096263040 libvgpu.c:897)]: cuInit failed:100
+device=cpu; world_size=1; precision=fp32
+dataset=weibo21; manifest_dir=/data/dyl/sotamodelv3_mask/workspaces/r1_cpu_smoke_02/ready
+{
+  "architecture": "qwen_lora_lgled_masked_r1",
+  "qwen_path": "/data/dyl/sotamodelv3_mask/workspaces/r1_cpu_smoke_02/qwen",
+  "qwen_class": "Qwen2Model",
+  "qwen_hidden_size": 32,
+  "qwen_num_hidden_layers": 3,
+  "latent_judge_layer_indices": [
+    1,
+    2
+  ],
+  "shared_layer_reference": true,
+  "total_parameters": 64966,
+  "trainable_parameters": 23430
+}
+train 1:   0%|          | 0/18 [00:00<?, ?it/s]/data/dyl/sotamodelv3_mask/.venv/lib/python3.10/site-packages/torch/utils/checkpoint.py:1399: FutureWarning: `torch.cpu.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cpu', args...)` instead.
+  with device_autocast_ctx, torch.cpu.amp.autocast(**cpu_autocast_kwargs), recompute_context:  # type: ignore[attr-defined]
+train 1:  17%|█▋        | 3/18 [00:00<00:00, 29.08it/s]train 1:  39%|███▉      | 7/18 [00:00<00:00, 31.74it/s]train 1:  61%|██████    | 11/18 [00:00<00:00, 32.62it/s]train 1:  83%|████████▎ | 15/18 [00:00<00:00, 33.04it/s]train 1: 100%|██████████| 18/18 [00:00<00:00, 32.60it/s]
+[VAL] Threshold Source: validation; Objective: macro_f1; macro_f1=0.500000; threshold=0.410000; accuracy=0.500000; fake_precision=0.500000; fake_recall=0.500000; fake_f1=0.500000; real_precision=0.500000; real_recall=0.500000; real_f1=0.500000; auc=0.500000; nll=0.712212; brier=0.259338; ece=0.208440
+{
+  "epoch": 1,
+  "train_total_loss": 1.2744416726960077,
+  "train_loss_components": {
+    "classification": 0.7131620645523071,
+    "r1/relation_A": 0.33507222102748024,
+    "r1/relation_C": 0.31209708915816414,
+    "r1/relation_M": 0.3528306997484631,
+    "relation": 1.2455293867323134,
+    "utility": 0.3121737092733383
+  },
+  "learning_rates": {
+    "lora_decay": 5.4613417973165106e-05,
+    "vision_decay": 1.092268359463302e-05,
+    "vision_no_decay": 1.092268359463302e-05,
+    "head_decay": 2.184536718926604e-05,
+    "head_no_decay": 2.184536718926604e-05
+  },
+  "val": {
+    "samples": 8,
+    "threshold": 0.41,
+    "decision_threshold": 0.41,
+    "accuracy": 0.5,
+    "threshold_accuracy": 0.5,
+    "macro_f1": 0.5,
+    "macro_precision": 0.5,
+    "macro_recall": 0.5,
+    "balanced_accuracy": 0.5,
+    "auc": 0.5,
+    "nll": 0.7122121059534199,
+    "brier": 0.25933762611936606,
+    "ece": 0.20843994617462153,
+    "ece_definition": "top_label_equal_width_15_bins",
+    "tp": 2,
+    "tn": 2,
+    "fp": 2,
+    "fn": 2,
+    "confusion_matrix": [
+      [
+        2,
+        2
+      ],
+      [
+        2,
+        2
+      ]
+    ],
+    "confusion_matrix_labels": [
+      0,
+      1
+    ],
+    "label_semantics": {
+      "0": "fake",
+      "1": "real"
+    },
+    "positive_label": 0,
+    "positive_class": "fake",
+    "fake_precision": 0.5,
+    "fake_recall": 0.5,
+    "fake_f1": 0.5,
+    "fake_support": 4,
+    "real_precision": 0.5,
+    "real_recall": 0.5,
+    "real_f1": 0.5,
+    "real_support": 4,
+    "positive_precision": 0.5,
+    "positive_recall": 0.5,
+    "positive_f1": 0.5,
+    "split": "val",
+    "threshold_selection": {
+      "evaluation_protocol": "validation_macro_f1_threshold_v1",
+      "threshold": 0.41,
+      "decision_threshold": 0.41,
+      "threshold_source": "validation",
+      "threshold_objective": "macro_f1",
+      "threshold_tie_break": "closest_to_0.5_then_lower",
+      "threshold_grid": [
+        0.2,
+        0.21,
+        0.22,
+        0.23,
+        0.24,
+        0.25,
+        0.26,
+        0.27,
+        0.28,
+        0.29,
+        0.3,
+        0.31,
+        0.32,
+        0.33,
+        0.34,
+        0.35,
+        0.36,
+        0.37,
+        0.38,
+        0.39,
+        0.4,
+        0.41,
+        0.42,
+        0.43,
+        0.44,
+        0.45,
+        0.46,
+        0.47,
+        0.48,
+        0.49,
+        0.5,
+        0.51,
+        0.52,
+        0.53,
+        0.54,
+        0.55,
+        0.56,
+        0.57,
+        0.58,
+        0.59,
+        0.6,
+        0.61,
+        0.62,
+        0.63,
+        0.64,
+        0.65,
+        0.66,
+        0.67,
+        0.68,
+        0.69,
+        0.7,
+        0.71,
+        0.72,
+        0.73,
+        0.74,
+        0.75,
+        0.76,
+        0.77,
+        0.78,
+        0.79,
+        0.8
+      ],
+      "val_best_macro_f1": 0.5,
+      "positive_label": 0,
+      "positive_class": "fake",
+      "label_semantics": {
+        "0": "fake",
+        "1": "real"
+      },
+      "checkpoint_reference": {
+        "kind": "epoch",
+        "epoch": 1
+      },
+      "model_hash": "2c50b3dc8feaac7199a1d11fba83aaab71ceaf97b8bed0992402d50bc8f5321f",
+      "selection_split_hash": "15f2efc390ed45008c36f60468669b6e49b299bc091763a8fc1593320ba9c803",
+      "probability_type": "raw",
+      "calibrated": false,
+      "temperature": 1.0,
+      "seed": 991
+    },
+    "inference_seconds": 0.017849348951131105,
+    "evaluation_protocol": "validation_macro_f1_threshold_v1",
+    "threshold_source": "validation",
+    "threshold_objective": "macro_f1",
+    "val_best_macro_f1": 0.5
+  },
+  "selection_metric": "macro_f1",
+  "selection_score": 0.5
+}
+train 2:   0%|          | 0/18 [00:00<?, ?it/s]/data/dyl/sotamodelv3_mask/.venv/lib/python3.10/site-packages/torch/utils/checkpoint.py:1399: FutureWarning: `torch.cpu.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cpu', args...)` instead.
+  with device_autocast_ctx, torch.cpu.amp.autocast(**cpu_autocast_kwargs), recompute_context:  # type: ignore[attr-defined]
+train 2:  22%|██▏       | 4/18 [00:00<00:00, 32.69it/s]train 2:  44%|████▍     | 8/18 [00:00<00:00, 30.48it/s]train 2:  67%|██████▋   | 12/18 [00:00<00:00, 27.47it/s]train 2:  83%|████████▎ | 15/18 [00:00<00:00, 24.91it/s]train 2: 100%|██████████| 18/18 [00:00<00:00, 22.62it/s]train 2: 100%|██████████| 18/18 [00:00<00:00, 24.84it/s]
+[VAL] Threshold Source: validation; Objective: macro_f1; macro_f1=0.500000; threshold=0.410000; accuracy=0.500000; fake_precision=0.500000; fake_recall=0.500000; fake_f1=0.500000; real_precision=0.500000; real_recall=0.500000; real_f1=0.500000; auc=0.500000; nll=0.710398; brier=0.258466; ece=0.088465
+{
+  "epoch": 2,
+  "train_total_loss": 1.2662793464130826,
+  "train_loss_components": {
+    "classification": 0.7075443201594882,
+    "r1/relation_A": 0.33265850444634754,
+    "r1/relation_C": 0.31096673674053615,
+    "r1/relation_M": 0.35637476378017,
+    "relation": 1.2328839368290372,
+    "utility": 0.3121582455933094
+  },
+  "learning_rates": {
+    "lora_decay": 0.0,
+    "vision_decay": 0.0,
+    "vision_no_decay": 0.0,
+    "head_decay": 0.0,
+    "head_no_decay": 0.0
+  },
+  "val": {
+    "samples": 8,
+    "threshold": 0.41,
+    "decision_threshold": 0.41,
+    "accuracy": 0.5,
+    "threshold_accuracy": 0.5,
+    "macro_f1": 0.5,
+    "macro_precision": 0.5,
+    "macro_recall": 0.5,
+    "balanced_accuracy": 0.5,
+    "auc": 0.5,
+    "nll": 0.7103983125477598,
+    "brier": 0.25846603948720004,
+    "ece": 0.0884646475315094,
+    "ece_definition": "top_label_equal_width_15_bins",
+    "tp": 2,
+    "tn": 2,
+    "fp": 2,
+    "fn": 2,
+    "confusion_matrix": [
+      [
+        2,
+        2
+      ],
+      [
+        2,
+        2
+      ]
+    ],
+    "confusion_matrix_labels": [
+      0,
+      1
+    ],
+    "label_semantics": {
+      "0": "fake",
+      "1": "real"
+    },
+    "positive_label": 0,
+    "positive_class": "fake",
+    "fake_precision": 0.5,
+    "fake_recall": 0.5,
+    "fake_f1": 0.5,
+    "fake_support": 4,
+    "real_precision": 0.5,
+    "real_recall": 0.5,
+    "real_f1": 0.5,
+    "real_support": 4,
+    "positive_precision": 0.5,
+    "positive_recall": 0.5,
+    "positive_f1": 0.5,
+    "split": "val",
+    "threshold_selection": {
+      "evaluation_protocol": "validation_macro_f1_threshold_v1",
+      "threshold": 0.41,
+      "decision_threshold": 0.41,
+      "threshold_source": "validation",
+      "threshold_objective": "macro_f1",
+      "threshold_tie_break": "closest_to_0.5_then_lower",
+      "threshold_grid": [
+        0.2,
+        0.21,
+        0.22,
+        0.23,
+        0.24,
+        0.25,
+        0.26,
+        0.27,
+        0.28,
+        0.29,
+        0.3,
+        0.31,
+        0.32,
+        0.33,
+        0.34,
+        0.35,
+        0.36,
+        0.37,
+        0.38,
+        0.39,
+        0.4,
+        0.41,
+        0.42,
+        0.43,
+        0.44,
+        0.45,
+        0.46,
+        0.47,
+        0.48,
+        0.49,
+        0.5,
+        0.51,
+        0.52,
+        0.53,
+        0.54,
+        0.55,
+        0.56,
+        0.57,
+        0.58,
+        0.59,
+        0.6,
+        0.61,
+        0.62,
+        0.63,
+        0.64,
+        0.65,
+        0.66,
+        0.67,
+        0.68,
+        0.69,
+        0.7,
+        0.71,
+        0.72,
+        0.73,
+        0.74,
+        0.75,
+        0.76,
+        0.77,
+        0.78,
+        0.79,
+        0.8
+      ],
+      "val_best_macro_f1": 0.5,
+      "positive_label": 0,
+      "positive_class": "fake",
+      "label_semantics": {
+        "0": "fake",
+        "1": "real"
+      },
+      "checkpoint_reference": {
+        "kind": "epoch",
+        "epoch": 2
+      },
+      "model_hash": "61a63f24befc82ada14ca0b19fb59868232201b28a2a4816ce8a6826f8b67a91",
+      "selection_split_hash": "15f2efc390ed45008c36f60468669b6e49b299bc091763a8fc1593320ba9c803",
+      "probability_type": "raw",
+      "calibrated": false,
+      "temperature": 1.0,
+      "seed": 991
+    },
+    "inference_seconds": 0.07672705966979265,
+    "evaluation_protocol": "validation_macro_f1_threshold_v1",
+    "threshold_source": "validation",
+    "threshold_objective": "macro_f1",
+    "val_best_macro_f1": 0.5
+  },
+  "selection_metric": "macro_f1",
+  "selection_score": 0.5
+}
+[VAL] Threshold Source: validation; Objective: macro_f1; macro_f1=0.500000; threshold=0.410000; accuracy=0.500000; fake_precision=0.500000; fake_recall=0.500000; fake_f1=0.500000; real_precision=0.500000; real_recall=0.500000; real_f1=0.500000; auc=0.500000; nll=0.711296; brier=0.258898; ece=0.209415
+completed_run=/data/dyl/sotamodelv3_mask/workspaces/r1_cpu_smoke_02/runs/synthetic_smoke; test=NOT_RUN
+[HAMI-core Msg(4043134:140544096263040:multiprocess_memory_limit.c:455)]: Calling exit handler 4043134
+[HAMI-core Msg(4043351:140402494159744:libvgpu.c:856)]: Initializing.....
+[HAMI-core ERROR (pid:4043351 thread=140402494159744 libvgpu.c:897)]: cuInit failed:100
+[VAL] Threshold Source: validation; Objective: macro_f1; macro_f1=0.500000; threshold=0.410000; accuracy=0.500000; fake_precision=0.500000; fake_recall=0.500000; fake_f1=0.500000; real_precision=0.500000; real_recall=0.500000; real_f1=0.500000; auc=0.500000; nll=0.711296; brier=0.258898; ece=0.209415
+{
+  "samples": 8,
+  "threshold": 0.41,
+  "decision_threshold": 0.41,
+  "accuracy": 0.5,
+  "threshold_accuracy": 0.5,
+  "macro_f1": 0.5,
+  "macro_precision": 0.5,
+  "macro_recall": 0.5,
+  "balanced_accuracy": 0.5,
+  "auc": 0.5,
+  "nll": 0.711295683489263,
+  "brier": 0.2588976668735792,
+  "ece": 0.2094147652387619,
+  "ece_definition": "top_label_equal_width_15_bins",
+  "tp": 2,
+  "tn": 2,
+  "fp": 2,
+  "fn": 2,
+  "confusion_matrix": [
+    [
+      2,
+      2
+    ],
+    [
+      2,
+      2
+    ]
+  ],
+  "confusion_matrix_labels": [
+    0,
+    1
+  ],
+  "label_semantics": {
+    "0": "fake",
+    "1": "real"
+  },
+  "positive_label": 0,
+  "positive_class": "fake",
+  "fake_precision": 0.5,
+  "fake_recall": 0.5,
+  "fake_f1": 0.5,
+  "fake_support": 4,
+  "real_precision": 0.5,
+  "real_recall": 0.5,
+  "real_f1": 0.5,
+  "real_support": 4,
+  "positive_precision": 0.5,
+  "positive_recall": 0.5,
+  "positive_f1": 0.5,
+  "split": "val",
+  "threshold_selection": {
+    "evaluation_protocol": "validation_macro_f1_threshold_v1",
+    "threshold": 0.41,
+    "decision_threshold": 0.41,
+    "threshold_source": "validation",
+    "threshold_objective": "macro_f1",
+    "threshold_tie_break": "closest_to_0.5_then_lower",
+    "threshold_grid": [
+      0.2,
+      0.21,
+      0.22,
+      0.23,
+      0.24,
+      0.25,
+      0.26,
+      0.27,
+      0.28,
+      0.29,
+      0.3,
+      0.31,
+      0.32,
+      0.33,
+      0.34,
+      0.35,
+      0.36,
+      0.37,
+      0.38,
+      0.39,
+      0.4,
+      0.41,
+      0.42,
+      0.43,
+      0.44,
+      0.45,
+      0.46,
+      0.47,
+      0.48,
+      0.49,
+      0.5,
+      0.51,
+      0.52,
+      0.53,
+      0.54,
+      0.55,
+      0.56,
+      0.57,
+      0.58,
+      0.59,
+      0.6,
+      0.61,
+      0.62,
+      0.63,
+      0.64,
+      0.65,
+      0.66,
+      0.67,
+      0.68,
+      0.69,
+      0.7,
+      0.71,
+      0.72,
+      0.73,
+      0.74,
+      0.75,
+      0.76,
+      0.77,
+      0.78,
+      0.79,
+      0.8
+    ],
+    "val_best_macro_f1": 0.5,
+    "positive_label": 0,
+    "positive_class": "fake",
+    "label_semantics": {
+      "0": "fake",
+      "1": "real"
+    },
+    "checkpoint_reference": {
+      "kind": "top_k_average",
+      "epochs": [
+        1,
+        2
+      ]
+    },
+    "model_hash": "1b72c9812050d188d7083bfc300e9939bf8ad2d656b76715552aea3ad21343c8",
+    "selection_split_hash": "15f2efc390ed45008c36f60468669b6e49b299bc091763a8fc1593320ba9c803",
+    "probability_type": "raw",
+    "calibrated": false,
+    "temperature": 1.0,
+    "seed": 991
+  },
+  "inference_seconds": 0.030224103946238756,
+  "evaluation_protocol": "validation_macro_f1_threshold_v1",
+  "threshold_source": "validation",
+  "threshold_objective": "macro_f1",
+  "val_best_macro_f1": 0.5
+}
+checkpoint_epoch=2; results=/data/dyl/sotamodelv3_mask/workspaces/r1_cpu_smoke_02/runs/manual_evaluation/20260915_223752_198153/final_averaged
+[HAMI-core Msg(4043351:140402494159744:multiprocess_memory_limit.c:455)]: Calling exit handler 4043351
+{"status": "PASS", "fixture": "synthetic tiny Qwen2/SigLIP/PEFT", "gpu_used": false, "ddp_world_size": 1, "output": "/data/dyl/sotamodelv3_mask/workspaces/r1_cpu_smoke_02/runs/synthetic_smoke"}
+[HAMI-core Msg(4042851:139782954044288:multiprocess_memory_limit.c:455)]: Calling exit handler 4042851

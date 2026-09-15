@@ -1,0 +1,560 @@
+[HAMI-core Msg(4054297:139863867452288:libvgpu.c:856)]: Initializing.....
+[HAMI-core ERROR (pid:4054297 thread=139863867452288 libvgpu.c:897)]: cuInit failed:100
+[HAMI-core Msg(4054472:139937752116096:libvgpu.c:856)]: Initializing.....
+[HAMI-core Msg(4054513:140477002742656:libvgpu.c:856)]: Initializing.....
+[HAMI-core Msg(4054511:140582834600832:libvgpu.c:856)]: Initializing.....
+[HAMI-core Msg(4054510:140356336888704:libvgpu.c:856)]: Initializing.....
+[HAMI-core Msg(4054512:140546485156736:libvgpu.c:856)]: Initializing.....
+[HAMI-core ERROR (pid:4054512 thread=140546485156736 libvgpu.c:897)]: cuInit failed:100
+[HAMI-core ERROR (pid:4054513 thread=140477002742656 libvgpu.c:897)]: cuInit failed:100
+[HAMI-core ERROR (pid:4054510 thread=140356336888704 libvgpu.c:897)]: cuInit failed:100
+[HAMI-core ERROR (pid:4054511 thread=140582834600832 libvgpu.c:897)]: cuInit failed:100
+/data/dyl/sotamodelv3_mask/.venv/lib/python3.10/site-packages/torch/utils/checkpoint.py:1399: FutureWarning: `torch.cpu.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cpu', args...)` instead.
+  with device_autocast_ctx, torch.cpu.amp.autocast(**cpu_autocast_kwargs), recompute_context:  # type: ignore[attr-defined]
+/data/dyl/sotamodelv3_mask/.venv/lib/python3.10/site-packages/torch/utils/checkpoint.py:1399: FutureWarning: `torch.cpu.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cpu', args...)` instead.
+  with device_autocast_ctx, torch.cpu.amp.autocast(**cpu_autocast_kwargs), recompute_context:  # type: ignore[attr-defined]
+/data/dyl/sotamodelv3_mask/.venv/lib/python3.10/site-packages/torch/utils/checkpoint.py:1399: FutureWarning: `torch.cpu.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cpu', args...)` instead.
+  with device_autocast_ctx, torch.cpu.amp.autocast(**cpu_autocast_kwargs), recompute_context:  # type: ignore[attr-defined]
+/data/dyl/sotamodelv3_mask/.venv/lib/python3.10/site-packages/torch/utils/checkpoint.py:1399: FutureWarning: `torch.cpu.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cpu', args...)` instead.
+  with device_autocast_ctx, torch.cpu.amp.autocast(**cpu_autocast_kwargs), recompute_context:  # type: ignore[attr-defined]
+{"reference_fold": 0, "epoch": 1, "cal_nll": 0.7200478315353394}
+{"reference_fold": 1, "epoch": 1, "cal_nll": 0.7260759472846985}
+{"reference_fold": 2, "epoch": 1, "cal_nll": 0.6475794315338135}
+[HAMI-core Msg(4054510:140356336888704:multiprocess_memory_limit.c:455)]: Calling exit handler 4054510
+[HAMI-core Msg(4054512:140546485156736:multiprocess_memory_limit.c:455)]: Calling exit handler 4054512
+[HAMI-core Msg(4054511:140582834600832:multiprocess_memory_limit.c:455)]: Calling exit handler 4054511
+[HAMI-core Msg(4054513:140477002742656:multiprocess_memory_limit.c:455)]: Calling exit handler 4054513
+[HAMI-core Msg(4054472:139937752116096:multiprocess_memory_limit.c:455)]: Calling exit handler 4054472
+[HAMI-core Msg(4054880:140592042351488:libvgpu.c:856)]: Initializing.....
+[HAMI-core Msg(4054902:140422266612608:libvgpu.c:856)]: Initializing.....
+[HAMI-core Msg(4054900:140086568299392:libvgpu.c:856)]: Initializing.....
+[HAMI-core Msg(4054903:140586981608320:libvgpu.c:856)]: Initializing.....
+[HAMI-core Msg(4054901:140524361423744:libvgpu.c:856)]: Initializing.....
+[HAMI-core ERROR (pid:4054901 thread=140524361423744 libvgpu.c:897)]: cuInit failed:100
+[HAMI-core ERROR (pid:4054903 thread=140586981608320 libvgpu.c:897)]: cuInit failed:100
+[HAMI-core ERROR (pid:4054902 thread=140422266612608 libvgpu.c:897)]: cuInit failed:100
+[HAMI-core ERROR (pid:4054900 thread=140086568299392 libvgpu.c:897)]: cuInit failed:100
+device=cpu; world_size=4; precision=fp32
+dataset=weibo21; manifest_dir=/data/dyl/sotamodelv3_mask/workspaces/r1_cpu_release_smoke/ready
+{
+  "architecture": "qwen_lora_lgled_masked_r1",
+  "qwen_path": "/data/dyl/sotamodelv3_mask/workspaces/r1_cpu_release_smoke/qwen",
+  "qwen_class": "Qwen2Model",
+  "qwen_hidden_size": 32,
+  "qwen_num_hidden_layers": 3,
+  "latent_judge_layer_indices": [
+    1,
+    2
+  ],
+  "shared_layer_reference": true,
+  "total_parameters": 64966,
+  "trainable_parameters": 23430
+}
+train 1:   0%|          | 0/5 [00:00<?, ?it/s]/data/dyl/sotamodelv3_mask/.venv/lib/python3.10/site-packages/torch/utils/checkpoint.py:1399: FutureWarning: `torch.cpu.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cpu', args...)` instead.
+  with device_autocast_ctx, torch.cpu.amp.autocast(**cpu_autocast_kwargs), recompute_context:  # type: ignore[attr-defined]
+/data/dyl/sotamodelv3_mask/.venv/lib/python3.10/site-packages/torch/utils/checkpoint.py:1399: FutureWarning: `torch.cpu.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cpu', args...)` instead.
+  with device_autocast_ctx, torch.cpu.amp.autocast(**cpu_autocast_kwargs), recompute_context:  # type: ignore[attr-defined]
+/data/dyl/sotamodelv3_mask/.venv/lib/python3.10/site-packages/torch/utils/checkpoint.py:1399: FutureWarning: `torch.cpu.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cpu', args...)` instead.
+  with device_autocast_ctx, torch.cpu.amp.autocast(**cpu_autocast_kwargs), recompute_context:  # type: ignore[attr-defined]
+/data/dyl/sotamodelv3_mask/.venv/lib/python3.10/site-packages/torch/utils/checkpoint.py:1399: FutureWarning: `torch.cpu.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cpu', args...)` instead.
+  with device_autocast_ctx, torch.cpu.amp.autocast(**cpu_autocast_kwargs), recompute_context:  # type: ignore[attr-defined]
+train 1:  60%|██████    | 3/5 [00:00<00:00, 28.25it/s]train 1: 100%|██████████| 5/5 [00:00<00:00, 29.67it/s]
+[VAL] Threshold Source: validation; Objective: macro_f1; macro_f1=0.733333; threshold=0.480000; accuracy=0.750000; fake_precision=0.666667; fake_recall=1.000000; fake_f1=0.800000; real_precision=1.000000; real_recall=0.500000; real_f1=0.666667; auc=0.500000; nll=0.702192; brier=0.254447; ece=0.037596
+{
+  "epoch": 1,
+  "train_total_loss": 1.3631090074777603,
+  "train_loss_components": {
+    "classification": 0.710997274518013,
+    "r1/relation_A": 0.3414424851536751,
+    "r1/relation_C": 0.29371601790189744,
+    "r1/relation_M": 0.36484148651361464,
+    "relation": 1.2178999304771423,
+    "utility": 0.4085317339748144
+  },
+  "learning_rates": {
+    "lora_decay": 5e-05,
+    "vision_decay": 1e-05,
+    "vision_no_decay": 1e-05,
+    "head_decay": 2e-05,
+    "head_no_decay": 2e-05
+  },
+  "val": {
+    "samples": 8,
+    "threshold": 0.48,
+    "decision_threshold": 0.48,
+    "accuracy": 0.75,
+    "threshold_accuracy": 0.75,
+    "macro_f1": 0.7333333333333334,
+    "macro_precision": 0.8333333333333333,
+    "macro_recall": 0.75,
+    "balanced_accuracy": 0.75,
+    "auc": 0.5,
+    "nll": 0.7021921343757184,
+    "brier": 0.2544474886592225,
+    "ece": 0.03759601712226868,
+    "ece_definition": "top_label_equal_width_15_bins",
+    "tp": 4,
+    "tn": 2,
+    "fp": 2,
+    "fn": 0,
+    "confusion_matrix": [
+      [
+        4,
+        0
+      ],
+      [
+        2,
+        2
+      ]
+    ],
+    "confusion_matrix_labels": [
+      0,
+      1
+    ],
+    "label_semantics": {
+      "0": "fake",
+      "1": "real"
+    },
+    "positive_label": 0,
+    "positive_class": "fake",
+    "fake_precision": 0.6666666666666666,
+    "fake_recall": 1.0,
+    "fake_f1": 0.8,
+    "fake_support": 4,
+    "real_precision": 1.0,
+    "real_recall": 0.5,
+    "real_f1": 0.6666666666666666,
+    "real_support": 4,
+    "positive_precision": 0.6666666666666666,
+    "positive_recall": 1.0,
+    "positive_f1": 0.8,
+    "split": "val",
+    "threshold_selection": {
+      "evaluation_protocol": "validation_macro_f1_threshold_v1",
+      "threshold": 0.48,
+      "decision_threshold": 0.48,
+      "threshold_source": "validation",
+      "threshold_objective": "macro_f1",
+      "threshold_tie_break": "closest_to_0.5_then_lower",
+      "threshold_grid": [
+        0.2,
+        0.21,
+        0.22,
+        0.23,
+        0.24,
+        0.25,
+        0.26,
+        0.27,
+        0.28,
+        0.29,
+        0.3,
+        0.31,
+        0.32,
+        0.33,
+        0.34,
+        0.35,
+        0.36,
+        0.37,
+        0.38,
+        0.39,
+        0.4,
+        0.41,
+        0.42,
+        0.43,
+        0.44,
+        0.45,
+        0.46,
+        0.47,
+        0.48,
+        0.49,
+        0.5,
+        0.51,
+        0.52,
+        0.53,
+        0.54,
+        0.55,
+        0.56,
+        0.57,
+        0.58,
+        0.59,
+        0.6,
+        0.61,
+        0.62,
+        0.63,
+        0.64,
+        0.65,
+        0.66,
+        0.67,
+        0.68,
+        0.69,
+        0.7,
+        0.71,
+        0.72,
+        0.73,
+        0.74,
+        0.75,
+        0.76,
+        0.77,
+        0.78,
+        0.79,
+        0.8
+      ],
+      "val_best_macro_f1": 0.7333333333333334,
+      "positive_label": 0,
+      "positive_class": "fake",
+      "label_semantics": {
+        "0": "fake",
+        "1": "real"
+      },
+      "checkpoint_reference": {
+        "kind": "epoch",
+        "epoch": 1
+      },
+      "model_hash": "466ea03111958c5d7fbe27f537273c9f99caf7db040a4e3ea927117ba7eed994",
+      "selection_split_hash": "15f2efc390ed45008c36f60468669b6e49b299bc091763a8fc1593320ba9c803",
+      "probability_type": "raw",
+      "calibrated": false,
+      "temperature": 1.0,
+      "seed": 991
+    },
+    "inference_seconds": 0.016703718807548285,
+    "evaluation_protocol": "validation_macro_f1_threshold_v1",
+    "threshold_source": "validation",
+    "threshold_objective": "macro_f1",
+    "val_best_macro_f1": 0.7333333333333334
+  },
+  "selection_metric": "macro_f1",
+  "selection_score": 0.7333333333333334
+}
+train 2:   0%|          | 0/5 [00:00<?, ?it/s]/data/dyl/sotamodelv3_mask/.venv/lib/python3.10/site-packages/torch/utils/checkpoint.py:1399: FutureWarning: `torch.cpu.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cpu', args...)` instead.
+  with device_autocast_ctx, torch.cpu.amp.autocast(**cpu_autocast_kwargs), recompute_context:  # type: ignore[attr-defined]
+train 2:  80%|████████  | 4/5 [00:00<00:00, 33.34it/s]train 2: 100%|██████████| 5/5 [00:00<00:00, 33.25it/s]
+[VAL] Threshold Source: validation; Objective: macro_f1; macro_f1=0.733333; threshold=0.480000; accuracy=0.750000; fake_precision=0.666667; fake_recall=1.000000; fake_f1=0.800000; real_precision=1.000000; real_recall=0.500000; real_f1=0.666667; auc=0.500000; nll=0.701847; brier=0.254280; ece=0.037394
+{
+  "epoch": 2,
+  "train_total_loss": 1.3453175187110902,
+  "train_loss_components": {
+    "classification": 0.7059597909450531,
+    "r1/relation_A": 0.33994287103414533,
+    "r1/relation_C": 0.29322064518928526,
+    "r1/relation_M": 0.36683648377656936,
+    "relation": 1.211289244890213,
+    "utility": 0.39709986336529257
+  },
+  "learning_rates": {
+    "lora_decay": 0.0,
+    "vision_decay": 0.0,
+    "vision_no_decay": 0.0,
+    "head_decay": 0.0,
+    "head_no_decay": 0.0
+  },
+  "val": {
+    "samples": 8,
+    "threshold": 0.48,
+    "decision_threshold": 0.48,
+    "accuracy": 0.75,
+    "threshold_accuracy": 0.75,
+    "macro_f1": 0.7333333333333334,
+    "macro_precision": 0.8333333333333333,
+    "macro_recall": 0.75,
+    "balanced_accuracy": 0.75,
+    "auc": 0.5,
+    "nll": 0.7018465869764834,
+    "brier": 0.25428042403160434,
+    "ece": 0.03739382326602936,
+    "ece_definition": "top_label_equal_width_15_bins",
+    "tp": 4,
+    "tn": 2,
+    "fp": 2,
+    "fn": 0,
+    "confusion_matrix": [
+      [
+        4,
+        0
+      ],
+      [
+        2,
+        2
+      ]
+    ],
+    "confusion_matrix_labels": [
+      0,
+      1
+    ],
+    "label_semantics": {
+      "0": "fake",
+      "1": "real"
+    },
+    "positive_label": 0,
+    "positive_class": "fake",
+    "fake_precision": 0.6666666666666666,
+    "fake_recall": 1.0,
+    "fake_f1": 0.8,
+    "fake_support": 4,
+    "real_precision": 1.0,
+    "real_recall": 0.5,
+    "real_f1": 0.6666666666666666,
+    "real_support": 4,
+    "positive_precision": 0.6666666666666666,
+    "positive_recall": 1.0,
+    "positive_f1": 0.8,
+    "split": "val",
+    "threshold_selection": {
+      "evaluation_protocol": "validation_macro_f1_threshold_v1",
+      "threshold": 0.48,
+      "decision_threshold": 0.48,
+      "threshold_source": "validation",
+      "threshold_objective": "macro_f1",
+      "threshold_tie_break": "closest_to_0.5_then_lower",
+      "threshold_grid": [
+        0.2,
+        0.21,
+        0.22,
+        0.23,
+        0.24,
+        0.25,
+        0.26,
+        0.27,
+        0.28,
+        0.29,
+        0.3,
+        0.31,
+        0.32,
+        0.33,
+        0.34,
+        0.35,
+        0.36,
+        0.37,
+        0.38,
+        0.39,
+        0.4,
+        0.41,
+        0.42,
+        0.43,
+        0.44,
+        0.45,
+        0.46,
+        0.47,
+        0.48,
+        0.49,
+        0.5,
+        0.51,
+        0.52,
+        0.53,
+        0.54,
+        0.55,
+        0.56,
+        0.57,
+        0.58,
+        0.59,
+        0.6,
+        0.61,
+        0.62,
+        0.63,
+        0.64,
+        0.65,
+        0.66,
+        0.67,
+        0.68,
+        0.69,
+        0.7,
+        0.71,
+        0.72,
+        0.73,
+        0.74,
+        0.75,
+        0.76,
+        0.77,
+        0.78,
+        0.79,
+        0.8
+      ],
+      "val_best_macro_f1": 0.7333333333333334,
+      "positive_label": 0,
+      "positive_class": "fake",
+      "label_semantics": {
+        "0": "fake",
+        "1": "real"
+      },
+      "checkpoint_reference": {
+        "kind": "epoch",
+        "epoch": 2
+      },
+      "model_hash": "147cf2dada58a533028425b97435b95014cedd394ea8b232c1931980e198f05c",
+      "selection_split_hash": "15f2efc390ed45008c36f60468669b6e49b299bc091763a8fc1593320ba9c803",
+      "probability_type": "raw",
+      "calibrated": false,
+      "temperature": 1.0,
+      "seed": 991
+    },
+    "inference_seconds": 0.0162806767039001,
+    "evaluation_protocol": "validation_macro_f1_threshold_v1",
+    "threshold_source": "validation",
+    "threshold_objective": "macro_f1",
+    "val_best_macro_f1": 0.7333333333333334
+  },
+  "selection_metric": "macro_f1",
+  "selection_score": 0.7333333333333334
+}
+[VAL] Threshold Source: validation; Objective: macro_f1; macro_f1=0.733333; threshold=0.480000; accuracy=0.750000; fake_precision=0.666667; fake_recall=1.000000; fake_f1=0.800000; real_precision=1.000000; real_recall=0.500000; real_f1=0.666667; auc=0.500000; nll=0.702019; brier=0.254364; ece=0.037495
+completed_run=/data/dyl/sotamodelv3_mask/workspaces/r1_cpu_release_smoke/runs/synthetic_smoke; test=NOT_RUN
+[HAMI-core Msg(4054901:140524361423744:multiprocess_memory_limit.c:455)]: Calling exit handler 4054901
+[HAMI-core Msg(4054903:140586981608320:multiprocess_memory_limit.c:455)]: Calling exit handler 4054903
+[HAMI-core Msg(4054900:140086568299392:multiprocess_memory_limit.c:455)]: Calling exit handler 4054900
+[HAMI-core Msg(4054902:140422266612608:multiprocess_memory_limit.c:455)]: Calling exit handler 4054902
+[HAMI-core Msg(4054880:140592042351488:multiprocess_memory_limit.c:455)]: Calling exit handler 4054880
+[HAMI-core Msg(4055273:140303414958976:libvgpu.c:856)]: Initializing.....
+[HAMI-core ERROR (pid:4055273 thread=140303414958976 libvgpu.c:897)]: cuInit failed:100
+[VAL] Threshold Source: validation; Objective: macro_f1; macro_f1=0.733333; threshold=0.480000; accuracy=0.750000; fake_precision=0.666667; fake_recall=1.000000; fake_f1=0.800000; real_precision=1.000000; real_recall=0.500000; real_f1=0.666667; auc=0.500000; nll=0.702019; brier=0.254364; ece=0.037495
+{
+  "samples": 8,
+  "threshold": 0.48,
+  "decision_threshold": 0.48,
+  "accuracy": 0.75,
+  "threshold_accuracy": 0.75,
+  "macro_f1": 0.7333333333333334,
+  "macro_precision": 0.8333333333333333,
+  "macro_recall": 0.75,
+  "balanced_accuracy": 0.75,
+  "auc": 0.5,
+  "nll": 0.7020190592881603,
+  "brier": 0.25436383946012797,
+  "ece": 0.03749482333660126,
+  "ece_definition": "top_label_equal_width_15_bins",
+  "tp": 4,
+  "tn": 2,
+  "fp": 2,
+  "fn": 0,
+  "confusion_matrix": [
+    [
+      4,
+      0
+    ],
+    [
+      2,
+      2
+    ]
+  ],
+  "confusion_matrix_labels": [
+    0,
+    1
+  ],
+  "label_semantics": {
+    "0": "fake",
+    "1": "real"
+  },
+  "positive_label": 0,
+  "positive_class": "fake",
+  "fake_precision": 0.6666666666666666,
+  "fake_recall": 1.0,
+  "fake_f1": 0.8,
+  "fake_support": 4,
+  "real_precision": 1.0,
+  "real_recall": 0.5,
+  "real_f1": 0.6666666666666666,
+  "real_support": 4,
+  "positive_precision": 0.6666666666666666,
+  "positive_recall": 1.0,
+  "positive_f1": 0.8,
+  "split": "val",
+  "threshold_selection": {
+    "evaluation_protocol": "validation_macro_f1_threshold_v1",
+    "threshold": 0.48,
+    "decision_threshold": 0.48,
+    "threshold_source": "validation",
+    "threshold_objective": "macro_f1",
+    "threshold_tie_break": "closest_to_0.5_then_lower",
+    "threshold_grid": [
+      0.2,
+      0.21,
+      0.22,
+      0.23,
+      0.24,
+      0.25,
+      0.26,
+      0.27,
+      0.28,
+      0.29,
+      0.3,
+      0.31,
+      0.32,
+      0.33,
+      0.34,
+      0.35,
+      0.36,
+      0.37,
+      0.38,
+      0.39,
+      0.4,
+      0.41,
+      0.42,
+      0.43,
+      0.44,
+      0.45,
+      0.46,
+      0.47,
+      0.48,
+      0.49,
+      0.5,
+      0.51,
+      0.52,
+      0.53,
+      0.54,
+      0.55,
+      0.56,
+      0.57,
+      0.58,
+      0.59,
+      0.6,
+      0.61,
+      0.62,
+      0.63,
+      0.64,
+      0.65,
+      0.66,
+      0.67,
+      0.68,
+      0.69,
+      0.7,
+      0.71,
+      0.72,
+      0.73,
+      0.74,
+      0.75,
+      0.76,
+      0.77,
+      0.78,
+      0.79,
+      0.8
+    ],
+    "val_best_macro_f1": 0.7333333333333334,
+    "positive_label": 0,
+    "positive_class": "fake",
+    "label_semantics": {
+      "0": "fake",
+      "1": "real"
+    },
+    "checkpoint_reference": {
+      "kind": "top_k_average",
+      "epochs": [
+        1,
+        2
+      ]
+    },
+    "model_hash": "e4e44adec7b8a0a083eb97e0e335cd5babce6f2d47d8b98ebca7717800b5217f",
+    "selection_split_hash": "15f2efc390ed45008c36f60468669b6e49b299bc091763a8fc1593320ba9c803",
+    "probability_type": "raw",
+    "calibrated": false,
+    "temperature": 1.0,
+    "seed": 991
+  },
+  "inference_seconds": 0.029490578919649124,
+  "evaluation_protocol": "validation_macro_f1_threshold_v1",
+  "threshold_source": "validation",
+  "threshold_objective": "macro_f1",
+  "val_best_macro_f1": 0.7333333333333334
+}
+checkpoint_epoch=2; results=/data/dyl/sotamodelv3_mask/workspaces/r1_cpu_release_smoke/runs/manual_evaluation/20260915_224331_212131/final_averaged
+[HAMI-core Msg(4055273:140303414958976:multiprocess_memory_limit.c:455)]: Calling exit handler 4055273
+{"status": "PASS", "fixture": "synthetic tiny Qwen2/SigLIP/PEFT", "gpu_used": false, "ddp_world_size": 4, "output": "/data/dyl/sotamodelv3_mask/workspaces/r1_cpu_release_smoke/runs/synthetic_smoke"}
+[HAMI-core Msg(4054297:139863867452288:multiprocess_memory_limit.c:455)]: Calling exit handler 4054297

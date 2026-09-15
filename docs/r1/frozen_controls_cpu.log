@@ -1,0 +1,16 @@
+[HAMI-core Msg(4088978:140428963580800:libvgpu.c:856)]: Initializing.....
+[HAMI-core ERROR (pid:4088978 thread=140428963580800 libvgpu.c:897)]: cuInit failed:100
+workspaces/r1_fixed_views_synthetic.pt
+[HAMI-core Msg(4088978:140428963580800:multiprocess_memory_limit.c:455)]: Calling exit handler 4088978
+[HAMI-core Msg(4089154:140667411798912:libvgpu.c:856)]: Initializing.....
+[HAMI-core ERROR (pid:4089154 thread=140667411798912 libvgpu.c:897)]: cuInit failed:100
+/data/dyl/sotamodelv3_mask/.venv/lib/python3.10/site-packages/torch/utils/checkpoint.py:1399: FutureWarning: `torch.cpu.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cpu', args...)` instead.
+  with device_autocast_ctx, torch.cpu.amp.autocast(**cpu_autocast_kwargs), recompute_context:  # type: ignore[attr-defined]
+workspaces/r1_pretrained_control_synthetic/report.json
+[HAMI-core Msg(4089154:140667411798912:multiprocess_memory_limit.c:455)]: Calling exit handler 4089154
+[HAMI-core Msg(4089269:140446323059584:libvgpu.c:856)]: Initializing.....
+[HAMI-core ERROR (pid:4089269 thread=140446323059584 libvgpu.c:897)]: cuInit failed:100
+/data/dyl/sotamodelv3_mask/.venv/lib/python3.10/site-packages/torch/utils/checkpoint.py:1399: FutureWarning: `torch.cpu.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cpu', args...)` instead.
+  with device_autocast_ctx, torch.cpu.amp.autocast(**cpu_autocast_kwargs), recompute_context:  # type: ignore[attr-defined]
+workspaces/r1_random_control_synthetic/report.json
+[HAMI-core Msg(4089269:140446323059584:multiprocess_memory_limit.c:455)]: Calling exit handler 4089269

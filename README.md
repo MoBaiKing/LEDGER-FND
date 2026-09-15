@@ -1,4 +1,39 @@
-# CUTE-FND v3: LG-LED
+# CUTE-FND: Strict Masked R1
+The current implementation is strict masked R1 in the masked workspace (`sotamodelv3_mask`), selected explicitly as `qwen_lora_lgled_masked_r1`. Historical configurations remain available for named legacy comparisons. The original tracked tree is preserved at `/data/dyl/sotamodelv3_mask_7649c557_pre_r1.tar` (base `7649c557b5d36bbd205ae353c96590b682a30402`).
+
+Legacy: four views → shared Qwen strict deliberation → confidence/minority/global/direct scores → two-path fusion/IURD.
+
+R1: same T/V/E/X → same shared Qwen last two layers with sample-specific strict mask → supervised reference-task A/M/C and vacuity → one supervised signed utility → one masked softmax → one weighted sum → LayerNorm/Dropout/Linear(D,2). The offline reference trains the entire existing encoder plus a small subset probe in three disjoint folds and produces all 16 probabilities from one encoding per input. It never becomes an inference dependency.
+
+- [Method, output definitions, gradient routes, controls and limitations](docs/MASKED_R1_METHOD.md)
+- [Data isolation, caching, five-seed commands, ablation/robustness/statistical interfaces and cost reporting](docs/MASKED_R1_PROTOCOL.md)
+- [Actual validation results and the 26-contract checklist](docs/MASKED_R1_VALIDATION.md)
+- [Baseline audit](BASELINE_AUDIT.md), [mathematical notes](docs/MASKED_R1_THEORY_NOTES.md)
+- [Actual scheduled four-seed job](docs/MASKED_R1_SCHEDULE.md)
+
+```bash
+cd /data/dyl/sotamodelv3_mask
+CUDA_VISIBLE_DEVICES='' .venv/bin/python -m pytest tests -q
+bash scripts/run_masked_r1.sh --help
+# GPU window only; all does not run test:
+bash scripts/run_masked_r1.sh --dataset weibo21 --stage all --seed 20260916 --nproc 4
+# Explicit final frozen test:
+bash scripts/run_masked_r1.sh --dataset weibo21 --stage test --seed 20260916 --frozen
+```
+
+Checkpoint loading checks the architecture, exact trained parameter set, local frozen backbone identity and student source fingerprint, and loads a complete merged state with `strict=True` in R1. Changed cache/model/preprocessing/fold/augmentation identities fail closed. E/X are derived representations; internal deletion is not raw-modality causality. CPU engineering checks do not establish mechanism or performance gains. No new real benchmark improvement has been measured at delivery.
+
+## Verification and fresh-start policy
+
+Executed CPU checks: **66 pytest cases and 14 subtests passed**, plus synthetic single-process and four-process Gloo pipelines. Real-data GPU training, mechanism acceptance and performance acceptance are **not run** at publication; the four-seed suite is scheduled for 2026-09-16 01:00 Asia/Shanghai. Historical results below are not R1 results.
+
+At the user's request, all 396 existing task training checkpoints in this masked workspace were deleted. Data, pretrained Qwen/SigLIP backbones and validation logs remain. All 12 scheduled jobs use new reference and main-model run directories without resume arguments; each starts from pretrained backbone weights and freshly initialized task parameters. See the [cleanup inventory](docs/r1/checkpoint_cleanup_20260915.json) and [formula-to-code map](docs/MASKED_R1_CODE_MAP.md).
+
+## Historical v3 documentation
+
+The following describes the previous architecture, commands and published results. For R1 use the configuration and entry point above.
+
+# Historical CUTE-FND v3: LG-LED
 
 CUTE-FND v3 is a multimodal fake-news classifier whose fourth stage is **LLM-Guided Latent Evidence Deliberation (LG-LED)**, with the subtitle *Uncertainty-Aware Cross-Evidence Adjudication*.
 

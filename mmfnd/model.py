@@ -464,9 +464,14 @@ class MultimodalIntrinsicEvidenceEncoder(nn.Module):
         text_tokens = self.text_proj(text_out.last_hidden_state)
         # The last non-padding Qwen state summarizes the preceding instruction
         # and news tokens under causal attention.
-        last_indices = (
-            batch["text_attention_mask"].sum(dim=1) - 1
-        ).clamp_min(0)
+        if getattr(self, "general_last_valid_index", False):
+            mask = batch["text_attention_mask"].bool()
+            if not mask.any(-1).all():
+                raise ValueError("empty token sequence")
+            positions = torch.arange(mask.shape[1], device=mask.device)[None]
+            last_indices = positions.expand_as(mask).masked_fill(~mask, -1).amax(-1)
+        else:
+            last_indices = (batch["text_attention_mask"].sum(dim=1) - 1).clamp_min(0)
         text = text_tokens[
             torch.arange(text_tokens.size(0), device=text_tokens.device),
             last_indices,

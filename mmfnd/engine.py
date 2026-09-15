@@ -124,6 +124,12 @@ def evaluate(
     *, split: str, tune_threshold: bool = False,
     threshold_selection: dict | None = None, checkpoint_reference: dict | None = None,
 ) -> tuple[dict, list[dict], float]:
+    if getattr(unwrap_model(model), "architecture_version", "") == "qwen_lora_lgled_masked_r1":
+        from mmfnd.evaluation_masked_r1 import evaluate_r1
+        return evaluate_r1(unwrap_model(model), loader, device, positive_label, class_names,
+                           decision_threshold, precision, show_progress, split=split,
+                           tune_threshold=tune_threshold, threshold_selection=threshold_selection,
+                           checkpoint_reference=checkpoint_reference)
     class_names = validate_class_names(positive_label, class_names)
     label_semantics = {str(k): v for k, v in class_names.items()}
     if split not in {"val", "test"}:
@@ -246,6 +252,9 @@ def evaluate(
 def _checkpoint_contract(config: dict) -> dict:
     lgled = config["model"].get("lgled", {})
     return {
+        **({"r1": config["model"].get("r1", {}), "backbone_identity": config.get("r1_backbone_identity", {}),
+             "student_source_fingerprint": config.get("r1_student_source_fingerprint")}
+           if config["model"]["architecture_version"] == "qwen_lora_lgled_masked_r1" else {}),
         "architecture_version": config["model"]["architecture_version"],
         "dataset": config["dataset"]["name"],
         "positive_label": int(config["dataset"]["positive_label"]),
@@ -312,6 +321,14 @@ def load_checkpoint(path: Path, model, device, strict: bool = True) -> dict:
             if str(actual.get(key)) != str(expected.get(key)):
                 raise ValueError(f"Checkpoint contract mismatch for {key}")
     state = {(name[7:] if name.startswith("module.") else name): value for name, value in checkpoint["model_state_dict"].items()}
+    if expected_version == "qwen_lora_lgled_masked_r1" and checkpoint.get("model_state_dict_format") == "trainable_only":
+        expected_names = {n for n,p in raw_model.named_parameters() if p.requires_grad}
+        if set(state) != expected_names or set(checkpoint["trainable_parameter_names"]) != expected_names:
+            raise RuntimeError("R1 checkpoint trainable key mismatch")
+        full_state = raw_model.state_dict()
+        full_state.update(state)
+        raw_model.load_state_dict(full_state, strict=True)
+        return checkpoint
     if checkpoint.get("model_state_dict_format", "full") == "trainable_only":
         incompatible = raw_model.load_state_dict(state, strict=False)
         trainable_names = {name for name, parameter in raw_model.named_parameters() if parameter.requires_grad}
