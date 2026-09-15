@@ -1,0 +1,195 @@
+{
+  "samples": 615,
+  "threshold": 0.76,
+  "decision_threshold": 0.76,
+  "accuracy": 0.975609756097561,
+  "threshold_accuracy": 0.975609756097561,
+  "macro_f1": 0.9756074343780491,
+  "macro_precision": 0.975625105770858,
+  "macro_recall": 0.9755949233209942,
+  "balanced_accuracy": 0.9755949233209942,
+  "auc": 0.9937704918032787,
+  "nll": 0.09538242413373496,
+  "brier": 0.0221338545985537,
+  "ece": 0.01698386688542564,
+  "ece_definition": "top_label_equal_width_15_bins",
+  "tp": 297,
+  "tn": 303,
+  "fp": 7,
+  "fn": 8,
+  "confusion_matrix": [
+    [
+      297,
+      8
+    ],
+    [
+      7,
+      303
+    ]
+  ],
+  "confusion_matrix_labels": [
+    0,
+    1
+  ],
+  "label_semantics": {
+    "0": "fake",
+    "1": "real"
+  },
+  "positive_label": 0,
+  "positive_class": "fake",
+  "fake_precision": 0.9769736842105263,
+  "fake_recall": 0.9737704918032787,
+  "fake_f1": 0.9753694581280787,
+  "fake_support": 305,
+  "real_precision": 0.9742765273311897,
+  "real_recall": 0.9774193548387097,
+  "real_f1": 0.9758454106280194,
+  "real_support": 310,
+  "positive_precision": 0.9769736842105263,
+  "positive_recall": 0.9737704918032787,
+  "positive_f1": 0.9753694581280787,
+  "evaluation_protocol": "validation_macro_f1_threshold_v1",
+  "threshold_source": "validation",
+  "threshold_objective": "macro_f1",
+  "val_best_macro_f1": 0.9756074343780491,
+  "split": "val",
+  "threshold_selection": {
+    "evaluation_protocol": "validation_macro_f1_threshold_v1",
+    "threshold": 0.76,
+    "decision_threshold": 0.76,
+    "threshold_source": "validation",
+    "threshold_objective": "macro_f1",
+    "threshold_tie_break": "closest_to_0.5_then_lower",
+    "threshold_grid": [
+      0.2,
+      0.21,
+      0.22,
+      0.23,
+      0.24,
+      0.25,
+      0.26,
+      0.27,
+      0.28,
+      0.29,
+      0.3,
+      0.31,
+      0.32,
+      0.33,
+      0.34,
+      0.35,
+      0.36,
+      0.37,
+      0.38,
+      0.39,
+      0.4,
+      0.41,
+      0.42,
+      0.43,
+      0.44,
+      0.45,
+      0.46,
+      0.47,
+      0.48,
+      0.49,
+      0.5,
+      0.51,
+      0.52,
+      0.53,
+      0.54,
+      0.55,
+      0.56,
+      0.57,
+      0.58,
+      0.59,
+      0.6,
+      0.61,
+      0.62,
+      0.63,
+      0.64,
+      0.65,
+      0.66,
+      0.67,
+      0.68,
+      0.69,
+      0.7,
+      0.71,
+      0.72,
+      0.73,
+      0.74,
+      0.75,
+      0.76,
+      0.77,
+      0.78,
+      0.79,
+      0.8
+    ],
+    "val_best_macro_f1": 0.9756074343780491,
+    "positive_label": 0,
+    "positive_class": "fake",
+    "label_semantics": {
+      "0": "fake",
+      "1": "real"
+    },
+    "checkpoint_reference": {
+      "kind": "top_k_average",
+      "epochs": [
+        10,
+        9,
+        13,
+        4,
+        11
+      ]
+    }
+  },
+  "lgled": {
+    "mean_agreement": 0.3627723157405853,
+    "mean_ambiguity": 0.28280144929885864,
+    "mean_conflict": 0.35442620515823364,
+    "mean_relation_uncertainty": 0.3941337466239929,
+    "mean_relation_strength": 8.323760986328125,
+    "mean_disagreement": 0.23478202521800995,
+    "mean_routing_gate": 0.3802303969860077,
+    "mean_evidence_confidence": {
+      "text": 0.5163679122924805,
+      "vision": 0.9494378566741943,
+      "intrinsic_feature": 0.9185848832130432,
+      "interaction": 0.48013797402381897
+    },
+    "mean_evidence_deviation": {
+      "text": 0.33927464485168457,
+      "vision": 0.1840280145406723,
+      "intrinsic_feature": 0.20142552256584167,
+      "interaction": 0.21439975500106812
+    },
+    "mean_evidence_minority": {
+      "text": 0.6719524264335632,
+      "vision": 0.5195927619934082,
+      "intrinsic_feature": 0.986229658126831,
+      "interaction": 0.6551067233085632
+    },
+    "mean_evidence_global_weights": {
+      "text": 0.9429313540458679,
+      "vision": 0.030697982758283615,
+      "intrinsic_feature": 0.0038045106921344995,
+      "interaction": 0.022566281259059906
+    },
+    "mean_evidence_deliberative_weights": {
+      "text": 0.49356916546821594,
+      "vision": 0.3877715468406677,
+      "intrinsic_feature": 0.0003131307603325695,
+      "interaction": 0.11834622174501419
+    },
+    "mean_evidence_direct_weights": {
+      "text": 0.44391727447509766,
+      "vision": 0.48500072956085205,
+      "intrinsic_feature": 0.0038823336362838745,
+      "interaction": 0.06719958037137985
+    },
+    "mean_evidence_final_weights": {
+      "text": 0.4675128757953644,
+      "vision": 0.4651292860507965,
+      "intrinsic_feature": 0.0030446741729974747,
+      "interaction": 0.06431303918361664
+    }
+  }
+}

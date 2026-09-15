@@ -1,0 +1,1 @@
+cd /data/dyl/sotamodelv3_mask && /data/dyl/sotamodelv3_mask/.venv/bin/python -u scripts/scheduled_random4.py --run-plan /data/dyl/sotamodelv3_mask/workspaces/scheduled/sotav3mask_random4_ep30_20260915_020000/cutoff_20260915_102500/continuation/plan.json

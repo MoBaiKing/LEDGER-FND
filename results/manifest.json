@@ -1,0 +1,818 @@
+{
+  "schema_version": "sotamodel_results_export_v1",
+  "model_variant": "sotamodelv3_masked",
+  "generated_at": "2026-09-15T18:17:28+08:00",
+  "label_semantics": {
+    "0": "fake",
+    "1": "real"
+  },
+  "prediction_storage": {
+    "format": "JSON Lines",
+    "compression": "gzip",
+    "deterministic_gzip_mtime": 0,
+    "integrity": "manifest records SHA-256 for compressed and original bytes"
+  },
+  "experiments": [
+    {
+      "dataset": "gossipcop",
+      "experiment": "sotav3mask_random4_ep30_20260915_020000_gossipcop",
+      "kind": "4-seed",
+      "status": "completed",
+      "planned_runs": 4,
+      "completed_runs": 4,
+      "epochs": 30,
+      "early_stop_patience": 8,
+      "seeds": [
+        325960923,
+        2029091074,
+        769503384,
+        323592911
+      ],
+      "metrics": {
+        "accuracy": 0.8785607196401799,
+        "macro_f1": 0.8135822663512753,
+        "auc": 0.9044978899935627
+      },
+      "aggregate_file": {
+        "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/aggregate.json",
+        "size_bytes": 5825,
+        "sha256": "8dcc717999c2192891ba24412e81785edbe4a9924a5612edff38962f71cf2069"
+      },
+      "runs": [
+        {
+          "run_name": "sotav3mask_random4_ep30_20260915_020000_gossipcop_seed325960923",
+          "seed": 325960923,
+          "status": "completed",
+          "source": "workspaces/gossipcop/runs/training/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed325960923",
+          "files": [
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed325960923/config.json",
+              "size_bytes": 3440,
+              "sha256": "15dfdee7cf18c0b03afde45877a75a720c4df7d53389f0aa60787e653c865deb"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed325960923/run_info.json",
+              "size_bytes": 577,
+              "sha256": "b6251fc32be87004435a4faa908086d50a7462f342734aa3eb1196785094663b"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed325960923/history.json",
+              "size_bytes": 88273,
+              "sha256": "7eab47d87831fdc3cb4af44385bd698652c3e6a525a12f339cc9f75ff99c906b"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed325960923/final_summary.json",
+              "size_bytes": 13431,
+              "sha256": "4d35b70d132564fa229214dad6657e2609b4947bff140d756b9fb26bfb0fd820"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed325960923/evaluation/val/evaluation_info.json",
+              "size_bytes": 1689,
+              "sha256": "07d9c2e48f45d61884dd4bede70d227dffd270c21ad05fadd8d33b49f3200357"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed325960923/evaluation/val/metrics.json",
+              "size_bytes": 4473,
+              "sha256": "4b5a048bb7066073128ca9c4cc8e5c57d9a0079b01c50d02fedc7fdf9dad5147"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed325960923/evaluation/val/predictions.jsonl.gz",
+              "size_bytes": 3270699,
+              "sha256": "6783cb4bad26a8283a1a64fcec8ad1002b2d7d6f138050f278e8608682af1243",
+              "compression": "gzip",
+              "original_name": "predictions.jsonl",
+              "original_size_bytes": 9524073,
+              "original_sha256": "4fb66ad90b63d26ce7a7910413880f82b15a52ada886e279f249f91c444c5516"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed325960923/evaluation/test/evaluation_info.json",
+              "size_bytes": 1690,
+              "sha256": "9a41e3197890cabe9ec03fa6a818081cc43e1bbc8fd0c3f6257cf5155e914e80"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed325960923/evaluation/test/metrics.json",
+              "size_bytes": 4453,
+              "sha256": "c0d22124f76673cec021a586c71559fb037b730e05c009efd1740ea7f8fa4c04"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed325960923/evaluation/test/predictions.jsonl.gz",
+              "size_bytes": 3177967,
+              "sha256": "86ec26dfe4dd6c5fada57d51b8b14d2faf62fd1df4e71d3670ff319f8ab3e5c7",
+              "compression": "gzip",
+              "original_name": "predictions.jsonl",
+              "original_size_bytes": 9333819,
+              "original_sha256": "953ac428700c9632e9b194dbd4b792282cf368150c6222d4f019df6a0a1d0d35"
+            }
+          ]
+        },
+        {
+          "run_name": "sotav3mask_random4_ep30_20260915_020000_gossipcop_seed2029091074",
+          "seed": 2029091074,
+          "status": "completed",
+          "source": "workspaces/gossipcop/runs/training/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed2029091074",
+          "files": [
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed2029091074/config.json",
+              "size_bytes": 3441,
+              "sha256": "1949914e1d83fa587131f5fe4d155eeeb0f5eb7efc4ce5d20602779c49a164d2"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed2029091074/run_info.json",
+              "size_bytes": 578,
+              "sha256": "32b6588cede4a85ad0b2534cc3dc7e843cb35fa295f9a4e1c1557428e4d6706c"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed2029091074/history.json",
+              "size_bytes": 117596,
+              "sha256": "2263448166638f10cafbc1098489a103a5da3297d6018bd4be3e4188ea582b51"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed2029091074/final_summary.json",
+              "size_bytes": 13426,
+              "sha256": "1f01be29aeeb0440e86bb61c4d81fa58df3102340e5b4fccf5f9c98f0e9e207d"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed2029091074/evaluation/val/evaluation_info.json",
+              "size_bytes": 1692,
+              "sha256": "4a6fac15b8f625d95da55dc6c2104944032857e645eda9fc184c1cb3fcfbdaf2"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed2029091074/evaluation/val/metrics.json",
+              "size_bytes": 4446,
+              "sha256": "d5dab24dfc228f31a043d201e5f5570b2ae7767066b0e19c54fd494b23917122"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed2029091074/evaluation/val/predictions.jsonl.gz",
+              "size_bytes": 3269739,
+              "sha256": "32c38dff3d331e5c9ee912f060f127092cf6b711d0c7be2f7355b1537f0585fa",
+              "compression": "gzip",
+              "original_name": "predictions.jsonl",
+              "original_size_bytes": 9525686,
+              "original_sha256": "d9c88777d9774105751764fa9dd726d8fd2084d6d4c6967303fc048e5264ee7e"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed2029091074/evaluation/test/evaluation_info.json",
+              "size_bytes": 1693,
+              "sha256": "426047654f1cf038d0a8c60b0ddd69b601d123c4ef2ae1afde471d9ff0a8a8a5"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed2029091074/evaluation/test/metrics.json",
+              "size_bytes": 4469,
+              "sha256": "99841072b592a18300703fb329b4d0959ec4701c068bc6a85d2400f59ca60761"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed2029091074/evaluation/test/predictions.jsonl.gz",
+              "size_bytes": 3176666,
+              "sha256": "1d4d362ddc7bfd061718f79a4e1f2b0eca01f0c1bcf1e6ba6f95723359e9283b",
+              "compression": "gzip",
+              "original_name": "predictions.jsonl",
+              "original_size_bytes": 9335432,
+              "original_sha256": "1b8635107a0600f4a2674d82bd8c5734a00551e4e3159dc5d46251f522c485ea"
+            }
+          ]
+        },
+        {
+          "run_name": "sotav3mask_random4_ep30_20260915_020000_gossipcop_seed769503384",
+          "seed": 769503384,
+          "status": "completed",
+          "source": "workspaces/gossipcop/runs/training/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed769503384",
+          "files": [
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed769503384/config.json",
+              "size_bytes": 3440,
+              "sha256": "99b0a23d1dd7c906ac7a5293d42faf616156d0adb847601c0f7cb1c4570877d3"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed769503384/run_info.json",
+              "size_bytes": 577,
+              "sha256": "3e19172fa12974c5f6f63e3fd7c597fe8e518e18fe98268d652378ae9953064e"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed769503384/history.json",
+              "size_bytes": 80842,
+              "sha256": "c7c6569d2ca78200e1ce88dc3d233425895cc60e5df06b05a04cb5ce171ddffb"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed769503384/final_summary.json",
+              "size_bytes": 13445,
+              "sha256": "21c8acf571b3e4fabfabb015488d09612965c62748f8613b3a26a18d10ec449c"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed769503384/evaluation/val/evaluation_info.json",
+              "size_bytes": 1692,
+              "sha256": "a76120d345337b131e4e6e9ed74e1a5452391390c08ff02d2f72d5fa359babf5"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed769503384/evaluation/val/metrics.json",
+              "size_bytes": 4467,
+              "sha256": "0b97212885950f0be46b7f34b882b354d9b1e3023a00448b13c960f5212cee04"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed769503384/evaluation/val/predictions.jsonl.gz",
+              "size_bytes": 3268756,
+              "sha256": "d71d1f06e02178b8a5e7424cf67e2692448b975368ef4b88f1fee6edf2a0f949",
+              "compression": "gzip",
+              "original_name": "predictions.jsonl",
+              "original_size_bytes": 9528928,
+              "original_sha256": "c1e6347b42c078958132c40ab8347bb55b56050a0e2eb0f3ba8ad565dcc9254d"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed769503384/evaluation/test/evaluation_info.json",
+              "size_bytes": 1693,
+              "sha256": "89e99ed5ccc0f81e025b2c411ea08fd14c82bed6ae31b18761a28821b681423e"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed769503384/evaluation/test/metrics.json",
+              "size_bytes": 4470,
+              "sha256": "63b0f41974db18f5faf268326ff6571230e896b4a124a1449f2133173999e26a"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed769503384/evaluation/test/predictions.jsonl.gz",
+              "size_bytes": 3175188,
+              "sha256": "89db2d16ecc5823d72f6fbcb8b27cf97de8ef4b2f7042bb067fa8668a896b6b3",
+              "compression": "gzip",
+              "original_name": "predictions.jsonl",
+              "original_size_bytes": 9339041,
+              "original_sha256": "b557d2ab5dd1bf2a2c09a073fd92367cbb059af03984a5f6ee7c179830012e06"
+            }
+          ]
+        },
+        {
+          "run_name": "sotav3mask_random4_ep30_20260915_020000_gossipcop_seed323592911",
+          "seed": 323592911,
+          "status": "completed",
+          "source": "workspaces/gossipcop/runs/training/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed323592911",
+          "files": [
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed323592911/config.json",
+              "size_bytes": 3440,
+              "sha256": "678824f0cfe764d385d098a1e6d2770f8d40f5a0c38d98ddb31d4860c41d6fde"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed323592911/run_info.json",
+              "size_bytes": 577,
+              "sha256": "3f038240e384c85c701e0d6734463727a5565f0f4244f0fd81091879635f528d"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed323592911/history.json",
+              "size_bytes": 88231,
+              "sha256": "792776b7d4a9de4043a12af463b60c8d2b37e19c1c5d121c3b4bc92c2e1edf70"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed323592911/final_summary.json",
+              "size_bytes": 13455,
+              "sha256": "ab744532a75efc52776ddff5eb012debd8ca4f89a6d91e64948fb45a6fa8a741"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed323592911/evaluation/val/evaluation_info.json",
+              "size_bytes": 1694,
+              "sha256": "7779ef8e43f7d52074f46d4d0c68a07081b75aec7d5f0b08bd7ff717092ab6f0"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed323592911/evaluation/val/metrics.json",
+              "size_bytes": 4474,
+              "sha256": "5648ed5e81960b459df17f84ffff410322f997026cfcd0d400b8dfbd79041a87"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed323592911/evaluation/val/predictions.jsonl.gz",
+              "size_bytes": 3269036,
+              "sha256": "d1502ecf073c2a8849e8b9db644a97418c21a2d39669354da1aa9492a18445b3",
+              "compression": "gzip",
+              "original_name": "predictions.jsonl",
+              "original_size_bytes": 9530359,
+              "original_sha256": "75dc5ec69f007cdf960d251b83ade013acd094e1afd9cecd14f1cd8a8d08310f"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed323592911/evaluation/test/evaluation_info.json",
+              "size_bytes": 1695,
+              "sha256": "5db7df4a38539bdeb66dfe63633ce70687cf68185ae91ebebfb753544ce0435c"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed323592911/evaluation/test/metrics.json",
+              "size_bytes": 4473,
+              "sha256": "49acfaac3cd9716b38559682a333792284b77fd14de280f339cf75019e0e2520"
+            },
+            {
+              "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/runs/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed323592911/evaluation/test/predictions.jsonl.gz",
+              "size_bytes": 3175825,
+              "sha256": "690e61dc8024b03735eaa1b3e97bc5e8c72e9528d2f251ed77134cef1af41cd0",
+              "compression": "gzip",
+              "original_name": "predictions.jsonl",
+              "original_size_bytes": 9339924,
+              "original_sha256": "161f378ae258d47d36c93293e0a40a438e28e4e467794adc91f943410ebbca4e"
+            }
+          ]
+        }
+      ],
+      "suite_status_file": {
+        "path": "results/gossipcop/sotav3mask_random4_ep30_20260915_020000_gossipcop/status.json",
+        "size_bytes": 1394,
+        "sha256": "4769adde28cad55252a21f14577ac78c1f8c5f07a3bcdd60a3b4ea84daabd425"
+      }
+    },
+    {
+      "dataset": "weibo",
+      "experiment": "sotav3mask_random4_ep30_20260915_020000_weibo",
+      "kind": "4-seed",
+      "status": "partial",
+      "planned_runs": 4,
+      "completed_runs": 2,
+      "epochs": null,
+      "early_stop_patience": null,
+      "seeds": [
+        325960923,
+        2029091074,
+        769503384,
+        323592911
+      ],
+      "metrics": {
+        "accuracy": null,
+        "macro_f1": null,
+        "auc": null
+      },
+      "aggregate_file": null,
+      "runs": [
+        {
+          "run_name": "sotav3mask_random4_ep30_20260915_020000_weibo_seed325960923",
+          "seed": 325960923,
+          "status": "completed",
+          "source": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed325960923",
+          "files": [
+            {
+              "path": "results/weibo/sotav3mask_random4_ep30_20260915_020000_weibo/runs/sotav3mask_random4_ep30_20260915_020000_weibo_seed325960923/config.json",
+              "size_bytes": 3278,
+              "sha256": "36495aff4778e0408f58babaeb961b781381a503cf871fb5c93c21d93a71e433"
+            },
+            {
+              "path": "results/weibo/sotav3mask_random4_ep30_20260915_020000_weibo/runs/sotav3mask_random4_ep30_20260915_020000_weibo_seed325960923/run_info.json",
+              "size_bytes": 569,
+              "sha256": "cb9eb2d683ef4e791bde062f51ffc63c91f0f81f3ee39f8bb763d8f2d190e50e"
+            },
+            {
+              "path": "results/weibo/sotav3mask_random4_ep30_20260915_020000_weibo/runs/sotav3mask_random4_ep30_20260915_020000_weibo_seed325960923/history.json",
+              "size_bytes": 102858,
+              "sha256": "89665011287906017f2c7ea35f5a5e6b07a3bff4caf853425be5a9dae4e4d94c"
+            },
+            {
+              "path": "results/weibo/sotav3mask_random4_ep30_20260915_020000_weibo/runs/sotav3mask_random4_ep30_20260915_020000_weibo_seed325960923/final_summary.json",
+              "size_bytes": 14413,
+              "sha256": "de591a4412ed42a9ec650610ced927300afa42ec78eca56651d73a257e3010c2"
+            },
+            {
+              "path": "results/weibo/sotav3mask_random4_ep30_20260915_020000_weibo/runs/sotav3mask_random4_ep30_20260915_020000_weibo_seed325960923/evaluation/val/evaluation_info.json",
+              "size_bytes": 1714,
+              "sha256": "f305acf63e9bb3c34d650912b460e4eac4b127474b67d8342d2b54a0a5234ce9"
+            },
+            {
+              "path": "results/weibo/sotav3mask_random4_ep30_20260915_020000_weibo/runs/sotav3mask_random4_ep30_20260915_020000_weibo_seed325960923/evaluation/val/metrics.json",
+              "size_bytes": 4482,
+              "sha256": "cba6be27ca97f42c87d34003d29620e760a6d56f741b3ce2d520a567435626b1"
+            },
+            {
+              "path": "results/weibo/sotav3mask_random4_ep30_20260915_020000_weibo/runs/sotav3mask_random4_ep30_20260915_020000_weibo_seed325960923/evaluation/val/predictions.jsonl.gz",
+              "size_bytes": 353074,
+              "sha256": "e197abfc7f907f4e7ac889ce43d21a8c49862da8864731184f510d993f920d89",
+              "compression": "gzip",
+              "original_name": "predictions.jsonl",
+              "original_size_bytes": 1543676,
+              "original_sha256": "82f9f39c58d582919c4b69eaa001439dc97da47f9d4deb8bc46e0e0b4089f085"
+            },
+            {
+              "path": "results/weibo/sotav3mask_random4_ep30_20260915_020000_weibo/runs/sotav3mask_random4_ep30_20260915_020000_weibo_seed325960923/evaluation/test/evaluation_info.json",
+              "size_bytes": 1715,
+              "sha256": "7e5cbfface9f72196cb08219901a66200b7d8571f0bab0d3b9cb1a8ce515c0f1"
+            },
+            {
+              "path": "results/weibo/sotav3mask_random4_ep30_20260915_020000_weibo/runs/sotav3mask_random4_ep30_20260915_020000_weibo_seed325960923/evaluation/test/metrics.json",
+              "size_bytes": 4481,
+              "sha256": "e9af8c2303efd034f1ec934291f35daf58db64fb30549a1ea4bd5c7efa0010db"
+            },
+            {
+              "path": "results/weibo/sotav3mask_random4_ep30_20260915_020000_weibo/runs/sotav3mask_random4_ep30_20260915_020000_weibo_seed325960923/evaluation/test/predictions.jsonl.gz",
+              "size_bytes": 603420,
+              "sha256": "4d9a15e9d599c3b30b0f2498a9731b098ab8d907aac62d76e773366e461abf09",
+              "compression": "gzip",
+              "original_name": "predictions.jsonl",
+              "original_size_bytes": 2654889,
+              "original_sha256": "465cf88b5481e3702cfc0a4c58b4a77cbfe170520991a4c13d5ea71234b3bb07"
+            }
+          ]
+        },
+        {
+          "run_name": "sotav3mask_random4_ep30_20260915_020000_weibo_seed2029091074",
+          "seed": 2029091074,
+          "status": "completed",
+          "source": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed2029091074",
+          "files": [
+            {
+              "path": "results/weibo/sotav3mask_random4_ep30_20260915_020000_weibo/runs/sotav3mask_random4_ep30_20260915_020000_weibo_seed2029091074/config.json",
+              "size_bytes": 3279,
+              "sha256": "af373b556434036eeb3e6e3d92ce514a51e4a26579c00cb4f2bd28b40781b2ae"
+            },
+            {
+              "path": "results/weibo/sotav3mask_random4_ep30_20260915_020000_weibo/runs/sotav3mask_random4_ep30_20260915_020000_weibo_seed2029091074/run_info.json",
+              "size_bytes": 570,
+              "sha256": "a1f75ec4b3bc69cd033ec01fcfc3a3f2a83737c2dc94acbaa20388a7abc67000"
+            },
+            {
+              "path": "results/weibo/sotav3mask_random4_ep30_20260915_020000_weibo/runs/sotav3mask_random4_ep30_20260915_020000_weibo_seed2029091074/history.json",
+              "size_bytes": 102920,
+              "sha256": "067e0cd9be8efacceafe59b1019c2c3253fe4ea20b047e8b4a08d08112406847"
+            },
+            {
+              "path": "results/weibo/sotav3mask_random4_ep30_20260915_020000_weibo/runs/sotav3mask_random4_ep30_20260915_020000_weibo_seed2029091074/final_summary.json",
+              "size_bytes": 14420,
+              "sha256": "c93b61b462b09d8716c12e4fafd0a56f3b8660cc2f0231294a48943e86bb1c19"
+            },
+            {
+              "path": "results/weibo/sotav3mask_random4_ep30_20260915_020000_weibo/runs/sotav3mask_random4_ep30_20260915_020000_weibo_seed2029091074/evaluation/val/evaluation_info.json",
+              "size_bytes": 1716,
+              "sha256": "dc418891cf94b6fae1d8fbd13e1fd4926e4e9f784ac58d8fd0e9fa94e0bd8b55"
+            },
+            {
+              "path": "results/weibo/sotav3mask_random4_ep30_20260915_020000_weibo/runs/sotav3mask_random4_ep30_20260915_020000_weibo_seed2029091074/evaluation/val/metrics.json",
+              "size_bytes": 4482,
+              "sha256": "a8a6df05789596e14ff050a77ec003588d47938b782a391302dcbd3640dee6c4"
+            },
+            {
+              "path": "results/weibo/sotav3mask_random4_ep30_20260915_020000_weibo/runs/sotav3mask_random4_ep30_20260915_020000_weibo_seed2029091074/evaluation/val/predictions.jsonl.gz",
+              "size_bytes": 351717,
+              "sha256": "6c36f07e1ff5c35309ad3190225691fac5eaaf2b437b3de17b56580faaafd11a",
+              "compression": "gzip",
+              "original_name": "predictions.jsonl",
+              "original_size_bytes": 1543525,
+              "original_sha256": "36673462cf596c1fb53f19855ce8b18fdd2b3851bd4f7a90c164b5d794139126"
+            },
+            {
+              "path": "results/weibo/sotav3mask_random4_ep30_20260915_020000_weibo/runs/sotav3mask_random4_ep30_20260915_020000_weibo_seed2029091074/evaluation/test/evaluation_info.json",
+              "size_bytes": 1717,
+              "sha256": "3f1b704fffd8b4ec1c6380cb2a6ca2128d494c2f5775ee950aa391d9513ee9e2"
+            },
+            {
+              "path": "results/weibo/sotav3mask_random4_ep30_20260915_020000_weibo/runs/sotav3mask_random4_ep30_20260915_020000_weibo_seed2029091074/evaluation/test/metrics.json",
+              "size_bytes": 4482,
+              "sha256": "854adb407d2400f8c4f5a948fa6d9eefb3b31a98694a1adfc504b06baa26e7a9"
+            },
+            {
+              "path": "results/weibo/sotav3mask_random4_ep30_20260915_020000_weibo/runs/sotav3mask_random4_ep30_20260915_020000_weibo_seed2029091074/evaluation/test/predictions.jsonl.gz",
+              "size_bytes": 601743,
+              "sha256": "5380b6931c43048b0e54effa5fe03ebfea2dd9a9bad8a1e19afdbe9846b3bda8",
+              "compression": "gzip",
+              "original_name": "predictions.jsonl",
+              "original_size_bytes": 2655078,
+              "original_sha256": "aeec55c075caf237434644a66f9a451abaeb2e9356e57c4b07b2a2bdc8a37178"
+            }
+          ]
+        },
+        {
+          "run_name": "sotav3mask_random4_ep30_20260915_020000_weibo_seed769503384",
+          "seed": 769503384,
+          "status": "cancelled",
+          "source": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed769503384",
+          "files": [
+            {
+              "path": "results/weibo/sotav3mask_random4_ep30_20260915_020000_weibo/runs/sotav3mask_random4_ep30_20260915_020000_weibo_seed769503384/config.json",
+              "size_bytes": 3278,
+              "sha256": "0239ad3492b41b39921b849e2bbc4e6edbd6af324f7a61f32625c89599249611"
+            },
+            {
+              "path": "results/weibo/sotav3mask_random4_ep30_20260915_020000_weibo/runs/sotav3mask_random4_ep30_20260915_020000_weibo_seed769503384/run_info.json",
+              "size_bytes": 569,
+              "sha256": "06c31c67e2cef74e002b8596e5a38e6854342c1d4107f2fdd7b8864c0fd51ffe"
+            },
+            {
+              "path": "results/weibo/sotav3mask_random4_ep30_20260915_020000_weibo/runs/sotav3mask_random4_ep30_20260915_020000_weibo_seed769503384/history.json",
+              "size_bytes": 117724,
+              "sha256": "fa6c324f071f29d677e3c7cf63afd6f5b997e0b53b5e2d3a3abb2a3991a7177a"
+            }
+          ]
+        },
+        {
+          "run_name": "sotav3mask_random4_ep30_20260915_020000_weibo_seed323592911",
+          "seed": 323592911,
+          "status": "cancelled",
+          "source": "workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed323592911",
+          "files": [
+            {
+              "path": "results/weibo/sotav3mask_random4_ep30_20260915_020000_weibo/runs/sotav3mask_random4_ep30_20260915_020000_weibo_seed323592911/config.json",
+              "size_bytes": 3278,
+              "sha256": "8929277ad67b8ecef197d99226d9a9db84ca81a48031255ffe1e597d0af38d82"
+            },
+            {
+              "path": "results/weibo/sotav3mask_random4_ep30_20260915_020000_weibo/runs/sotav3mask_random4_ep30_20260915_020000_weibo_seed323592911/run_info.json",
+              "size_bytes": 569,
+              "sha256": "cdf2fb79a9caf90d20990d10d9c11f585a529c6a4e2f15fdfb17cb10d1091321"
+            },
+            {
+              "path": "results/weibo/sotav3mask_random4_ep30_20260915_020000_weibo/runs/sotav3mask_random4_ep30_20260915_020000_weibo_seed323592911/history.json",
+              "size_bytes": 66160,
+              "sha256": "13d75ecbfa025a96573dfbd32c5c5e821d6169571b8b15f8277e594decdabd70"
+            }
+          ]
+        }
+      ],
+      "suite_status_file": {
+        "path": "results/weibo/sotav3mask_random4_ep30_20260915_020000_weibo/status.json",
+        "size_bytes": 1310,
+        "sha256": "a48ea9b2c26d6517aa541ee8c21ff82106e6d22a679f5654ee70e6cda6d1c277"
+      }
+    },
+    {
+      "dataset": "weibo21",
+      "experiment": "sotav3mask_random4_ep30_20260915_020000_weibo21",
+      "kind": "4-seed",
+      "status": "completed",
+      "planned_runs": 4,
+      "completed_runs": 4,
+      "epochs": 30,
+      "early_stop_patience": 8,
+      "seeds": [
+        325960923,
+        2029091074,
+        769503384,
+        323592911
+      ],
+      "metrics": {
+        "accuracy": 0.9630081300813008,
+        "macro_f1": 0.9630057137906964,
+        "auc": 0.9891367001586463
+      },
+      "aggregate_file": {
+        "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/aggregate.json",
+        "size_bytes": 5814,
+        "sha256": "f289d0699627b19c9d3b9f48204f009144c03ac6901084d74ab53c60550a22be"
+      },
+      "runs": [
+        {
+          "run_name": "sotav3mask_random4_ep30_20260915_020000_weibo21_seed325960923",
+          "seed": 325960923,
+          "status": "completed",
+          "source": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed325960923",
+          "files": [
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed325960923/config.json",
+              "size_bytes": 3258,
+              "sha256": "9370b1efaf337bf8ce188a9d1555fe317053de01b927d3d39fa79b54bfc0c963"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed325960923/run_info.json",
+              "size_bytes": 573,
+              "sha256": "b9f8ba743386c0fa42817a0e359b105cb24c55020d876ab5260551869454cf5b"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed325960923/history.json",
+              "size_bytes": 132354,
+              "sha256": "deb21c09f221816f75a988113ee5aaf0979114f1a256cec078da63c34b459742"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed325960923/final_summary.json",
+              "size_bytes": 14449,
+              "sha256": "586f622a4140748729d532f163f0eef942e564b03ff283980b1e5f681cfd7a42"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed325960923/evaluation/val/evaluation_info.json",
+              "size_bytes": 1717,
+              "sha256": "2cfa70b32c5e18fde4dfbc8c5a072c957c2b2ab9c4b427d96eb912a7feb125e9"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed325960923/evaluation/val/metrics.json",
+              "size_bytes": 4482,
+              "sha256": "c7778a11a1b055ffde66e19a859add45c8f295f3ab9625836897a88035e8c397"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed325960923/evaluation/val/predictions.jsonl.gz",
+              "size_bytes": 311333,
+              "sha256": "f67b7179df8af792eb33b0e03fa6af9750456bc209e66d493011036f6e3ed239",
+              "compression": "gzip",
+              "original_name": "predictions.jsonl",
+              "original_size_bytes": 1170890,
+              "original_sha256": "13ccc477ee64bbc6925dc70ff610c9d9a2d45e6c2bed065e05e1512c4fa7c1d7"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed325960923/evaluation/test/evaluation_info.json",
+              "size_bytes": 1718,
+              "sha256": "1352e6f2e577b6d059794cf9518c0de3bf2c360adea29ae35beb882aa4cbf973"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed325960923/evaluation/test/metrics.json",
+              "size_bytes": 4488,
+              "sha256": "997d41ac65a21c33b8baf22cba7b1aca15517e71561734e62148d5f06a816b7e"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed325960923/evaluation/test/predictions.jsonl.gz",
+              "size_bytes": 301889,
+              "sha256": "86f0eeeb3d0c9f5d7723cae1f760c2c11909578172444fd54193f632322c4dd4",
+              "compression": "gzip",
+              "original_name": "predictions.jsonl",
+              "original_size_bytes": 1151910,
+              "original_sha256": "d6c6a790d7e7f31532d186940c2a6ea8b397c0c2cff3f98f352322f0e57e8bb1"
+            }
+          ]
+        },
+        {
+          "run_name": "sotav3mask_random4_ep30_20260915_020000_weibo21_seed2029091074",
+          "seed": 2029091074,
+          "status": "completed",
+          "source": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed2029091074",
+          "files": [
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed2029091074/config.json",
+              "size_bytes": 3259,
+              "sha256": "cd40f02152edd3c6ede2bfc7358d7a5948b7ed000ac48da3ec45c9358a12a6e0"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed2029091074/run_info.json",
+              "size_bytes": 574,
+              "sha256": "ee7a191da1f918317713f50f071034ea29114794bf52cd48c07d53f923dca3cc"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed2029091074/history.json",
+              "size_bytes": 102948,
+              "sha256": "6a92cb5c9882755c2fe219e33738166e665642fd3d1eddf301b0db8f874449f9"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed2029091074/final_summary.json",
+              "size_bytes": 14437,
+              "sha256": "f9934898a62bfcc03da3e7477ccc9152774150bab9c58ba72562f467132c4c35"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed2029091074/evaluation/val/evaluation_info.json",
+              "size_bytes": 1715,
+              "sha256": "0f6e10743f7660dd838a4f7592f2bb4f600bc39b20c6388e62c91ba99a765389"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed2029091074/evaluation/val/metrics.json",
+              "size_bytes": 4471,
+              "sha256": "b91aaf39dc8ff6ac4a78cb517d70216de63a910a2f39a68e9ea2ce95bf5fe4cf"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed2029091074/evaluation/val/predictions.jsonl.gz",
+              "size_bytes": 312263,
+              "sha256": "169788f4be2ac114ba6907a78b3734b3958ab33238dd5284c4f1f78354705f3f",
+              "compression": "gzip",
+              "original_name": "predictions.jsonl",
+              "original_size_bytes": 1170789,
+              "original_sha256": "0d4ce2bbf334e4e83bec319207f2adb21254cd3c8575f9d4d4c4ea57cf1a1063"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed2029091074/evaluation/test/evaluation_info.json",
+              "size_bytes": 1716,
+              "sha256": "2e8a78daee9df06d4169d6f2f0f4768ebb583cff8d2ef3fbaf6c876d165a2f75"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed2029091074/evaluation/test/metrics.json",
+              "size_bytes": 4482,
+              "sha256": "8f1172c6c191768b6a0962200072d880cbd6d99a0e653602ff1cadb836ee7e45"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed2029091074/evaluation/test/predictions.jsonl.gz",
+              "size_bytes": 302397,
+              "sha256": "f47aa85abd24a27e7607e3df943b32ed766621c1523bf7f196335bad78ee0dca",
+              "compression": "gzip",
+              "original_name": "predictions.jsonl",
+              "original_size_bytes": 1151989,
+              "original_sha256": "a3bd6a821c1d729e2bd2d0724336c08f9ed6e840b7e335c1dffc837ce2195f99"
+            }
+          ]
+        },
+        {
+          "run_name": "sotav3mask_random4_ep30_20260915_020000_weibo21_seed769503384",
+          "seed": 769503384,
+          "status": "completed",
+          "source": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed769503384",
+          "files": [
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed769503384/config.json",
+              "size_bytes": 3258,
+              "sha256": "6ba0795c4369e33c602c0850025a10f4a7b5929687b5445ac2388b6e0e1cf835"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed769503384/run_info.json",
+              "size_bytes": 573,
+              "sha256": "0768ef452f54a50fd7e35df158e6df3348ae6e5d6ccc6c741d5cb9c31b6811e9"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed769503384/history.json",
+              "size_bytes": 117638,
+              "sha256": "b89a0fe4f7e967f8d64ab4c402c751e7e08d0fb584a76fd6a1a91b1ad97b5ff4"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed769503384/final_summary.json",
+              "size_bytes": 14438,
+              "sha256": "e7825f8ba03908e71664bbbf44cfb46cdd792d8e00d985f21655adbbbcc4e0a7"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed769503384/evaluation/val/evaluation_info.json",
+              "size_bytes": 1710,
+              "sha256": "f6361fa3cbe1626430cd3a84719ebcdca51dc79024d60ab11b98fc07ad474aa0"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed769503384/evaluation/val/metrics.json",
+              "size_bytes": 4480,
+              "sha256": "98b4787fb03785935101f053d406810712cca03d74fabfabfabb7c5c07f191fa"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed769503384/evaluation/val/predictions.jsonl.gz",
+              "size_bytes": 312734,
+              "sha256": "c8c25799014bb27824565483a5a4b3c0d2c808bcc192fa1134e992272e31465c",
+              "compression": "gzip",
+              "original_name": "predictions.jsonl",
+              "original_size_bytes": 1169711,
+              "original_sha256": "dae7586044eb9139b780857748ee45d2c80c0ef2dbc1e1fcafaf93f55890eefb"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed769503384/evaluation/test/evaluation_info.json",
+              "size_bytes": 1711,
+              "sha256": "6955be25945f4b3bdaef502ec8fd37a03d7050d1fb0e87b3b7f569f57d6f2227"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed769503384/evaluation/test/metrics.json",
+              "size_bytes": 4483,
+              "sha256": "8ae63ca3dbc95fc9f76bb81c0f2fa8a83204d3c4152100a5d19c15f8325cbe71"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed769503384/evaluation/test/predictions.jsonl.gz",
+              "size_bytes": 303001,
+              "sha256": "33208ed2375ae5484a7f7d77b119ef17b823d3c64d71eff282feb1932a9686b8",
+              "compression": "gzip",
+              "original_name": "predictions.jsonl",
+              "original_size_bytes": 1150792,
+              "original_sha256": "bb0bd9e52b96f43f4b392825b42f10ad9f69619316043cf1de796c9e8fc580a5"
+            }
+          ]
+        },
+        {
+          "run_name": "sotav3mask_random4_ep30_20260915_020000_weibo21_seed323592911",
+          "seed": 323592911,
+          "status": "completed",
+          "source": "workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed323592911",
+          "files": [
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed323592911/config.json",
+              "size_bytes": 3258,
+              "sha256": "4ae692f8e715cf480695918ba9053c708f3ec4baadb87484ab22a34fbc8a6ee0"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed323592911/run_info.json",
+              "size_bytes": 573,
+              "sha256": "433dbc9552b597eea31aa0d3484625b6b1056c59be2d90cfa579a34518777cb1"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed323592911/history.json",
+              "size_bytes": 80837,
+              "sha256": "35623cc207e36433c7c307cb3c33a934ed653c685e935055e91d3cbbd931091f"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed323592911/final_summary.json",
+              "size_bytes": 14426,
+              "sha256": "f7cdf44dfd8536570cd73ad22a6c985dc0fa4af362896a8c003ef7c5e1e179da"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed323592911/evaluation/val/evaluation_info.json",
+              "size_bytes": 1710,
+              "sha256": "759425fca20f0d15680f472ac0494453af1b50d460cf2f9ac5f533ef6db2d5ac"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed323592911/evaluation/val/metrics.json",
+              "size_bytes": 4477,
+              "sha256": "c8b308a6d1809683a0b09c1d786d7a009fc831c6fb97eb6e3e65c8f6fd1318fd"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed323592911/evaluation/val/predictions.jsonl.gz",
+              "size_bytes": 311608,
+              "sha256": "0db07989480498d5a051ec6e67439f1354657c4abb198e526ddb6c5ebb89dbe9",
+              "compression": "gzip",
+              "original_name": "predictions.jsonl",
+              "original_size_bytes": 1169045,
+              "original_sha256": "c774e4223211c684efc59731ea889096556b3a2a648cd2906dbce21fb93f159c"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed323592911/evaluation/test/evaluation_info.json",
+              "size_bytes": 1711,
+              "sha256": "2e7f73c2d9d59f9a0034c869ec146fbeb57d6cc307adf20443b4ab2b63defa5b"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed323592911/evaluation/test/metrics.json",
+              "size_bytes": 4476,
+              "sha256": "da0305743a2a5dd860b0b55505300e057d928b3ee17fafc0544870a493527b91"
+            },
+            {
+              "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/runs/sotav3mask_random4_ep30_20260915_020000_weibo21_seed323592911/evaluation/test/predictions.jsonl.gz",
+              "size_bytes": 301990,
+              "sha256": "be048a4f7453f6a188628b2cba1a31a07cb09a8b7c3cb359694138e71494b94f",
+              "compression": "gzip",
+              "original_name": "predictions.jsonl",
+              "original_size_bytes": 1150064,
+              "original_sha256": "ccab0e75b27dd163adb7b88627ff02beac6cd2204f77a50655784be9193f7c9e"
+            }
+          ]
+        }
+      ],
+      "suite_status_file": {
+        "path": "results/weibo21/sotav3mask_random4_ep30_20260915_020000_weibo21/status.json",
+        "size_bytes": 1374,
+        "sha256": "1951b98f34aeee67dd55f7626767fcc50970f17f89ad310c7febefda2b9c49ee"
+      }
+    }
+  ]
+}

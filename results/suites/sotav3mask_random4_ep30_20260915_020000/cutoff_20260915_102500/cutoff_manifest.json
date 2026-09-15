@@ -1,0 +1,225 @@
+{
+  "cutoff_at": "2026-09-15T10:25:00+08:00",
+  "created_at": "2026-09-15T10:25:02+08:00",
+  "original_suite": "sotav3mask_random4_ep30_20260915_020000",
+  "original_final_status": "cancelled",
+  "resume_required": true,
+  "completed_jobs": [
+    {
+      "dataset": "weibo21",
+      "seed": 325960923,
+      "run_dir": "/data/dyl/sotamodelv3_mask/workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed325960923"
+    },
+    {
+      "dataset": "weibo21",
+      "seed": 2029091074,
+      "run_dir": "/data/dyl/sotamodelv3_mask/workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed2029091074"
+    },
+    {
+      "dataset": "weibo21",
+      "seed": 769503384,
+      "run_dir": "/data/dyl/sotamodelv3_mask/workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed769503384"
+    },
+    {
+      "dataset": "weibo21",
+      "seed": 323592911,
+      "run_dir": "/data/dyl/sotamodelv3_mask/workspaces/weibo21/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo21_seed323592911"
+    },
+    {
+      "dataset": "gossipcop",
+      "seed": 325960923,
+      "run_dir": "/data/dyl/sotamodelv3_mask/workspaces/gossipcop/runs/training/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed325960923"
+    },
+    {
+      "dataset": "gossipcop",
+      "seed": 2029091074,
+      "run_dir": "/data/dyl/sotamodelv3_mask/workspaces/gossipcop/runs/training/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed2029091074"
+    },
+    {
+      "dataset": "gossipcop",
+      "seed": 769503384,
+      "run_dir": "/data/dyl/sotamodelv3_mask/workspaces/gossipcop/runs/training/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed769503384"
+    },
+    {
+      "dataset": "gossipcop",
+      "seed": 323592911,
+      "run_dir": "/data/dyl/sotamodelv3_mask/workspaces/gossipcop/runs/training/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed323592911"
+    },
+    {
+      "dataset": "weibo",
+      "seed": 325960923,
+      "run_dir": "/data/dyl/sotamodelv3_mask/workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed325960923"
+    },
+    {
+      "dataset": "weibo",
+      "seed": 2029091074,
+      "run_dir": "/data/dyl/sotamodelv3_mask/workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed2029091074"
+    }
+  ],
+  "unfinished_jobs": [
+    {
+      "dataset": "weibo",
+      "seed": 769503384,
+      "run_dir": "/data/dyl/sotamodelv3_mask/workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed769503384",
+      "resume_from": "/data/dyl/sotamodelv3_mask/workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed769503384/checkpoints/cutoff_20260915_102500.pth",
+      "checkpoint_epoch": 16,
+      "command": [
+        "/data/dyl/sotamodelv3_mask/.venv/bin/python",
+        "-u",
+        "/data/dyl/sotamodelv3_mask/train.py",
+        "--dataset",
+        "weibo",
+        "--config",
+        "/data/dyl/sotamodelv3_mask/workspaces/scheduled/sotav3mask_random4_ep30_20260915_020000/configs/weibo.json",
+        "--manifest-dir",
+        "/data/dyl/sotamodelv3_mask/datasets/weibo/ready",
+        "--seed",
+        "769503384",
+        "--run-name",
+        "sotav3mask_random4_ep30_20260915_020000_weibo_seed769503384",
+        "--epochs",
+        "30",
+        "--early-stop-patience",
+        "8",
+        "--per-gpu-batch-size",
+        "16",
+        "--grad-accum-steps",
+        "1",
+        "--resume",
+        "/data/dyl/sotamodelv3_mask/workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed769503384/checkpoints/cutoff_20260915_102500.pth"
+      ]
+    },
+    {
+      "dataset": "weibo",
+      "seed": 323592911,
+      "run_dir": "/data/dyl/sotamodelv3_mask/workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed323592911",
+      "resume_from": "/data/dyl/sotamodelv3_mask/workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed323592911/checkpoints/cutoff_20260915_102500.pth",
+      "checkpoint_epoch": 9,
+      "command": [
+        "/data/dyl/sotamodelv3_mask/.venv/bin/python",
+        "-u",
+        "/data/dyl/sotamodelv3_mask/train.py",
+        "--dataset",
+        "weibo",
+        "--config",
+        "/data/dyl/sotamodelv3_mask/workspaces/scheduled/sotav3mask_random4_ep30_20260915_020000/configs/weibo.json",
+        "--manifest-dir",
+        "/data/dyl/sotamodelv3_mask/datasets/weibo/ready",
+        "--seed",
+        "323592911",
+        "--run-name",
+        "sotav3mask_random4_ep30_20260915_020000_weibo_seed323592911",
+        "--epochs",
+        "30",
+        "--early-stop-patience",
+        "8",
+        "--per-gpu-batch-size",
+        "16",
+        "--grad-accum-steps",
+        "1",
+        "--resume",
+        "/data/dyl/sotamodelv3_mask/workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed323592911/checkpoints/cutoff_20260915_102500.pth"
+      ]
+    }
+  ],
+  "validated_snapshots": {
+    "gossipcop:2029091074": {
+      "path": "/data/dyl/sotamodelv3_mask/workspaces/gossipcop/runs/training/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed2029091074/checkpoints/cutoff_20260915_102500.pth",
+      "epoch": 16,
+      "global_step": 8048,
+      "bad_epochs": 8,
+      "best_score": 0.8317629658732661,
+      "size_bytes": 214031250,
+      "mtime_ns": 1789436757806549950,
+      "validated_at": "2026-09-15T09:51:57+08:00",
+      "has_optimizer_state": true,
+      "has_scheduler_state": true,
+      "source": "/data/dyl/sotamodelv3_mask/workspaces/gossipcop/runs/training/sotav3mask_random4_ep30_20260915_020000_gossipcop_seed2029091074/checkpoints/last.pth",
+      "source_signature": [
+        1789436757806549950,
+        214031250
+      ],
+      "dataset": "gossipcop",
+      "seed": 2029091074
+    },
+    "weibo:325960923": {
+      "path": "/data/dyl/sotamodelv3_mask/workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed325960923/checkpoints/cutoff_20260915_102500.pth",
+      "epoch": 14,
+      "global_step": 4746,
+      "bad_epochs": 8,
+      "best_score": 0.9580850232624214,
+      "size_bytes": 299095698,
+      "mtime_ns": 1789435157719987852,
+      "validated_at": "2026-09-15T09:25:12+08:00",
+      "has_optimizer_state": true,
+      "has_scheduler_state": true,
+      "source": "/data/dyl/sotamodelv3_mask/workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed325960923/checkpoints/last.pth",
+      "source_signature": [
+        1789435157719987852,
+        299095698
+      ],
+      "dataset": "weibo",
+      "seed": 325960923
+    },
+    "weibo:2029091074": {
+      "path": "/data/dyl/sotamodelv3_mask/workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed2029091074/checkpoints/cutoff_20260915_102500.pth",
+      "epoch": 14,
+      "global_step": 4746,
+      "bad_epochs": 8,
+      "best_score": 0.960667906148158,
+      "size_bytes": 299095698,
+      "mtime_ns": 1789435618968261674,
+      "validated_at": "2026-09-15T09:33:19+08:00",
+      "has_optimizer_state": true,
+      "has_scheduler_state": true,
+      "source": "/data/dyl/sotamodelv3_mask/workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed2029091074/checkpoints/last.pth",
+      "source_signature": [
+        1789435618968261674,
+        299095698
+      ],
+      "dataset": "weibo",
+      "seed": 2029091074
+    },
+    "weibo:769503384": {
+      "path": "/data/dyl/sotamodelv3_mask/workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed769503384/checkpoints/cutoff_20260915_102500.pth",
+      "epoch": 16,
+      "global_step": 5424,
+      "bad_epochs": 5,
+      "best_score": 0.9606271574814628,
+      "size_bytes": 299102738,
+      "mtime_ns": 1789438491010282069,
+      "validated_at": "2026-09-15T10:21:09+08:00",
+      "has_optimizer_state": true,
+      "has_scheduler_state": true,
+      "source": "/data/dyl/sotamodelv3_mask/workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed769503384/checkpoints/last.pth",
+      "source_signature": [
+        1789438491010282069,
+        299102738
+      ],
+      "dataset": "weibo",
+      "seed": 769503384
+    },
+    "weibo:323592911": {
+      "path": "/data/dyl/sotamodelv3_mask/workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed323592911/checkpoints/cutoff_20260915_102500.pth",
+      "epoch": 9,
+      "global_step": 3051,
+      "bad_epochs": 0,
+      "best_score": 0.9546697232127695,
+      "size_bytes": 299078226,
+      "mtime_ns": 1789438531610166842,
+      "validated_at": "2026-09-15T10:21:40+08:00",
+      "has_optimizer_state": true,
+      "has_scheduler_state": true,
+      "source": "/data/dyl/sotamodelv3_mask/workspaces/weibo/runs/training/sotav3mask_random4_ep30_20260915_020000_weibo_seed323592911/checkpoints/last.pth",
+      "source_signature": [
+        1789438531610166842,
+        299078226
+      ],
+      "dataset": "weibo",
+      "seed": 323592911
+    }
+  },
+  "resume_plan": "/data/dyl/sotamodelv3_mask/workspaces/scheduled/sotav3mask_random4_ep30_20260915_020000/cutoff_20260915_102500/continuation/plan.json",
+  "resume_status": "/data/dyl/sotamodelv3_mask/workspaces/scheduled/sotav3mask_random4_ep30_20260915_020000/cutoff_20260915_102500/continuation/status.json",
+  "resume_command_file": "/data/dyl/sotamodelv3_mask/workspaces/scheduled/sotav3mask_random4_ep30_20260915_020000/cutoff_20260915_102500/continuation/resume_command.txt"
+}

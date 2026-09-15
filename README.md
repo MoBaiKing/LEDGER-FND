@@ -201,3 +201,12 @@ Validation/test metrics contain aggregate LG-LED beliefs, strength, uncertainty,
 ## Ablations
 
 Recommended order: Last-1/Last-2/Last-4; shared versus independent projector; Qwen latent versus `mlp_pair`; without role embedding; without uncertainty; without critical minority; without global judge; without selective routing; then mean pooling/plain MHA external baselines. The main configuration always uses the single shared projector and `qwen_latent` judge. Independent projectors and the MLP judge are instantiated only when explicitly selected.
+
+## Published experiment outputs
+
+See [results/README.md](results/README.md) for the strict-mask 4-seed suite.
+The export includes per-sample validation/test predictions, metrics, selected
+thresholds, run metadata, epoch histories and multi-seed aggregates. The two
+Weibo runs interrupted by the scheduled cutoff retain their histories and
+continuation metadata. Prediction JSONL files use lossless gzip compression;
+model weights and optimizer checkpoints are excluded.

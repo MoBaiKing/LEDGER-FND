@@ -1,0 +1,22 @@
+{
+  "started_at": "2026-09-15T08:06:50.775793+08:00",
+  "world_size": 1,
+  "per_gpu_batch_size": 16,
+  "effective_batch_size": 16,
+  "dataset": "weibo",
+  "manifest_dir": "/data/dyl/datasets/data/weibo",
+  "seed": 2029091074,
+  "precision": "bf16",
+  "epochs": 30,
+  "early_stop_patience": 8,
+  "monitor": "macro_f1",
+  "evaluation_protocol": "validation_macro_f1_threshold_v1",
+  "threshold_source": "validation",
+  "threshold_objective": "macro_f1",
+  "evaluation_label_semantics": {
+    "0": "fake",
+    "1": "real"
+  },
+  "positive_label": 0,
+  "resume_from": null
+}

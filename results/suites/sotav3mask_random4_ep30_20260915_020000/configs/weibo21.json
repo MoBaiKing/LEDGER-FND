@@ -1,0 +1,113 @@
+{
+  "dataset": {
+    "name": "weibo21",
+    "display_name": "Weibo21",
+    "adapter": "dataset_tools.weibo21.prepare",
+    "schema_version": "cute_fnd_multimodal_v1",
+    "positive_label": 0,
+    "positive_class": "fake",
+    "class_names": {
+      "0": "fake",
+      "1": "real"
+    }
+  },
+  "seed": 200408,
+  "data": {
+    "root": "datasets/weibo21/raw/annotations",
+    "image_root": "datasets/weibo21/raw/images",
+    "processed_dir": "workspaces/weibo21/processed",
+    "max_images": 1000,
+    "image_size": 224,
+    "image_preprocessing": {
+      "color_mode": "RGB",
+      "transparent_background": "white",
+      "train_augmentation": {
+        "enabled": true,
+        "random_crop_scale": [
+          0.9,
+          1.0
+        ],
+        "brightness": 0.08,
+        "contrast": 0.08
+      }
+    },
+    "max_text_length": 192,
+    "text_instruction": "请提取这条新闻中的事件、人物、时间、地点、因果关系、夸张表达和不确定性线索。新闻：",
+    "num_workers": 4,
+    "pin_memory": true,
+    "persistent_workers": true,
+    "prefetch_factor": 2
+  },
+  "model": {
+    "architecture_version": "qwen_lora_lgled_v3",
+    "text_backbone": "pretrained_models/Qwen2.5-7B-Instruct",
+    "vision_backbone": "pretrained_models/siglip-base-patch16-224",
+    "hidden_dim": 384,
+    "num_heads": 8,
+    "dropout": 0.2,
+    "lora_rank": 8,
+    "lora_alpha": 16,
+    "lora_dropout": 0.05,
+    "lora_target_modules": [
+      "q_proj",
+      "v_proj"
+    ],
+    "qwen_gradient_checkpointing": true,
+    "qwen_use_cache": false,
+    "qwen_dtype": "bfloat16",
+    "qwen_use_lora": true,
+    "lgled": {
+      "enabled": true,
+      "projector_type": "shared",
+      "judge_type": "qwen_latent",
+      "latent_judge_num_layers": 2,
+      "use_role_embedding": true,
+      "use_evidential_relation": true,
+      "use_uncertainty": true,
+      "use_critical_minority": true,
+      "use_global_judge": true,
+      "use_selective_routing": true,
+      "routing_threshold": 0.3,
+      "routing_scale": 10.0,
+      "head_hidden_dim": 256,
+      "dropout": 0.1,
+      "evidential_reg_weight": 0.0,
+      "export_diagnostics": false
+    },
+    "causal_effect_scale": 0.5,
+    "view_dropout_probability": 0.0,
+    "freeze_vision": true,
+    "unfreeze_vision_last_n": 2
+  },
+  "train": {
+    "epochs": 30,
+    "per_gpu_batch_size": 16,
+    "grad_accum_steps": 1,
+    "vision_learning_rate": 2e-05,
+    "lora_learning_rate": 0.0001,
+    "head_learning_rate": 4e-05,
+    "weight_decay": 0.02,
+    "warmup_ratio": 0.1,
+    "label_smoothing": 0.05,
+    "gradient_clip_norm": 1.0,
+    "precision": "bf16",
+    "early_stop_patience": 8,
+    "monitor": "macro_f1",
+    "top_k_checkpoint_average": 5,
+    "threshold_min": 0.2,
+    "threshold_max": 0.8,
+    "threshold_step": 0.01,
+    "output_dir": "workspaces/weibo21/runs/training"
+  },
+  "loss": {
+    "classification": 1.0,
+    "contrastive": 0.0,
+    "causal_probe_classification": 0.0,
+    "causal_fidelity": 0.0,
+    "event_counterfactual_ranking": 0.0,
+    "visual_source_ranking": 0.0,
+    "causal_veracity_ranking": 0.0,
+    "uncertainty_calibration": 0.0,
+    "evidential_regularization": 0.0
+  }
+}
