@@ -5,15 +5,18 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import math
 from pathlib import Path
 from statistics import mean, stdev
+
+from mmfnd.evaluation import PROTOCOL, validate_threshold_selection
 
 
 REPORT_METRICS = (
     "macro_f1", "accuracy",
     "fake_precision", "fake_recall", "fake_f1",
     "real_precision", "real_recall", "real_f1",
-    "auc", "brier", "nll", "decision_threshold",
+    "auc", "brier", "nll", "ece", "decision_threshold",
 )
 CONFUSION_FIELDS = ("tp", "tn", "fp", "fn")
 
@@ -38,6 +41,20 @@ def main() -> None:
                 raise FileNotFoundError(f"incomplete seed run: missing {path}")
         info = json.loads(info_path.read_text(encoding="utf-8"))
         metrics = json.loads(metrics_path.read_text(encoding="utf-8"))
+        summary = json.loads(summary_path.read_text(encoding="utf-8"))
+        val_metrics = json.loads((run_dir / "evaluation/final/val/metrics.json").read_text(encoding="utf-8"))
+        if any(item.get("evaluation_protocol") != PROTOCOL for item in (info, metrics, summary, val_metrics)):
+            raise ValueError(f"{run_dir}: legacy/mixed evaluation protocols; do not aggregate with new results")
+        selection = metrics.get("threshold_selection")
+        threshold = validate_threshold_selection(selection)
+        if metrics.get("split") != "test" or val_metrics.get("split") != "val":
+            raise ValueError(f"{run_dir}: expected final val and test metrics")
+        if (selection != val_metrics.get("threshold_selection") or selection != summary.get("threshold_selection")
+                or metrics.get("decision_threshold") != threshold or val_metrics.get("decision_threshold") != threshold
+                or val_metrics.get("macro_f1") != selection["val_best_macro_f1"]):
+            raise ValueError(f"{run_dir}: test threshold is not paired with this model's validation result")
+        if not math.isclose(metrics["accuracy"], (metrics["tp"] + metrics["tn"]) / metrics["samples"], abs_tol=1e-12):
+            raise ValueError(f"{run_dir}: Accuracy disagrees with threshold confusion matrix")
         missing = [name for name in REPORT_METRICS if metrics.get(name) is None]
         if missing:
             raise ValueError(f"{metrics_path} missing metrics: {missing}")
@@ -47,6 +64,9 @@ def main() -> None:
             "seed": int(info["seed"]),
             "epochs": int(info["epochs"]),
             "early_stop_patience": int(info["early_stop_patience"]),
+            "evaluation_protocol": PROTOCOL, "threshold_source": "validation", "threshold_objective": "macro_f1",
+            "threshold": threshold, "val_best_macro_f1": selection["val_best_macro_f1"],
+            "test_macro_f1": float(metrics["macro_f1"]),
             **{name: float(metrics[name]) for name in REPORT_METRICS},
             **{name: int(metrics[name]) for name in CONFUSION_FIELDS},
         })
@@ -59,15 +79,20 @@ def main() -> None:
         if len(values) != 1:
             raise ValueError(f"seed runs use different {field}: {sorted(values)}")
 
-    aggregate = {
-        name: {
-            "mean": mean(row[name] for row in rows),
-            "sample_std": stdev(row[name] for row in rows),
-        }
-        for name in REPORT_METRICS
-    }
+    aggregate = {}
+    for name in REPORT_METRICS:
+        values = [row[name] for row in rows]
+        # Single-class AUC is undefined: keep NaN visibly, never silently drop a seed.
+        if not all(math.isfinite(value) for value in values):
+            if name != "auc":
+                raise ValueError(f"Nonfinite metric: {name}")
+            aggregate[name] = {"mean": float("nan"), "sample_std": float("nan")}
+        else:
+            aggregate[name] = {"mean": mean(values), "sample_std": stdev(values)}
     payload = {
         "runs": len(rows),
+        "evaluation_protocol": PROTOCOL,
+        "threshold_source": "validation", "threshold_objective": "macro_f1",
         "dataset": rows[0]["dataset"],
         "epochs": rows[0]["epochs"],
         "early_stop_patience": rows[0]["early_stop_patience"],

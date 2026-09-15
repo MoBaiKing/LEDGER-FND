@@ -63,6 +63,6 @@ PY
   RUN_DIRS+=("$OUTPUT_ROOT/$RUN_NAME")
 done
 
-"$PYTHON_BIN" aggregate_seeds.py \
+"$PYTHON_BIN" "$ROOT/aggregate_seeds.py" \
   --output "$GROUP_DIR/aggregate.json" "${RUN_DIRS[@]}"
 echo "completed_group=$GROUP_DIR"

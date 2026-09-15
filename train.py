@@ -19,8 +19,9 @@ from mmfnd.data import move_batch
 from mmfnd.dataset_contract import bind_dataset_workspace, validate_dataset_semantics
 from mmfnd.engine import (
     autocast_context, evaluate, load_checkpoint, save_checkpoint,
-    select_robust_threshold, unwrap_model, write_jsonl,
+    unwrap_model, write_jsonl,
 )
+from mmfnd.evaluation import PROTOCOL, checkpoint_threshold_selection, evaluation_info, log_evaluation
 from mmfnd.factory import build_loader, build_processor
 from mmfnd.latent_evidence_deliberation import EVIDENCE_ORDER, RELATION_ORDER
 from mmfnd.model import ExplainableMMFND, multimodal_loss
@@ -56,10 +57,10 @@ def build_optimizer(model, config: dict) -> AdamW:
 
 
 def checkpoint_score(metrics: dict, monitor: str) -> float:
-    if monitor not in {"macro_f1", "accuracy", "auc"}:
-        raise ValueError("train.monitor must be macro_f1, accuracy or auc")
+    if monitor != "macro_f1":
+        raise ValueError("This protocol requires train.monitor=macro_f1 after validation threshold tuning")
     value = metrics.get(monitor)
-    if value is None:
+    if value is None or not math.isfinite(float(value)):
         raise ValueError(f"validation metric {monitor!r} is unavailable")
     return float(value)
 
@@ -68,6 +69,8 @@ def average_checkpoints(paths: list[Path], model, device) -> None:
     if not paths:
         raise RuntimeError("no validation checkpoints available for averaging")
     checkpoints = [torch.load(path, map_location="cpu", weights_only=False) for path in paths]
+    for checkpoint in checkpoints:
+        checkpoint_threshold_selection(checkpoint)
     reference_state = checkpoints[0]["model_state_dict"]
     reference_contract = checkpoints[0].get("checkpoint_contract")
     for checkpoint in checkpoints[1:]:
@@ -147,6 +150,8 @@ def main() -> None:
     parser.add_argument("--seed", type=int)
     parser.add_argument("--epochs", type=int)
     parser.add_argument("--early-stop-patience", type=int)
+    parser.add_argument("--per-gpu-batch-size", type=int)
+    parser.add_argument("--grad-accum-steps", type=int)
     parser.add_argument("--smoke-steps", type=int, default=0, help="Run only N distributed training steps")
     args = parser.parse_args()
 
@@ -167,10 +172,18 @@ def main() -> None:
             config["train"]["early_stop_patience"] = int(
                 args.early_stop_patience
             )
+        if args.per_gpu_batch_size is not None:
+            if args.per_gpu_batch_size <= 0:
+                raise ValueError("--per-gpu-batch-size must be positive")
+            config["train"]["per_gpu_batch_size"] = int(args.per_gpu_batch_size)
+        if args.grad_accum_steps is not None:
+            if args.grad_accum_steps <= 0:
+                raise ValueError("--grad-accum-steps must be positive")
+            config["train"]["grad_accum_steps"] = int(args.grad_accum_steps)
         positive_label, class_names = validate_dataset_semantics(config)
         monitor = str(config["train"].get("monitor", "macro_f1")).lower()
-        if monitor not in {"macro_f1", "accuracy", "auc"}:
-            raise ValueError("train.monitor must be macro_f1, accuracy or auc")
+        if monitor != "macro_f1":
+            raise ValueError("This protocol requires train.monitor=macro_f1 after validation threshold tuning")
         seed_everything(int(config["seed"]) + context.rank)
         precision = str(config["train"].get("precision", "bf16")).lower()
         if precision not in {"bf16", "fp16", "fp32"}:
@@ -235,6 +248,14 @@ def main() -> None:
         if context.device.type == "cuda":
             torch.cuda.reset_peak_memory_stats(context.device)
 
+        # Reject old-protocol resumes BEFORE changing their saved logs/configs.
+        resume_checkpoint = None
+        if args.resume:
+            resume_checkpoint = load_checkpoint(args.resume, model, context.device)
+            checkpoint_threshold_selection(resume_checkpoint)
+            if resume_checkpoint.get("optimizer_state_dict") is None or resume_checkpoint.get("scheduler_state_dict") is None:
+                raise ValueError("--resume requires a resumable last.pth, not a model-only best/final checkpoint")
+
         output_root = resolve_path(root, config["train"]["output_dir"])
         if args.resume:
             output_dir = args.resume.resolve().parent.parent
@@ -258,6 +279,10 @@ def main() -> None:
                     config["train"]["early_stop_patience"]
                 ),
                 "monitor": monitor,
+                "evaluation_protocol": PROTOCOL,
+                "threshold_source": "validation", "threshold_objective": "macro_f1",
+                "evaluation_label_semantics": {str(k): v for k, v in class_names.items()},
+                "positive_label": positive_label,
                 "resume_from": str(args.resume) if args.resume else None,
             }, output_dir / "run_info.json")
         if context.distributed:
@@ -267,7 +292,7 @@ def main() -> None:
         history: list[dict] = []
         topk: list[dict] = []
         if args.resume:
-            checkpoint = load_checkpoint(args.resume, model, context.device)
+            checkpoint = resume_checkpoint
             optimizer.load_state_dict(checkpoint["optimizer_state_dict"])
             scheduler.load_state_dict(checkpoint["scheduler_state_dict"])
             if scaler.is_enabled() and checkpoint.get("scaler_state_dict"):
@@ -372,11 +397,12 @@ def main() -> None:
             if context.distributed:
                 dist.barrier()
             if context.is_main:
-                val_metrics, _, _ = evaluate(
+                val_metrics, _, selected_threshold = evaluate(
                     unwrap_model(model), val_loader, context.device,
-                    positive_label, class_names, decision_threshold=0.5,
-                    precision=precision,
+                    positive_label, class_names, precision=precision, split="val", tune_threshold=True,
+                    checkpoint_reference={"kind": "epoch", "epoch": epoch},
                 )
+                log_evaluation(val_metrics)
                 selection_score = checkpoint_score(val_metrics, monitor)
                 epoch_metrics = {
                     "epoch": epoch,
@@ -390,10 +416,15 @@ def main() -> None:
                 history.append(epoch_metrics)
                 if selection_score > best_score:
                     best_score, bad_epochs = selection_score, 0
+                    save_checkpoint(
+                        checkpoint_dir / "best.pth", model, None, None, epoch, val_metrics, config,
+                        decision_threshold=selected_threshold,
+                    )
                 else:
                     bad_epochs += 1
                 top_path = checkpoint_dir / "topk" / f"epoch_{epoch:02d}.pth"
-                save_checkpoint(top_path, model, None, None, epoch, val_metrics, config)
+                save_checkpoint(top_path, model, None, None, epoch, val_metrics, config,
+                                decision_threshold=selected_threshold)
                 topk.append({
                     "selection_score": selection_score,
                     "monitor": monitor,
@@ -401,6 +432,8 @@ def main() -> None:
                     "accuracy": float(val_metrics["accuracy"]),
                     "auc": float(val_metrics["auc"]),
                     "epoch": epoch,
+                    "decision_threshold": selected_threshold,
+                    "evaluation_protocol": PROTOCOL,
                     "path": str(top_path),
                 })
                 topk.sort(key=lambda item: (-item["selection_score"], item["epoch"]))
@@ -410,12 +443,14 @@ def main() -> None:
                 topk = topk[:keep]
                 state = {
                     "monitor": monitor, "best_score": best_score,
+                    "best_val_macro_f1": best_score,
                     "bad_epochs": bad_epochs,
                     "global_step": global_step, "history": history, "topk": topk,
                 }
                 save_checkpoint(
                     checkpoint_dir / "last.pth", model, optimizer, scheduler,
-                    epoch, val_metrics, config, scaler=scaler, training_state=state,
+                    epoch, val_metrics, config, decision_threshold=selected_threshold,
+                    scaler=scaler, training_state=state,
                 )
                 dump_json(history, output_dir / "history.json")
                 print(json.dumps(epoch_metrics, ensure_ascii=False, indent=2))
@@ -436,28 +471,14 @@ def main() -> None:
             top_paths = [Path(item["path"]) for item in topk]
             average_checkpoints(top_paths, model, context.device)
             final_path = checkpoint_dir / "final_averaged.pth"
-            save_checkpoint(
-                final_path, model, None, None, last_epoch,
-                {"averaged_epochs": [item["epoch"] for item in topk]}, config,
-            )
-            val_metrics_05, val_rows_05, _ = evaluate(
+            # Averaging creates a NEW model. Tune on its own validation outputs,
+            # never reuse an epoch's threshold or average thresholds numerically.
+            val_metrics, val_rows, selected_threshold = evaluate(
                 unwrap_model(model), val_loader, context.device, positive_label,
-                class_names, 0.5, precision,
+                class_names, precision=precision, split="val", tune_threshold=True,
+                checkpoint_reference={"kind": "top_k_average", "epochs": [item["epoch"] for item in topk]},
             )
-            selected_threshold, maximum_f1 = select_robust_threshold(
-                [row["label"] for row in val_rows_05],
-                [row["positive_probability"] for row in val_rows_05],
-                positive_label,
-                float(config["train"]["threshold_min"]),
-                float(config["train"]["threshold_max"]),
-                float(config["train"]["threshold_step"]),
-                float(config["train"]["threshold_plateau_delta"]),
-            )
-            val_metrics, val_rows, _ = evaluate(
-                unwrap_model(model), val_loader, context.device, positive_label,
-                class_names, selected_threshold, precision,
-            )
-            val_metrics["calibration_max_positive_f1"] = maximum_f1
+            log_evaluation(val_metrics)
             save_checkpoint(
                 final_path, model, None, None, last_epoch, val_metrics, config,
                 decision_threshold=selected_threshold,
@@ -465,23 +486,31 @@ def main() -> None:
             )
             val_dir = output_dir / "evaluation" / "final" / "val"
             dump_json(val_metrics, val_dir / "metrics.json")
-            dump_json({"decision_threshold": selected_threshold}, val_dir / "evaluation_info.json")
+            dump_json(evaluation_info(val_metrics), val_dir / "evaluation_info.json")
             write_jsonl(val_rows, val_dir / "predictions.jsonl")
 
             # Test is exposed exactly once, after the final model and threshold are frozen.
+            final_checkpoint = load_checkpoint(final_path, model, context.device)
+            frozen_selection = checkpoint_threshold_selection(final_checkpoint)
             test_loader = build_loader(root, config, "test", processor)
             test_metrics, test_rows, _ = evaluate(
                 unwrap_model(model), test_loader, context.device, positive_label,
                 class_names, selected_threshold, precision,
+                split="test", threshold_selection=frozen_selection,
             )
+            log_evaluation(test_metrics)
             test_dir = output_dir / "evaluation" / "final" / "test"
             dump_json(test_metrics, test_dir / "metrics.json")
-            dump_json({"decision_threshold": selected_threshold}, test_dir / "evaluation_info.json")
+            dump_json(evaluation_info(test_metrics), test_dir / "evaluation_info.json")
             write_jsonl(test_rows, test_dir / "predictions.jsonl")
             summary = {
                 "completed_at": datetime.now().astimezone().isoformat(),
                 "checkpoint": str(final_path), "decision_threshold": selected_threshold,
-                "topk": topk, "val_at_0_5": val_metrics_05,
+                **evaluation_info(test_metrics),
+                "best_checkpoint": str(checkpoint_dir / "best.pth"),
+                "best_val_macro_f1": best_score, "best_epoch": topk[0]["epoch"],
+                "test_macro_f1": test_metrics["macro_f1"],
+                "final_model_kind": "top_k_average", "topk": topk,
                 "val_calibrated": val_metrics, "test": test_metrics,
             }
             dump_json(summary, output_dir / "final_summary.json")

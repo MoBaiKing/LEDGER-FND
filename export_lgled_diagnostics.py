@@ -12,6 +12,7 @@ from tqdm import tqdm
 from mmfnd.data import move_batch
 from mmfnd.dataset_contract import bind_dataset_workspace, validate_dataset_semantics
 from mmfnd.engine import autocast_context, lgled_sample_diagnostics, load_checkpoint
+from mmfnd.evaluation import checkpoint_threshold_selection
 from mmfnd.factory import build_loader, build_processor
 from mmfnd.model import ExplainableMMFND
 from mmfnd.utils import get_device, load_config
@@ -43,7 +44,8 @@ def main() -> None:
     model = ExplainableMMFND(config).to(device)
     checkpoint_path = args.checkpoint if args.checkpoint.is_absolute() else root / args.checkpoint
     checkpoint = load_checkpoint(checkpoint_path, model, device)
-    threshold = float(checkpoint.get("decision_threshold", 0.5))
+    selection = checkpoint_threshold_selection(checkpoint)
+    threshold = selection["threshold"]
     model.eval()
     output = args.output or (
         checkpoint_path.resolve().parent.parent / "lgled_diagnostics"
@@ -66,6 +68,10 @@ def main() -> None:
                     "label": int(batch["labels"][index]),
                     "prediction": int(prediction),
                     "positive_probability": positive_probability,
+                    "positive_label": positive_label, "positive_class": "fake",
+                    "threshold": threshold, "decision_threshold": threshold,
+                    "threshold_source": "validation", "threshold_objective": "macro_f1",
+                    "evaluation_protocol": selection["evaluation_protocol"], "threshold_selection": selection,
                     "lgled": lgled_sample_diagnostics(outputs, index),
                 }
                 file.write(json.dumps(row, ensure_ascii=False) + "\n")

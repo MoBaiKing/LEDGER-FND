@@ -14,6 +14,7 @@ import torch
 from mmfnd.data import move_batch
 from mmfnd.dataset_contract import bind_dataset_workspace, validate_dataset_semantics
 from mmfnd.engine import autocast_context, lgled_sample_diagnostics, load_checkpoint
+from mmfnd.evaluation import checkpoint_threshold_selection
 from mmfnd.factory import build_loader, build_processor
 from mmfnd.image_preprocessing import load_preprocessed_image
 from mmfnd.model import ExplainableMMFND
@@ -54,7 +55,9 @@ def image_occlusion_map(
         "fp16" if qwen_dtype == torch.float16 else "fp32"
     )
     with torch.no_grad(), autocast_context(device, precision):
-        base = model(batch)["logits"].softmax(-1)
+        base = model(batch)["logits"].float().softmax(-1)
+        # Optional standalone occlusion target, not an evaluation prediction.
+        # Both CLI callers supply the frozen-threshold predicted class explicitly.
         predicted = (
             int(base[sample_index].argmax())
             if target_class is None else int(target_class)
@@ -107,7 +110,8 @@ def main() -> None:
     loader = build_loader(root, config, args.split, processor)
     model = ExplainableMMFND(config).to(device)
     checkpoint = load_checkpoint(args.checkpoint, model, device)
-    decision_threshold = float(checkpoint.get("decision_threshold", 0.5))
+    threshold_selection = checkpoint_threshold_selection(checkpoint)
+    decision_threshold = threshold_selection["threshold"]
     model.eval()
     precision = str(config["train"].get("precision", "bf16"))
     output_dir = (
@@ -125,7 +129,7 @@ def main() -> None:
         batch = move_batch(raw_batch, device)
         with torch.no_grad(), autocast_context(device, precision):
             outputs = model(batch)
-            probs = outputs["logits"].softmax(-1)
+            probs = outputs["logits"].float().softmax(-1)
             ablated_probs = {
                 component: model(
                     batch, ablate_component=component
@@ -165,6 +169,10 @@ def main() -> None:
                 "label": int(batch["labels"][index]),
                 "prediction": predicted_class,
                 "decision_threshold": decision_threshold,
+                "threshold": decision_threshold,
+                "threshold_source": "validation", "threshold_objective": "macro_f1",
+                "evaluation_protocol": threshold_selection["evaluation_protocol"],
+                "threshold_selection": threshold_selection,
                 "positive_label": positive_label,
                 "positive_class": class_names[positive_label],
                 "positive_probability": float(probs[index, positive_label]),

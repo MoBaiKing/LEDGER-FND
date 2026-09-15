@@ -1,0 +1,21 @@
+test_actual_training_evaluation_and_report_pipeline (ablation.test_ablation.AblationTests) ... ok
+test_all_training_loss_graphs (ablation.test_ablation.AblationTests) ... ok
+test_all_variants_masks_finite_and_backward (ablation.test_ablation.AblationTests) ... ok
+test_checkpoint_isolation_and_roundtrip (ablation.test_ablation.AblationTests) ... ok
+test_correction_bypass_and_loss_dependencies (ablation.test_ablation.AblationTests) ... ok
+test_cpu_bf16_finite_and_full_equivalence (ablation.test_ablation.AblationTests) ... ok
+test_disabled_heads_are_not_computed_and_routing_is_fixed (ablation.test_ablation.AblationTests) ... ok
+test_full_exact_output_loss_and_optimizer_step (ablation.test_ablation.AblationTests) ... ok
+test_global_token_removed_and_masked_pooling (ablation.test_ablation.AblationTests) ... ok
+test_interrupted_epoch_resume_matches_uninterrupted (ablation.test_ablation.AblationTests) ... ok
+test_non_llm_causal_mask_slots_and_no_qwen (ablation.test_ablation.AblationTests) ... ok
+test_rng_roundtrip_and_config_overwrite_guard (ablation.test_ablation.AblationTests) ... ok
+test_shared_initialization_and_rng (ablation.test_ablation.AblationTests) ... ok
+test_strict_direct_and_whole_mlp_classifier_isolation (ablation.test_ablation.AblationTests) ... ok
+test_training_seed_source_and_partial_table (ablation.test_ablation.AblationTests) ... ok
+test_uncertainty_perturbation_cannot_change_logits (ablation.test_ablation.AblationTests) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 5.530s
+
+OK

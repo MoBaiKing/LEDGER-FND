@@ -92,7 +92,6 @@
     "threshold_min": 0.2,
     "threshold_max": 0.8,
     "threshold_step": 0.01,
-    "threshold_plateau_delta": 0.002,
     "output_dir": "workspaces/weibo/runs/training"
   },
   "loss": {

@@ -1,0 +1,14 @@
+variant,upstream_T_V_E_X,evaluator,pair_relations,explicit_relation_uncertainty,critical_minority,global_summary,direct_candidate,direct_confidence,deliberation_candidate,mixture,raw_mean_residual,decision_correction,comparison_group
+full,True,shared_qwen,True,True,True,learned_token,True,latent,True,dynamic,True,True,main
+mlp_classifier,True,none,False,False,False,none,False,none,False,not_applicable,False,False,main
+non_llm_evaluator,True,random_transformer,True,True,True,learned_token,True,latent,True,dynamic,True,True,main
+no_uncertainty,True,shared_qwen,True,False,True,learned_token,True,latent,True,dynamic,True,True,main
+no_critical_minority,True,shared_qwen,True,True,False,learned_token,True,latent,True,dynamic,True,True,main
+no_global_token,True,shared_qwen,True,True,True,masked_pair_mean,True,latent,True,dynamic,True,True,main
+fixed_mixture,True,shared_qwen,True,True,True,learned_token,True,latent,True,fixed,True,True,main
+direct_only,True,none,False,False,False,none,True,constant_zero,False,direct,False,False,main
+deliberation_only,True,shared_qwen,True,True,True,learned_token,False,none,True,deliberation,False,True,main
+no_decision_correction,True,shared_qwen,True,True,True,learned_token,True,latent,True,dynamic,True,False,main
+path_direct_reference,True,none,False,False,False,none,True,constant_zero,False,direct,False,False,path_control
+path_deliberation_reference,True,shared_qwen,True,True,True,learned_token,False,none,True,deliberation,False,False,path_control
+dual_path_reference,True,shared_qwen,True,True,True,learned_token,True,constant_zero,True,dynamic,False,False,path_control

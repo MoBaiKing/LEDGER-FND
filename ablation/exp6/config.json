@@ -1,0 +1,34 @@
+{
+  "legacy_id": "exp6",
+  "ablation": {
+    "version": 2,
+    "name": "fixed_mixture",
+    "fixed_mix_coefficient": 0.5,
+    "strict_dependency_check": true,
+    "non_llm_evaluator": {
+      "hidden_dim": 256,
+      "num_layers": 2,
+      "num_heads": 8,
+      "feedforward_dim": 1024,
+      "dropout": 0.1
+    }
+  },
+  "module_states": {
+    "variant": "fixed_mixture",
+    "upstream_T_V_E_X": true,
+    "evaluator": "shared_qwen",
+    "pair_relations": true,
+    "explicit_relation_uncertainty": true,
+    "critical_minority": true,
+    "global_summary": "learned_token",
+    "direct_candidate": true,
+    "direct_confidence": "latent",
+    "deliberation_candidate": true,
+    "mixture": "fixed",
+    "raw_mean_residual": true,
+    "decision_correction": true,
+    "comparison_group": "main"
+  },
+  "disabled_losses": {},
+  "status": "definition_only; no measured result"
+}

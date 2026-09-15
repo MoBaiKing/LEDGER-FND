@@ -1,0 +1,36 @@
+{
+  "ablation": {
+    "version": 2,
+    "name": "path_direct_reference",
+    "fixed_mix_coefficient": 0.5,
+    "strict_dependency_check": true,
+    "non_llm_evaluator": {
+      "hidden_dim": 256,
+      "num_layers": 2,
+      "num_heads": 8,
+      "feedforward_dim": 1024,
+      "dropout": 0.1
+    }
+  },
+  "module_states": {
+    "variant": "path_direct_reference",
+    "upstream_T_V_E_X": true,
+    "evaluator": "none",
+    "pair_relations": false,
+    "explicit_relation_uncertainty": false,
+    "critical_minority": false,
+    "global_summary": "none",
+    "direct_candidate": true,
+    "direct_confidence": "constant_zero",
+    "deliberation_candidate": false,
+    "mixture": "direct",
+    "raw_mean_residual": false,
+    "decision_correction": false,
+    "comparison_group": "path_control"
+  },
+  "disabled_losses": {
+    "evidential_regularization": "Relation head removed; relation strength is undefined",
+    "uncertainty_calibration": "IURD uncertainty/correction module bypassed"
+  },
+  "alias_of": "direct_only"
+}

@@ -1,0 +1,20 @@
+test_all_predictions_one_class_and_single_class_auc (test_evaluation_protocol.MetricTests) ... ok
+test_exact_ties_ignore_input_order (test_evaluation_protocol.MetricTests) ... ok
+test_invalid_inputs_and_test_tuning_fail_closed (test_evaluation_protocol.MetricTests) ... ok
+test_macro_objective_differs_from_positive_f1 (test_evaluation_protocol.MetricTests) ... ok
+test_near_optimal_plateau_is_not_allowed (test_evaluation_protocol.MetricTests) ... ok
+test_shared_predictions_and_probability_metrics (test_evaluation_protocol.MetricTests) ... ok
+test_aggregate_provenance_and_no_legacy_mixing (test_evaluation_protocol.PipelineTests) ... ok
+test_all_dataset_configs_preserve_v3_labels_and_macro_monitor (test_evaluation_protocol.PipelineTests) ... ok
+test_averaged_model_has_its_own_threshold (test_evaluation_protocol.PipelineTests) ... ok
+test_checkpoints_preserve_threshold_and_reject_wrong_epoch (test_evaluation_protocol.PipelineTests) ... ok
+test_independent_seeds_can_choose_different_thresholds (test_evaluation_protocol.PipelineTests) ... ok
+test_manual_legacy_evaluation_requires_explicit_validation_recalibration (test_evaluation_protocol.PipelineTests) ... ok
+test_test_without_provenance_or_with_tuning_fails_before_forward (test_evaluation_protocol.PipelineTests) ... ok
+test_training_loop_early_stop_best_topk_and_final_test (test_evaluation_protocol.PipelineTests) ... ok
+test_validation_single_pass_and_frozen_test (test_evaluation_protocol.PipelineTests) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 1.911s
+
+OK

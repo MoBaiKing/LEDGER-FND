@@ -1,0 +1,43 @@
+{
+  "date": "2026-09-14",
+  "unit_tests": {
+    "passed": 16,
+    "failed": 0
+  },
+  "production_evaluation_tests": {
+    "passed": 15,
+    "failed": 0
+  },
+  "ddp": {
+    "backend": "gloo",
+    "world_size": 2,
+    "variants_passed": 13,
+    "optimizer_steps_per_variant": 2,
+    "gradient_accumulation": true
+  },
+  "full_equivalence": {
+    "fp32_outputs_loss_optimizer_step": "exact",
+    "cpu_bf16_logits": "exact"
+  },
+  "real_backbone_training_executed": false,
+  "gpu_integration_executed": false,
+  "current_seed_source": "workspaces/scheduled/v3_random4_20260914_014500/plan.json",
+  "dry_run": {
+    "datasets": [
+      "weibo21",
+      "weibo",
+      "gossipcop"
+    ],
+    "independent_jobs": 144,
+    "alias_records": 12
+  },
+  "environment": {
+    "path": "/data/dyl/sotamodelv3/ablation/.runtime/python-packages",
+    "cache_path": "/data/dyl/sotamodelv3/ablation/.cache",
+    "torch": "2.4.1+cpu",
+    "torchvision": "0.19.1+cpu",
+    "transformers": "4.46.3",
+    "peft": "0.13.2",
+    "numpy": "1.24.4"
+  }
+}

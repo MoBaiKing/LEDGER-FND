@@ -6,10 +6,14 @@ from pathlib import Path
 
 import numpy as np
 import torch
-from sklearn.metrics import accuracy_score, confusion_matrix, f1_score, precision_recall_fscore_support, roc_auc_score
 from tqdm import tqdm
 
 from mmfnd.data import move_batch
+from mmfnd.evaluation import (
+    PROTOCOL, checkpoint_threshold_selection, validate_class_names,
+    compute_classification_metrics, find_best_macro_f1_threshold, threshold_grid,
+    validate_threshold_selection,
+)
 from mmfnd.latent_evidence_deliberation import (
     EVIDENCE_ORDER,
     PAIR_ORDER,
@@ -112,90 +116,33 @@ def autocast_context(device: torch.device, precision: str):
     )
 
 
-def select_robust_threshold(
-    labels, positive_probabilities, positive_label: int,
-    threshold_min: float = 0.20, threshold_max: float = 0.80,
-    threshold_step: float = 0.01, plateau_delta: float = 0.002,
-) -> tuple[float, float]:
-    """Select the threshold nearest 0.5 on the near-optimal fixed-grid plateau."""
-    if threshold_step <= 0 or threshold_min > threshold_max:
-        raise ValueError("invalid threshold grid")
-    binary = (np.asarray(labels, dtype=np.int64) == positive_label).astype(int)
-    probabilities = np.asarray(positive_probabilities, dtype=np.float64)
-    grid = np.arange(
-        threshold_min, threshold_max + threshold_step * 0.5, threshold_step,
-        dtype=np.float64,
-    )
-    scores = np.asarray([
-        f1_score(binary, probabilities >= threshold, zero_division=0)
-        for threshold in grid
-    ])
-    maximum = float(scores.max())
-    plateau = grid[scores >= maximum - plateau_delta - 1e-12]
-    selected = min(plateau.tolist(), key=lambda value: (abs(value - 0.5), value))
-    return float(round(selected, 10)), maximum
-
-
-def classification_metrics(
-    labels, positive_probabilities, decision_threshold: float,
-    positive_label: int, class_names: dict[int, str], argmax_predictions=None,
-) -> dict:
-    labels = np.asarray(labels, dtype=np.int64)
-    probabilities = np.asarray(positive_probabilities, dtype=np.float64)
-    negative_label = 1 - positive_label
-    predictions = np.where(
-        probabilities >= decision_threshold, positive_label, negative_label
-    ).astype(np.int64)
-    precision, recall, f1, support = precision_recall_fscore_support(
-        labels, predictions, labels=[0, 1], zero_division=0
-    )
-    binary = (labels == positive_label).astype(np.int64)
-    tn, fp, fn, tp = confusion_matrix(
-        binary, predictions == positive_label, labels=[0, 1]
-    ).ravel()
-    clipped = np.clip(probabilities, 1e-7, 1.0 - 1e-7)
-    threshold_accuracy = float(accuracy_score(labels, predictions))
-    argmax_accuracy = (
-        float(accuracy_score(labels, argmax_predictions))
-        if argmax_predictions is not None else threshold_accuracy
-    )
-    metrics = {
-        "samples": int(labels.size),
-        "decision_threshold": float(decision_threshold),
-        "macro_f1": float(f1.mean()),
-        # Accuracy follows the original two-logit argmax contract. Thresholded
-        # accuracy is retained separately for calibration diagnostics.
-        "accuracy": argmax_accuracy,
-        "threshold_accuracy": threshold_accuracy,
-        "auc": float(roc_auc_score(binary, probabilities)) if len(set(binary.tolist())) > 1 else None,
-        "brier": float(np.mean((probabilities - binary) ** 2)),
-        "nll": float(np.mean(-(binary * np.log(clipped) + (1 - binary) * np.log(1 - clipped)))),
-        "positive_precision": float(precision[positive_label]),
-        "positive_recall": float(recall[positive_label]),
-        "positive_f1": float(f1[positive_label]),
-        "tp": int(tp), "tn": int(tn), "fp": int(fp), "fn": int(fn),
-    }
-    for label in (0, 1):
-        name = class_names[label].strip().lower().replace(" ", "_")
-        metrics.update({
-            f"{name}_precision": float(precision[label]),
-            f"{name}_recall": float(recall[label]),
-            f"{name}_f1": float(f1[label]),
-            f"{name}_support": int(support[label]),
-        })
-    metrics["argmax_accuracy"] = argmax_accuracy
-    return metrics
-
-
 @torch.no_grad()
 def evaluate(
     model, loader, device: torch.device, positive_label: int,
-    class_names: dict[int, str], decision_threshold: float = 0.5,
+    class_names: dict[int, str], decision_threshold: float | None = None,
     precision: str = "fp32", show_progress: bool = True,
+    *, split: str, tune_threshold: bool = False,
+    threshold_selection: dict | None = None, checkpoint_reference: dict | None = None,
 ) -> tuple[dict, list[dict], float]:
+    class_names = validate_class_names(positive_label, class_names)
+    label_semantics = {str(k): v for k, v in class_names.items()}
+    if split not in {"val", "test"}:
+        raise ValueError("Evaluation split must be val or test")
+    if tune_threshold:
+        if split != "val":
+            raise ValueError("Test threshold tuning is forbidden")
+        if threshold_selection is not None or decision_threshold is not None or not checkpoint_reference:
+            raise ValueError("Validation tuning requires a model reference, not an existing threshold")
+    else:
+        saved_threshold = validate_threshold_selection(threshold_selection)
+        if decision_threshold is not None and decision_threshold != saved_threshold:
+            raise ValueError("Requested threshold differs from the checkpoint validation threshold")
+        if threshold_selection.get("positive_label") != positive_label:
+            raise ValueError("Threshold and model use different raw positive-label indices")
+        decision_threshold = saved_threshold
     raw_model = unwrap_model(model)
     raw_model.eval()
-    labels, positive_probabilities, argmax_predictions, rows = [], [], [], []
+    labels, probabilities, rows = [], [], []
     lgled_totals: dict[str, torch.Tensor | float] = {}
     lgled_count = 0
     export_diagnostics = bool(
@@ -211,18 +158,17 @@ def evaluate(
         lgled_count += _update_lgled_totals(lgled_totals, outputs)
         probs = outputs["logits"].float().softmax(-1)
         batch_labels = batch["labels"].cpu().tolist()
-        batch_positive = probs[:, positive_label].cpu().tolist()
-        batch_argmax = probs.argmax(dim=-1).cpu().tolist()
+        batch_probs = probs.cpu().numpy()
         labels.extend(batch_labels)
-        positive_probabilities.extend(batch_positive)
-        argmax_predictions.extend(batch_argmax)
+        probabilities.extend(batch_probs.tolist())
         for index, sample_id in enumerate(batch["ids"]):
             rows.append({
                 "id": sample_id,
                 "label": int(batch_labels[index]),
                 "positive_label": int(positive_label),
-                "positive_class": class_names[positive_label],
-                "positive_probability": float(batch_positive[index]),
+                "positive_class": "fake",
+                "positive_probability": float(batch_probs[index, positive_label]),
+                "fake_probability": float(batch_probs[index, positive_label]),
                 "class_probabilities": {
                     class_names[label]: float(probs[index, label].item())
                     for label in (0, 1)
@@ -263,19 +209,37 @@ def evaluate(
             })
             if export_diagnostics:
                 rows[-1]["lgled"] = lgled_sample_diagnostics(outputs, index)
-    metrics = classification_metrics(
-        labels, positive_probabilities, decision_threshold, positive_label,
-        class_names, argmax_predictions,
-    )
+    probabilities = np.asarray(probabilities, dtype=np.float64)
+    if probabilities.shape != (len(labels), 2) or not labels:
+        raise ValueError("Cannot evaluate an empty split")
+    if tune_threshold:
+        selection = find_best_macro_f1_threshold(
+            labels, probabilities[:, positive_label], threshold_grid(raw_model.runtime_config["train"]),
+            split=split, positive_label=positive_label,
+        )
+        decision_threshold = selection["threshold"]
+        threshold_selection = {
+            "evaluation_protocol": PROTOCOL, "threshold": decision_threshold,
+            "decision_threshold": decision_threshold, "threshold_source": "validation",
+            "threshold_objective": "macro_f1", "threshold_tie_break": "closest_to_0.5_then_lower",
+            "threshold_grid": selection["threshold_grid"], "val_best_macro_f1": selection["macro_f1"],
+            "positive_label": int(positive_label), "positive_class": "fake",
+            "label_semantics": label_semantics, "checkpoint_reference": checkpoint_reference,
+        }
+    metrics = compute_classification_metrics(labels, probabilities, decision_threshold,
+                                             positive_label=positive_label, class_names=class_names)
+    metrics.update({key: threshold_selection[key] for key in (
+        "evaluation_protocol", "threshold_source", "threshold_objective", "val_best_macro_f1",
+    )})
+    metrics.update(split=split, threshold_selection=threshold_selection)
     metrics["lgled"] = _finalize_lgled_totals(lgled_totals, lgled_count)
-    negative_label = 1 - positive_label
-    predictions = [
-        positive_label if probability >= decision_threshold else negative_label
-        for probability in positive_probabilities
-    ]
+    predictions = np.where(probabilities[:, positive_label] >= decision_threshold,
+                           positive_label, 1 - positive_label).astype(np.int64)
     for row, prediction in zip(rows, predictions):
         row["prediction"] = int(prediction)
-        row["decision_threshold"] = float(decision_threshold)
+        row.update(threshold=float(decision_threshold), decision_threshold=float(decision_threshold),
+                   threshold_source="validation", threshold_objective="macro_f1", evaluation_protocol=PROTOCOL,
+                   label_semantics=label_semantics)
     return metrics, rows, float(decision_threshold)
 
 
@@ -296,7 +260,7 @@ def _checkpoint_contract(config: dict) -> dict:
 
 def save_checkpoint(
     path: Path, model, optimizer, scheduler, epoch: int, metrics: dict,
-    config: dict, decision_threshold: float = 0.5, scaler=None,
+    config: dict, decision_threshold: float | None = None, scaler=None,
     training_state: dict | None = None,
 ) -> None:
     raw_model = unwrap_model(model)
@@ -306,7 +270,15 @@ def save_checkpoint(
         name: value.detach().cpu() for name, value in raw_model.state_dict().items()
         if name in trainable_names
     }
-    torch.save({
+    selection = metrics.get("threshold_selection")
+    if selection is not None:
+        selected = validate_threshold_selection(selection)
+        if decision_threshold is not None and selected != decision_threshold:
+            raise ValueError("Cannot save mismatched checkpoint and validation threshold")
+        decision_threshold = selected
+    elif "macro_f1" in metrics:
+        raise ValueError("Validation checkpoint must include threshold provenance")
+    payload = {
         "model_state_dict": trainable_state,
         "model_state_dict_format": "trainable_only",
         "trainable_parameter_names": sorted(trainable_names),
@@ -315,9 +287,14 @@ def save_checkpoint(
         "scaler_state_dict": scaler.state_dict() if scaler is not None and scaler.is_enabled() else None,
         "epoch": int(epoch), "metrics": metrics, "config": config,
         "checkpoint_contract": _checkpoint_contract(config),
-        "decision_threshold": float(decision_threshold),
+        "evaluation_protocol": PROTOCOL if selection is not None else "uncalibrated",
+        "decision_threshold": decision_threshold,
+        "threshold_selection": selection,
         "training_state": training_state or {},
-    }, path)
+    }
+    if selection is not None:
+        checkpoint_threshold_selection(payload)
+    torch.save(payload, path)
 
 
 def load_checkpoint(path: Path, model, device, strict: bool = True) -> dict:

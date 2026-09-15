@@ -16,6 +16,7 @@ from explain import configure_chinese_font, image_occlusion_map
 from mmfnd.data import move_batch
 from mmfnd.dataset_contract import bind_dataset_workspace, validate_dataset_semantics
 from mmfnd.engine import autocast_context, lgled_sample_diagnostics, load_checkpoint
+from mmfnd.evaluation import checkpoint_threshold_selection
 from mmfnd.factory import build_loader, build_processor
 from mmfnd.image_preprocessing import load_preprocessed_image
 from mmfnd.model import ExplainableMMFND
@@ -162,7 +163,8 @@ def main() -> None:
     processor = build_processor(root, config); loader = build_loader(root, config, args.split, processor)
     raw_batch, index = select_sample(loader, args.sample_id, args.sample_index); batch = move_batch(raw_batch, device)
     model = ExplainableMMFND(config).to(device); checkpoint = load_checkpoint(checkpoint_path, model, device)
-    decision_threshold = float(checkpoint.get("decision_threshold", 0.5)); model.eval()
+    threshold_selection = checkpoint_threshold_selection(checkpoint)
+    decision_threshold = threshold_selection["threshold"]; model.eval()
     precision = str(config["train"].get("precision", "bf16"))
     with torch.no_grad(), autocast_context(device, precision):
         outputs = model(batch); probabilities = outputs["logits"].float().softmax(dim=-1)
@@ -181,6 +183,8 @@ def main() -> None:
             "positive_probability": float(probabilities[index, positive_label]),
             "class_probabilities": {class_names_int[item]: float(probabilities[index, item]) for item in (0, 1)},
             "decision_threshold": decision_threshold, "uncertainty": uncertainty,
+            "threshold": decision_threshold, "threshold_source": "validation", "threshold_objective": "macro_f1",
+            "evaluation_protocol": threshold_selection["evaluation_protocol"], "threshold_selection": threshold_selection,
             "uncertainty_level_zh": level_zh, "uncertainty_level_en": level_en,
             "uncertainty_analysis": {
                 name: float(outputs["uncertainty_components"][index, position])

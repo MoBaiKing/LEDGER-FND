@@ -1,0 +1,39 @@
+{
+  "legacy_id": "exp1",
+  "ablation": {
+    "version": 2,
+    "name": "mlp_classifier",
+    "fixed_mix_coefficient": 0.5,
+    "strict_dependency_check": true,
+    "non_llm_evaluator": {
+      "hidden_dim": 256,
+      "num_layers": 2,
+      "num_heads": 8,
+      "feedforward_dim": 1024,
+      "dropout": 0.1
+    }
+  },
+  "module_states": {
+    "variant": "mlp_classifier",
+    "upstream_T_V_E_X": true,
+    "evaluator": "none",
+    "pair_relations": false,
+    "explicit_relation_uncertainty": false,
+    "critical_minority": false,
+    "global_summary": "none",
+    "direct_candidate": false,
+    "direct_confidence": "none",
+    "deliberation_candidate": false,
+    "mixture": "not_applicable",
+    "raw_mean_residual": false,
+    "decision_correction": false,
+    "comparison_group": "main"
+  },
+  "disabled_losses": {
+    "causal_probe_classification": "Whole classification module replaced; reliability probe is not executed",
+    "causal_fidelity": "Whole classification module replaced; reliability probe is not executed",
+    "evidential_regularization": "Relation head removed; relation strength is undefined",
+    "uncertainty_calibration": "IURD uncertainty/correction module bypassed"
+  },
+  "status": "definition_only; no measured result"
+}

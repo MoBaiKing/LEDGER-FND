@@ -38,6 +38,25 @@ GLOBAL_JUDGE_INDEX = NUM_EVIDENCE + NUM_PAIRS
 LATENT_SEQUENCE_LENGTH = NUM_EVIDENCE + NUM_JUDGES
 
 
+def strict_latent_attention_mask(sequence_length: int,
+                                 device: torch.device) -> torch.Tensor:
+    """Boolean attention mask (True blocks), also supporting no-global ablation.
+
+    Evidence slots stay isolated so later layers cannot relay other evidence
+    into a pair. Each pair reads only its two evidence slots and its own state;
+    the global judge can read every slot. Apply this mask at EVERY layer.
+    """
+    if sequence_length not in {GLOBAL_JUDGE_INDEX, LATENT_SEQUENCE_LENGTH}:
+        raise ValueError("strict latent attention expects 10 or 11 tokens")
+    allowed = torch.eye(sequence_length, device=device, dtype=torch.bool)
+    for pair_index, (left, right) in enumerate(PAIR_EVIDENCE_INDICES):
+        allowed[NUM_EVIDENCE + pair_index, left] = True
+        allowed[NUM_EVIDENCE + pair_index, right] = True
+    if sequence_length == LATENT_SEQUENCE_LENGTH:
+        allowed[GLOBAL_JUDGE_INDEX, :] = True
+    return ~allowed
+
+
 class SharedEvidenceProjector(nn.Module):
     """The single D -> H projection shared by every evidence role."""
 
@@ -308,23 +327,24 @@ class LLMGuidedLatentEvidenceDeliberation(nn.Module):
     def _run_qwen_last_layers(self, latent_sequence: torch.Tensor,
                               qwen_model: nn.Module) -> torch.Tensor:
         shared_layers = self.selected_qwen_layers(qwen_model)
+        if qwen_model.config._attn_implementation not in {"eager", "sdpa"}:
+            raise ValueError("strict latent attention requires Qwen eager or sdpa")
         target_dtype = next(qwen_model.parameters()).dtype
         hidden_states = latent_sequence.to(dtype=target_dtype)
         batch_size, sequence_length = hidden_states.shape[:2]
         cache_position = torch.arange(sequence_length, device=hidden_states.device)
         position_ids = cache_position.unsqueeze(0).expand(batch_size, -1)
-        attention_mask = torch.ones(
-            batch_size, sequence_length, dtype=torch.long,
-            device=hidden_states.device,
-        )
-        causal_mask = qwen_model._update_causal_mask(
-            attention_mask, hidden_states, cache_position, None, False
-        )
+        blocked = strict_latent_attention_mask(sequence_length, hidden_states.device)
+        # Pass the explicit 4-D additive mask directly to every shared layer.
+        # -inf gives blocked edges exactly zero probability, including in BF16.
+        attention_mask = hidden_states.new_zeros(sequence_length, sequence_length)
+        attention_mask.masked_fill_(blocked, float("-inf"))
+        attention_mask = attention_mask[None, None].expand(batch_size, 1, -1, -1)
         position_embeddings = qwen_model.rotary_emb(hidden_states, position_ids)
         for layer in shared_layers:
             hidden_states = layer(
                 hidden_states,
-                attention_mask=causal_mask,
+                attention_mask=attention_mask,
                 position_ids=position_ids,
                 past_key_value=None,
                 output_attentions=False,

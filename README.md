@@ -6,6 +6,18 @@ V2 used a similarity-driven Relational Evidence Graph: four 384-D nodes were con
 
 Agreement, ambiguity, and conflict are **task-driven learned latent relation beliefs**. They are not claims that Qwen establishes true logical contradiction because the supported datasets provide only Fake/Real labels, not pair-level relation labels.
 
+## Evaluation protocol (updated 2026-09-13)
+
+Original labels stay unchanged: **0=Fake, 1=Real**. Every epoch/seed independently
+maximizes validation Macro-F1 over the configured Fake-probability threshold grid.
+Accuracy, Macro-F1, class-wise P/R/F1 and confusion counts use that same threshold.
+Early stopping/top-k selection use tuned validation Macro-F1. The averaged final
+model gets its own validation threshold, stored inside its checkpoint and frozen
+for test. AUC/NLL/Brier/ECE use original probabilities, not thresholded labels.
+
+See [the evaluation audit and migration guide](docs/EVALUATION_PROTOCOL.md) for
+changed files, tie-breaking, old-checkpoint handling, CPU tests and timer details.
+
 ## Architecture
 
 The four real code-level evidence representations are:
@@ -41,7 +53,9 @@ Selective Direct / Deliberative Fusion
 384-D Final Evidence → Existing Calibrated Binary Classifier
 ```
 
-The pair order is fixed as text–vision, text–intrinsic, text–interaction, vision–intrinsic, vision–interaction, and intrinsic–interaction. Evidence precedes all judge tokens because Qwen is causal; the global judge is last.
+The pair order is fixed as text–vision, text–intrinsic, text–interaction, vision–intrinsic, vision–interaction, and intrinsic–interaction. Evidence precedes all judge tokens; the global judge is last.
+
+This mask version applies strict visibility in **every** reused Qwen layer: each evidence token attends only to itself; each of the six pair judges attends only to its two corresponding evidence tokens and itself; G attends to all 11 tokens. Pair judges cannot attend to other judges or G. Isolating evidence tokens also prevents indirect leakage across layers. The same mask applies to the non-LLM Transformer ablation (and the 10-token sequence without G). Qwen eager and SDPA attention are supported; unsupported attention backends fail explicitly. This restriction starts at the four LG-LED input evidence vectors; upstream evidence construction and downstream fusion are unchanged.
 
 Simplified formulation:
 

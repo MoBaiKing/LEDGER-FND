@@ -1,0 +1,11 @@
+variant,evidence_dim,qwen_hidden_dim,lgled_parameters,decision_parameters,replacement_transformer_parameters,replacement_adapter_parameters,evaluator_tokens,scope
+full,384,3584,4223373,2312,0,0,11,head modules only; excludes shared Qwen/SigLIP/upstream encoder; no FLOPs or performance claim
+mlp_classifier,384,3584,0,594050,0,0,0,head modules only; excludes shared Qwen/SigLIP/upstream encoder; no FLOPs or performance claim
+non_llm_evaluator,384,3584,7642253,2312,1580032,1838848,11,head modules only; excludes shared Qwen/SigLIP/upstream encoder; no FLOPs or performance claim
+no_uncertainty,384,3584,4223373,2312,0,0,11,head modules only; excludes shared Qwen/SigLIP/upstream encoder; no FLOPs or performance claim
+no_critical_minority,384,3584,3304332,2312,0,0,11,head modules only; excludes shared Qwen/SigLIP/upstream encoder; no FLOPs or performance claim
+no_global_token,384,3584,4219789,2312,0,0,10,head modules only; excludes shared Qwen/SigLIP/upstream encoder; no FLOPs or performance claim
+fixed_mixture,384,3584,4223373,2312,0,0,11,head modules only; excludes shared Qwen/SigLIP/upstream encoder; no FLOPs or performance claim
+direct_only,384,3584,1154,1538,0,0,0,head modules only; excludes shared Qwen/SigLIP/upstream encoder; no FLOPs or performance claim
+deliberation_only,384,3584,4222986,2312,0,0,11,head modules only; excludes shared Qwen/SigLIP/upstream encoder; no FLOPs or performance claim
+no_decision_correction,384,3584,4223373,1538,0,0,11,head modules only; excludes shared Qwen/SigLIP/upstream encoder; no FLOPs or performance claim
