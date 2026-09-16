@@ -7,7 +7,7 @@
 - Seeds: **834958859, 1729822690, 1487209254, 1459867472**. OS CSPRNG, distinct from previous local suite seeds, identical paired seed list on each dataset.
 - FIFO dataset order: GossipCop → Weibo21 → Weibo; 12 complete seed pipelines. Each free card receives one seed. When one finishes/fails, that card can accept the next pending job without waiting for the other cards.
 - Each seed: three sequential reference folds → independent target construction → R1 student → validation mechanisms → explicitly frozen final test. A failure is preserved as failed; a dataset with any failed seed is marked incomplete and is not summarized as four successful seeds.
-- Original epoch limit **50**, patience **8**, original per-device batch **1**. Single-GPU accumulation is **32 for GossipCop**, **16 for Weibo21/Weibo**, preserving the baseline default four-rank effective batches. These budgets are starting settings, not validated optima.
+- Epoch limit **30**, patience **8**, original per-device batch **1**. Single-GPU accumulation is **32 for GossipCop**, **16 for Weibo21/Weibo**, preserving the baseline default four-rank effective batches. These budgets are starting settings, not validated optima.
 - No GPU query or allocation occurs during the timer wait. At 01:00 the scheduler checks current GPU processes/UUIDs and waits for free cards; it never kills someone else's process.
 - Startup checks code, scheduled config and dataset-manifest hashes. Changes fail closed. Each reference run also hashes actual pretrained/processor/image bytes before fitting.
 - Actual seed-specific fold preflight: `planned_fold_preflight.json` beside the plan; all 36 outer/inner fold partitions were checked on CPU.

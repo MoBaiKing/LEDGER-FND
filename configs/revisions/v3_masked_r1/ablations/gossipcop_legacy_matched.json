@@ -89,7 +89,7 @@
     "unfreeze_vision_last_n": 1
   },
   "train": {
-    "epochs": 50,
+    "epochs": 30,
     "per_gpu_batch_size": 1,
     "grad_accum_steps": 8,
     "vision_learning_rate": 5e-06,
