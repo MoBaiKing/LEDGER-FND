@@ -13,6 +13,8 @@ from zoneinfo import ZoneInfo
 
 ROOT=Path(__file__).resolve().parents[1]
 TZ=ZoneInfo('Asia/Shanghai')
+STUDENT_BATCH=8
+STUDENT_ACCUMULATION=4
 
 
 def now():return datetime.now(TZ).isoformat(timespec='seconds')
@@ -34,7 +36,8 @@ def common(job):
     plan_dir=Path(job['reference_dir']).parents[2]
     return ['bash',str(ROOT/'scripts/run_masked_r1.sh'),'--dataset',job['dataset'],'--seed',str(job['seed']),
             '--nproc','1','--config',str(plan_dir/'configs'/f"{job['dataset']}.json"),'--run-name',job['run_name'],
-            '--reference-dir',job['reference_dir']]
+            '--reference-dir',job['reference_dir'],'--per-gpu-batch-size',str(STUDENT_BATCH),
+            '--grad-accum-steps',str(STUDENT_ACCUMULATION)]
 
 
 def commands(job):

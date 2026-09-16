@@ -20,6 +20,7 @@ def main():
     p.add_argument('--checkpoint',type=Path);p.add_argument('--split',choices=['val','test'],default='val')
     p.add_argument('--frozen',action='store_true');p.add_argument('--smoke-steps',type=int,default=0)
     p.add_argument('--resume',type=Path)
+    p.add_argument('--per-gpu-batch-size',type=int);p.add_argument('--grad-accum-steps',type=int)
     a=p.parse_args()
     if a.nproc<1:p.error('--nproc must be positive')
     if a.stage=='test' and not a.frozen:p.error('--stage test requires --frozen')
@@ -46,6 +47,8 @@ def main():
                                 '--r1-target-cache',str(ref/'targets.pt')]
                 if a.smoke_steps:command+=['--smoke-steps',str(a.smoke_steps)]
                 if a.resume:command+=['--resume',str(a.resume)]
+                if a.per_gpu_batch_size is not None:command+=['--per-gpu-batch-size',str(a.per_gpu_batch_size)]
+                if a.grad_accum_steps is not None:command+=['--grad-accum-steps',str(a.grad_accum_steps)]
             else:
                 checkpoint=a.checkpoint or run/'checkpoints/final_averaged.pth'
                 script='evaluate.py' if stage=='test' else 'scripts/evaluate_masked_r1_mechanisms.py'

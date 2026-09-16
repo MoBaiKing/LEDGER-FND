@@ -186,14 +186,15 @@ def main() -> None:
             config["train"]["early_stop_patience"] = int(
                 args.early_stop_patience
             )
-        if args.per_gpu_batch_size is not None:
-            if args.per_gpu_batch_size <= 0:
-                raise ValueError("--per-gpu-batch-size must be positive")
-            config["train"]["per_gpu_batch_size"] = int(args.per_gpu_batch_size)
-        if args.grad_accum_steps is not None:
-            if args.grad_accum_steps <= 0:
-                raise ValueError("--grad-accum-steps must be positive")
-            config["train"]["grad_accum_steps"] = int(args.grad_accum_steps)
+        if args.per_gpu_batch_size is not None and args.per_gpu_batch_size <= 0:
+            raise ValueError("--per-gpu-batch-size must be positive")
+        if args.grad_accum_steps is not None and args.grad_accum_steps <= 0:
+            raise ValueError("--grad-accum-steps must be positive")
+        # Reference-cache identity includes the reference fitting batch settings.
+        # Validate that immutable identity before applying student-only throughput
+        # overrides below.
+        reference_batch = int(config["train"]["per_gpu_batch_size"])
+        reference_accumulation = int(config["train"]["grad_accum_steps"])
         positive_label, class_names = validate_dataset_semantics(config)
         monitor = str(config["train"].get("monitor", "macro_f1")).lower()
         if monitor != "macro_f1":
@@ -226,6 +227,32 @@ def main() -> None:
             config["r1_backbone_identity"] = {k:fingerprint[k] for k in ("model_fingerprint","preprocess_fingerprint","source_fingerprint")}
             config["r1_reference_cache"] = str(args.r1_target_cache.resolve())
             config["r1_reference_fingerprint"] = fingerprint
+        if args.per_gpu_batch_size is not None:
+            config["train"]["per_gpu_batch_size"] = int(args.per_gpu_batch_size)
+        if args.grad_accum_steps is not None:
+            config["train"]["grad_accum_steps"] = int(args.grad_accum_steps)
+        if args.per_gpu_batch_size is not None or args.grad_accum_steps is not None:
+            reference_effective_batch = (
+                reference_batch * reference_accumulation * context.world_size
+            )
+            student_effective_batch = (
+                int(config["train"]["per_gpu_batch_size"])
+                * int(config["train"]["grad_accum_steps"])
+                * context.world_size
+            )
+            if student_effective_batch != reference_effective_batch:
+                raise ValueError(
+                    "Student batch overrides must preserve the reference effective "
+                    f"batch size ({student_effective_batch} != "
+                    f"{reference_effective_batch})"
+                )
+            config["student_batch_override"] = {
+                "reference_per_gpu_batch_size": reference_batch,
+                "reference_grad_accum_steps": reference_accumulation,
+                "student_per_gpu_batch_size": int(config["train"]["per_gpu_batch_size"]),
+                "student_grad_accum_steps": int(config["train"]["grad_accum_steps"]),
+                "effective_batch_size": student_effective_batch,
+            }
         seed_everything(int(config["seed"]) + (0 if is_r1 or config.get("protocol") == "r1_replay_pool_v1" else context.rank))
         precision = str(config["train"].get("precision", "bf16")).lower()
         if precision not in {"bf16", "fp16", "fp32"}:
@@ -367,6 +394,18 @@ def main() -> None:
         observed_examples = 0
         stop_training = False
         last_epoch = start_epoch - 1
+        loader_batch_size = int(
+            getattr(train_loader, "batch_size", config["train"]["per_gpu_batch_size"])
+        )
+        loader_sampler = getattr(train_loader, "sampler", None)
+        loader_dataset = getattr(train_loader, "dataset", None)
+        loader_examples = (
+            len(loader_sampler)
+            if loader_sampler is not None
+            else len(loader_dataset)
+            if loader_dataset is not None
+            else len(train_loader) * loader_batch_size
+        )
         for epoch in range(start_epoch, int(config["train"]["epochs"]) + 1):
             last_epoch = epoch
             if hasattr(train_loader.sampler, "set_epoch"):
@@ -380,7 +419,12 @@ def main() -> None:
                 observed_examples += len(batch["labels"])
                 window_start = ((step - 1) // accumulation) * accumulation + 1
                 window_end = min(window_start + accumulation - 1, len(train_loader))
-                window_size = window_end - window_start + 1
+                window_examples = min(
+                    (window_end - window_start + 1) * loader_batch_size,
+                    loader_examples - (window_start - 1) * loader_batch_size,
+                )
+                if window_examples <= 0:
+                    raise RuntimeError("invalid gradient accumulation window")
                 update_now = step == window_end
                 sync_context = model.no_sync() if context.distributed and not update_now else nullcontext()
                 with sync_context:
@@ -406,7 +450,10 @@ def main() -> None:
                                 outputs, batch["labels"], config["loss"],
                                 float(config["train"]["label_smoothing"]), positive_label,
                             )
-                        scaled_loss = loss / window_size
+                        # Losses are micro-batch means. Weight by the actual
+                        # number of examples so a short final batch has the
+                        # same per-example contribution as batch_size=1.
+                        scaled_loss = loss * len(batch["labels"]) / window_examples
                     if not torch.isfinite(loss):
                         raise FloatingPointError(f"non-finite loss epoch={epoch} step={step}: {components}")
                     scaler.scale(scaled_loss).backward()
