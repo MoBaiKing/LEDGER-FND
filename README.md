@@ -1,5 +1,5 @@
-# CUTE-FND: Strict Masked R1
-The current implementation is strict masked R1 in the masked workspace (`sotamodelv3_mask`), selected explicitly as `qwen_lora_lgled_masked_r1`. Historical configurations remain available for named legacy comparisons. The original tracked tree is preserved at `/data/dyl/sotamodelv3_mask_7649c557_pre_r1.tar` (base `7649c557b5d36bbd205ae353c96590b682a30402`).
+# LEDGER-FND: Latent Evidence Deliberation with Global Evidence Reweighting for Multimodal Fake News Detection
+The current implementation is strict masked R1 in the `LEDGER-FND` workspace, selected explicitly as `qwen_lora_lgled_masked_r1`. Historical configurations remain available for named legacy comparisons. The original tracked tree is preserved at `/data/dyl/sotamodelv3_mask_7649c557_pre_r1.tar` (base `7649c557b5d36bbd205ae353c96590b682a30402`).
 
 Legacy: four views → shared Qwen strict deliberation → confidence/minority/global/direct scores → two-path fusion/IURD.
 
@@ -12,7 +12,7 @@ R1: same T/V/E/X → same shared Qwen last two layers with sample-specific stric
 - [Actual scheduled four-seed job](docs/MASKED_R1_SCHEDULE.md)
 
 ```bash
-cd /data/dyl/sotamodelv3_mask
+cd /data/dyl/LEDGER-FND
 CUDA_VISIBLE_DEVICES='' .venv/bin/python -m pytest tests -q
 bash scripts/run_masked_r1.sh --help
 # GPU window only; all does not run test:
