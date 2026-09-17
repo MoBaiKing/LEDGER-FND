@@ -75,6 +75,11 @@ def run_job(status_path,index):
 def run(status_path,start_at):
     state=json.loads(status_path.read_text())
     if state['status']!='paused':raise ValueError('resume scheduler requires paused queue status')
+    allowed_gpus=state.get('allowed_gpus')
+    if allowed_gpus is not None:
+        allowed_gpus={int(gpu) for gpu in allowed_gpus}
+        if not allowed_gpus or not allowed_gpus.issubset(set(range(4))):
+            raise ValueError('allowed_gpus must be a non-empty subset of [0, 1, 2, 3]')
     launch=datetime.fromisoformat(start_at)
     if launch.tzinfo is None:launch=launch.replace(tzinfo=TZ)
     stopped=False;active={}
@@ -96,7 +101,11 @@ def run(status_path,start_at):
                 handle.close();job.update(status='completed' if code==0 else 'failed',exit_code=code,finished_at=now());del active[gpu]
             pending=[j for j in state['jobs'] if j['status']=='pending']
             if not pending and not active:break
-            try:free=free_gpus();state.pop('probe_error',None)
+            try:
+                free=free_gpus()
+                if allowed_gpus is not None:
+                    free={gpu:uuid for gpu,uuid in free.items() if gpu in allowed_gpus}
+                state.pop('probe_error',None)
             except Exception as error:free={};state['probe_error']=str(error)
             for gpu,uuid in free.items():
                 if gpu in active or not pending:continue
